@@ -1,4 +1,4 @@
-package client
+package objects
 
 import (
   "testing"
@@ -8,8 +8,8 @@ import (
   "github.com/Lunkov/lib-wallets"
 )
 
-func TestCoins(t *testing.T) {
-	client := NewClient([]string{"http://127.0.0.1:8085/"}, 3)
+func TestRule(t *testing.T) {
+	client := NewClient([]string{"http://127.0.0.1:8084/"}, 3)
   
   w := &wallets.WalletHD{}
   w.Create(&map[string]string{"mnemonic": "chase oil pigeon elegant ketchup whip frozen beauty unknown brass amount slender pony pottery attitude flavor rifle primary beach sign glue oven crazy lottery"})

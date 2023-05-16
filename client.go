@@ -1,4 +1,4 @@
-package clientecos
+package client
 
 import (
   "time"
