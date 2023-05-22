@@ -1,6 +1,7 @@
 package utils
 
 import (
+  "fmt"
   "hash"
   "golang.org/x/crypto/sha3"
   "crypto/elliptic"
@@ -8,7 +9,9 @@ import (
   "encoding/hex"
 )
 
+// COPY FROM
 // https://github.com/ethereum/go-ethereum/blob/master/crypto/crypto.go
+// https://github.com/ethereum/go-ethereum/blob/master/common/types.go
 
 /////////// Address
 // Lengths of hashes and addresses in bytes.
@@ -104,10 +107,13 @@ func fromECDSAPub(pub *ecdsa.PublicKey) []byte {
   if pub == nil || pub.X == nil || pub.Y == nil {
     return nil
   }
+  fmt.Printf("pub = %v \n pub.X = %v \n pub.Y = %v\n", pub, pub.X, pub.Y)
+  fmt.Printf("elliptic.P256() = %v\n", elliptic.P256())
   return elliptic.Marshal(elliptic.P256(), pub.X, pub.Y)
 }
 
-func PubkeyToAddress(p ecdsa.PublicKey) Address {
-  pubBytes := fromECDSAPub(&p)
+func PubkeyToAddress(p *ecdsa.PublicKey) Address {
+  pubBytes := fromECDSAPub(p)
+  fmt.Printf("pubBytes = %v\n", pubBytes)
   return BytesToAddress(keccak256(pubBytes[1:])[12:])
 }

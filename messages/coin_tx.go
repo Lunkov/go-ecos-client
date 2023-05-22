@@ -16,8 +16,9 @@ import (
 )
 
 const (
-  CalcTransaction = 0
-  DoTransaction = 1
+  GetBalance = 0
+  CalcTransaction = 1
+  DoTransaction = 2
   
   
   StatusNew = 0
@@ -113,7 +114,7 @@ func (i *ReqActionCoin) Deserialize(msg []byte) bool {
 }
 
 func (i *ReqActionCoin) DoSign(pk *ecdsa.PrivateKey) bool {
-  if i.AddressFrom != utils.PubkeyToAddress(pk.PublicKey).Hex() {
+  if i.AddressFrom != utils.PubkeyToAddress(&pk.PublicKey).Hex() {
     return false
   }
   sign, ok := utils.ECDSA256SignHash512(pk, i.Hash())

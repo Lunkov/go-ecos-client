@@ -1,4 +1,4 @@
-module engine
+module github.com/Lunkov/go-ecos-client/engine
 
 go 1.18
 

@@ -17,7 +17,6 @@ func (c *Client) GetBalance(w *wallets.WalletHD) (*messages.Balance, bool) {
   if !ok {
     return nil, false
   }
-
   result := messages.NewBalance()
   if !result.Deserialize(answer) {
     glog.Errorf("ERR: GetBalance.Deserialize")

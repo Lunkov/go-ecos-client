@@ -17,6 +17,9 @@ func (c *Client) httpRequest(url string, request string) ([]byte, bool) {
   retry := 1
   for {
     answer, reconnect, ok = c.httpReq("POST", url, request)
+    if ok {
+      return answer, true
+    }
     if retry >= c.maxRetries {
       return nil, false
     }

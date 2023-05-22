@@ -79,7 +79,7 @@ func ECDSA256VerifySender(address string, pubKey []byte, hash []byte, signature 
   if !ok {
     return false
   }
-  if address != PubkeyToAddress(*rawPubKey).Hex() {
+  if address != PubkeyToAddress(rawPubKey).Hex() {
     return false
   }
   return ecdsa.VerifyASN1(rawPubKey, hash, signature)
@@ -89,3 +89,36 @@ func ECDSA256SignHash512(pk *ecdsa.PrivateKey, hash []byte) ([]byte, bool) {
   signature, err := ecdsa.SignASN1(rand.Reader, pk, hash)
   return signature, err == nil 
 }
+
+/*
+func ECDSAEncrypt(publicKey *ecdsa.PublicKey, message []byte) ([]byte, bool) {
+    k, err := rand.Int(rand.Reader, publicKey.Params().N) // Generate a random number k
+    if err != nil {
+      glog.Errorf("ERR: ECDSA Encrypt: %v", err)
+      return nil, false
+    }
+    // x, y := publicKey.Curve.ScalarBaseMult(k.Bytes()) // Calculate the point (x,y) on the elliptic curve
+    x, y := publicKey.Curve.ScalarBaseMult(k.Bytes()) // Calculate the point (x,y) on the elliptic curve
+    s := new(big.Int).SetBytes(message) // Convert the message to a big integer
+    s.Mul(s, x) // Multiply the message by x
+    s.Mod(s, publicKey.Params().N) // Take the modulus of the result
+    yBytes := elliptic.Marshal(publicKey.Curve, x, y) // Convert y to a byte array
+    //yBytes := elliptic.Marshal(publicKey.Curve, x, y) // Convert y to a byte array
+    return append(yBytes, s.Bytes()...), true // Return the encrypted message
+    // return s.Bytes(), true // Return the encrypted message
+}
+
+func ECDSADecrypt(privateKey *ecdsa.PrivateKey, encryptedMessage []byte) ([]byte, bool) {
+    yBytes := encryptedMessage[:len(encryptedMessage)/2] // Extract the y component from the encrypted message
+    sBytes := encryptedMessage[len(encryptedMessage)/2:] // Extract the s component from the encrypted message
+    y, _ := elliptic.Unmarshal(privateKey.Curve, yBytes) // Convert y back to a point on the elliptic curve
+    // x, _ := privateKey.Curve.ScalarMult(y, privateKey.D.Bytes()) // Calculate the point (x,y) on the elliptic curve
+    x, _ := privateKey.Curve.ScalarMult(y, y, privateKey.D.Bytes()) // Calculate the point (x,y) on the elliptic curve
+    s := new(big.Int).SetBytes(sBytes) // Convert s to a big integer
+    // s := new(big.Int).SetBytes(encryptedMessage) // Convert s to a big integer
+    s.ModInverse(s, privateKey.Params().N) // Calculate the modular inverse of s
+    s.Mul(s, x) // Multiply the result by x
+    s.Mod(s, privateKey.Params().N) // Take the modulus of the result
+    return s.Bytes(), true // Return the decrypted message
+}
+*/

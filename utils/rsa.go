@@ -18,6 +18,15 @@ type RSABuf struct {
   E int
 }
 
+func RSAGenerate(bits int) (*rsa.PrivateKey, bool) {
+  caPrivKey, errc := rsa.GenerateKey(rand.Reader, bits)
+  if errc != nil {
+    glog.Errorf("ERR: GenerateKey: %v", errc)
+    return nil, false
+  }
+  return caPrivKey, true
+}
+
 func RSASerialize(pk *rsa.PublicKey) ([]byte, bool) {
   rsabuf := RSABuf{N: pk.N.Bytes(), E: pk.E}
   var buff bytes.Buffer

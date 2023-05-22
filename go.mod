@@ -11,7 +11,8 @@ replace github.com/Lunkov/go-ecos-client/messages => ./messages
 replace github.com/Lunkov/go-ecos-client/engine => ./engine
 
 require (
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-00010101000000-000000000000
+	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230516173213-b6187b1d1cf8
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230516173213-b6187b1d1cf8
 	github.com/Lunkov/lib-messages v0.0.0-20230329103351-79b6281401c8
 	github.com/Lunkov/lib-wallets v0.0.0-20230410194832-3d99ce72afaf
 	github.com/golang/glog v1.1.1
@@ -19,10 +20,8 @@ require (
 )
 
 require (
-	github.com/Lunkov/go-ecos-client/messages v0.0.0-00010101000000-000000000000 // indirect
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-00010101000000-000000000000 // indirect
 	github.com/Lunkov/go-hdwallet v0.0.0-20230402114829-9836cf5dfed5 // indirect
-	github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29 // indirect
+	github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180 // indirect
 	github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
@@ -32,12 +31,12 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/deckarep/golang-set/v2 v2.1.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
-	github.com/ethereum/go-ethereum v1.11.6 // indirect
+	github.com/ethereum/go-ethereum v1.11.5 // indirect
 	github.com/go-ole/go-ole v1.2.1 // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
-	github.com/holiman/uint256 v1.2.2-0.20230321075855-87b91420868c // indirect
+	github.com/holiman/uint256 v1.2.0 // indirect
 	github.com/itchyny/base58-go v0.2.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/shirou/gopsutil v3.21.4-0.20210419000835-c7a38de76ee5+incompatible // indirect
