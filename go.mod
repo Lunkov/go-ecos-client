@@ -2,14 +2,6 @@ module github.com/Lunkov/go-ecos-client
 
 go 1.19
 
-// replace github.com/Lunkov/go-ecos-client/utils => ./utils
-
-// replace github.com/Lunkov/go-ecos-client/objects => ./objects
-
-// replace github.com/Lunkov/go-ecos-client/messages => ./messages
-
-// replace github.com/Lunkov/go-ecos-client/engine => ./engine
-
 require (
 	github.com/Lunkov/lib-wallets v0.0.0-20230410194832-3d99ce72afaf
 	github.com/golang/glog v1.1.1

@@ -8,7 +8,7 @@ import (
   "github.com/Lunkov/go-ecos-client/utils"
 )
 
-func (c *ClientECOS) GetBalance(w *wallets.WalletHD) (*messages.Balance, bool) {
+func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   c.selectServer()
   msg := messages.NewReqGetBalance()
   msg.Address = w.GetAddress("ECOS")
