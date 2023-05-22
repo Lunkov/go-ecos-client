@@ -1,4 +1,4 @@
-module github.com/Lunkov/go-ecos-client/messages
+module messages
 
 go 1.18
 
