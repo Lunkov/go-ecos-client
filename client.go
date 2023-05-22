@@ -6,14 +6,14 @@ import (
   "net/url"
 )
 
-type Client struct {
+type ClientECOS struct {
   currentUrl       string
   currentProtocol  string
   url            []string
   maxRetries       int
 }
 
-func NewClient(urls []string, maxRetries int) (*Client) {
+func NewClientECOS(urls []string, maxRetries int) (*ClientECOS) {
   rand.Seed(time.Now().UnixNano())
   au := make([]string, 0)
   for _, ui := range urls {
@@ -25,10 +25,10 @@ func NewClient(urls []string, maxRetries int) (*Client) {
       au = append(au, ui)
     }
   }
-  return &Client{url: au, maxRetries: maxRetries}
+  return &ClientECOS{url: au, maxRetries: maxRetries}
 }
 
-func (c *Client) selectServer() {
+func (c *ClientECOS) selectServer() {
   index := rand.Intn(len(c.url))
   c.currentUrl = c.url[index]
 }

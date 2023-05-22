@@ -11,7 +11,7 @@ import (
   "github.com/golang/glog"
 )
 
-func (c *Client) httpRequest(url string, request string) ([]byte, bool) {
+func (c *ClientECOS) httpRequest(url string, request string) ([]byte, bool) {
   var answer []byte
   var reconnect, ok bool  
   retry := 1
@@ -34,7 +34,7 @@ func (c *Client) httpRequest(url string, request string) ([]byte, bool) {
   return answer, true
 }
 
-func (c *Client) httpReq(protocol string, url string, request string) ([]byte, bool, bool) {
+func (c *ClientECOS) httpReq(protocol string, url string, request string) ([]byte, bool, bool) {
   client := http.Client{Timeout: time.Duration(2) * time.Second}
   req, errreq := http.NewRequest(protocol, c.currentUrl + url, strings.NewReader(request))
   if errreq != nil {

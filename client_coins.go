@@ -8,7 +8,7 @@ import (
   "github.com/Lunkov/go-ecos-client/utils"
 )
 
-func (c *Client) GetBalance(w *wallets.WalletHD) (*messages.Balance, bool) {
+func (c *ClientECOS) GetBalance(w *wallets.WalletHD) (*messages.Balance, bool) {
   c.selectServer()
   msg := messages.NewReqGetBalance()
   msg.Address = w.GetAddress("ECOS")
@@ -25,7 +25,7 @@ func (c *Client) GetBalance(w *wallets.WalletHD) (*messages.Balance, bool) {
   return result, true
 }
 
-func (c *Client) NewTransaction(w *wallets.WalletHD, addressTo string, coin string, value uint64, maxCost uint64) (*messages.Balance, bool) {
+func (c *ClientECOS) NewTransaction(w *wallets.WalletHD, addressTo string, coin string, value uint64, maxCost uint64) (*messages.Balance, bool) {
   c.selectServer()
   msg := messages.NewTokenTransaction()
   pkBuf, okpk := utils.ECDSASerialize(&w.Master.PrivateECDSA.PublicKey)

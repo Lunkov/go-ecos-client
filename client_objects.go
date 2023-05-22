@@ -4,7 +4,6 @@ import (
   /*
   "github.com/golang/glog"
   
-  "github.com/Lunkov/lib-messages"
   "github.com/Lunkov/lib-wallets"
   
   "github.com/Lunkov/go-ecos-client/objects"
