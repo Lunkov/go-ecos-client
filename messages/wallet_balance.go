@@ -2,40 +2,73 @@ package messages
 
 import ( 
   "sync"
-
   "bytes"
-  
   "encoding/gob"
+  "crypto/sha512"
+  
+  "github.com/Lunkov/lib-wallets"
+  "github.com/Lunkov/go-ecos-client/utils"
 )
 
-type ReqGetBalance struct {
+type GetBalanceReq struct {
   Address              string      `json:"address"      gorm:"column:address;primary_key"`
+  Coin                 uint32      `json:"coin"`
+  
   Sign                 []byte      `json:"sign"         gorm:"column:sign"`
   PublicKey            []byte      `json:"public_key"   gorm:"column:public_key"`
 }
 
-func NewReqGetBalance() *ReqGetBalance {
-  return &ReqGetBalance{}
+func NewGetBalanceReq() *GetBalanceReq {
+  return &GetBalanceReq{}
 }
 
-func (t *ReqGetBalance) Serialize() []byte {
+func (m *GetBalanceReq) Serialize() []byte {
   var buff bytes.Buffer
   encoder := gob.NewEncoder(&buff)
-  encoder.Encode(t)
+  encoder.Encode(m)
   return buff.Bytes()
 }
 
-func (t *ReqGetBalance) Deserialize(msg []byte) bool {
+func (m *GetBalanceReq) Deserialize(msg []byte) bool {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
-  err := decoder.Decode(t)
+  err := decoder.Decode(m)
   if err != nil {
     return false
   }
   return true
 }
 
+func (m *GetBalanceReq) Hash() []byte {
+  sha := sha512.New()
+  sha.Write([]byte(m.Address))
+  sha.Write(utils.UInt32ToBytes(m.Coin))
+  
+  return sha.Sum(nil)
+}
+
+func (m *GetBalanceReq) Init(wallet wallets.IWallet, coin uint32) bool {
+  m.Address = wallet.GetAddress(coin)
+  m.Coin = coin
+  
+  sign, ok := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), m.Hash())
+  if !ok {
+    return false
+  }
+  m.Sign = sign
+  m.PublicKey, ok = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
+  if !ok {
+    return false
+  }
+  return true  
+}
+
+func (m *GetBalanceReq) DoVerify() bool {
+  return utils.ECDSA256VerifySender(m.Address, m.PublicKey, m.Hash(), m.Sign)
+}
+
 type Balance struct {
+
   Address              string      `gorm:"column:address;primary_key"`
   Coin                 uint32      `gorm:"column:coin"`
   Balance              uint64      `gorm:"column:balance"`

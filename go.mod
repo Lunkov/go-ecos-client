@@ -4,7 +4,8 @@ go 1.19
 
 require (
 	github.com/Lunkov/go-hdwallet v0.0.0-20230402114829-9836cf5dfed5
-	github.com/Lunkov/lib-wallets v0.0.0-20230523144955-5d6be11e8bd8
+	github.com/Lunkov/lib-wallets v0.0.0-20230524114813-51e3c1416459
+	github.com/btcsuite/btcd v0.20.1-beta
 	github.com/golang/glog v1.1.1
 	github.com/google/uuid v1.3.0
 	github.com/itchyny/base58-go v0.2.1
@@ -14,7 +15,6 @@ require (
 
 require (
 	github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180 // indirect
-	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
 	github.com/btcsuite/btclog v0.0.0-20170628155309-84c8d2346e9f // indirect
 	github.com/btcsuite/btcutil v1.0.2 // indirect

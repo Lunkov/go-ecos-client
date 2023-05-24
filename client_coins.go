@@ -5,14 +5,17 @@ import (
   
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
+
   "github.com/Lunkov/go-ecos-client/messages"
-  "github.com/Lunkov/go-ecos-client/utils"
 )
 
 func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   c.selectServer()
-  msg := messages.NewReqGetBalance()
-  msg.Address = w.GetAddress(hdwallet.ECOS)
+  msg := messages.NewGetBalanceReq()
+  oks := msg.Init(w, hdwallet.ECOS)
+  if !oks {
+    return nil, false
+  }
   
   answer, ok := c.httpRequest("/wallet/balance", string(msg.Serialize()))
   if !ok {
@@ -26,25 +29,45 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   return result, true
 }
 
-func (c *ClientECOS) NewTransaction(w wallets.IWallet, addressTo string, coin uint32, value uint64, maxCost uint64) (*messages.Balance, bool) {
+func (c *ClientECOS) NewTransaction(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*messages.MsgTransaction, bool) {
   c.selectServer()
-  msg := messages.NewTokenTransaction()
-  pkBuf, okpk := utils.ECDSAPublicKeySerialize(w.GetECDSAPublicKey())
-  if !okpk {
-    glog.Errorf("ERR: NewTransaction.PublicKeyToBytes")
+  msg := messages.NewMsgTransaction()
+  msg.Init(messages.StatusTxNew, w, addressTo, coin, coin, 0, value)
+  
+  if !msg.DoSign(w) {
     return nil, false
   }
-  msg.Init(w.GetAddress(hdwallet.ECOS), addressTo, coin, value, maxCost, pkBuf)
   
-  answer, ok := c.httpRequest("/new/transaction", string(msg.Serialize()))
+  answer, ok := c.httpRequest("/transaction/new", string(msg.Serialize()))
   if !ok {
     return nil, false
   }
 
-  result := messages.NewBalance()
-  if !result.Deserialize(answer) {
+  if !msg.Deserialize(answer) {
     glog.Errorf("ERR: NewTransaction.Deserialize")
     return nil, false
   }
-  return result, true
+  return msg, true
+}
+
+func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdMessage uint32) (*messages.MsgTransaction, bool) {
+  c.selectServer()
+  msg := messages.NewMsgTransaction()
+  msg.Init(messages.StatusTxNew, w, "", 0, 0, 0, 0)
+  msg.IdMessage = IdMessage
+  
+  if !msg.DoSign(w) {
+    return nil, false
+  }
+  
+  answer, ok := c.httpRequest("/transaction/status", string(msg.Serialize()))
+  if !ok {
+    return nil, false
+  }
+
+  if !msg.Deserialize(answer) {
+    glog.Errorf("ERR: NewTransaction.Deserialize")
+    return nil, false
+  }
+  return msg, true
 }
