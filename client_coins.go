@@ -3,6 +3,7 @@ package client
 import (
   "github.com/golang/glog"
   
+  "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
   "github.com/Lunkov/go-ecos-client/messages"
   "github.com/Lunkov/go-ecos-client/utils"
@@ -11,7 +12,7 @@ import (
 func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   c.selectServer()
   msg := messages.NewReqGetBalance()
-  msg.Address = w.GetAddress("ECOS")
+  msg.Address = w.GetAddress(hdwallet.ECOS)
   
   answer, ok := c.httpRequest("/wallet/balance", string(msg.Serialize()))
   if !ok {
@@ -25,15 +26,15 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   return result, true
 }
 
-func (c *ClientECOS) NewTransaction(w *wallets.WalletHD, addressTo string, coin string, value uint64, maxCost uint64) (*messages.Balance, bool) {
+func (c *ClientECOS) NewTransaction(w wallets.IWallet, addressTo string, coin uint32, value uint64, maxCost uint64) (*messages.Balance, bool) {
   c.selectServer()
   msg := messages.NewTokenTransaction()
-  pkBuf, okpk := utils.ECDSASerialize(&w.Master.PrivateECDSA.PublicKey)
+  pkBuf, okpk := utils.ECDSAPublicKeySerialize(w.GetECDSAPublicKey())
   if !okpk {
     glog.Errorf("ERR: NewTransaction.PublicKeyToBytes")
     return nil, false
   }
-  msg.Init(w.GetAddress("ECOS"), addressTo, coin, value, maxCost, pkBuf)
+  msg.Init(w.GetAddress(hdwallet.ECOS), addressTo, coin, value, maxCost, pkBuf)
   
   answer, ok := c.httpRequest("/new/transaction", string(msg.Serialize()))
   if !ok {

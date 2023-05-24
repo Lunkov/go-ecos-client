@@ -1,7 +1,6 @@
 package client
 
 import (
-  "fmt"
   "time"
   "bytes"
   "crypto/sha256"
@@ -22,8 +21,7 @@ type Msg struct {
   UpdatedAt     time.Time       `json:"updated_at"`
   PubKey        []byte          `json:"pubkey"`
   Sign          []byte          `json:"sign"`
-  
-  
+
   DataHash func() []byte        `json:"-"`
 }
 
@@ -43,7 +41,6 @@ func (i *Msg) msgId() uint32 {
   sha_256.Write([]byte(i.IdObject))
   sha_256.Write(utils.UInt32ToBytes(i.IdAction))
   if i.DataHash != nil  {
-    fmt.Printf("LOG ****** msgId() -> HashMsg\n")
     sha_256.Write(i.DataHash())
   }
   sha_256.Write([]byte(i.UpdatedAt.String()))
@@ -56,7 +53,6 @@ func (i *Msg) Hash() []byte {
   sha_512.Write(utils.UInt32ToBytes(i.IdAction))
   sha_512.Write(utils.UInt32ToBytes(i.IdMessage))
   if i.DataHash != nil {
-    fmt.Printf("LOG ****** Hash() -> HashMsg\n")
     sha_512.Write(i.DataHash())
   }
   return sha_512.Sum(nil)

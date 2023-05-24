@@ -37,7 +37,7 @@ func (t *ReqGetBalance) Deserialize(msg []byte) bool {
 
 type Balance struct {
   Address              string      `gorm:"column:address;primary_key"`
-  Coin                 string      `gorm:"column:coin"`
+  Coin                 uint32      `gorm:"column:coin"`
   Balance              uint64      `gorm:"column:balance"`
   UnconfirmedBalance   uint64      `gorm:"column:unconfirmed_balance"`
   TotalReceived        uint64      `gorm:"column:total_received"`

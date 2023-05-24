@@ -12,7 +12,7 @@ import (
 type TokenTransaction struct {
   AddressFrom        string  `json:"address_from"`
   AddressTo          string  `json:"address_to"`
-  Coin               string  `json:"coin"`
+  Coin               uint32  `json:"coin"`
   Value              uint64  `json:"value"`
   MaxCost            uint64  `json:"max_cost"`
   PublicKey          []byte  `json:"public_key"`
@@ -23,7 +23,7 @@ func NewTokenTransaction() (*TokenTransaction) {
   return &TokenTransaction{}
 }
 
-func (t *TokenTransaction) Init(addressFrom string, addressTo string, coin string, value uint64, maxCost uint64, publicKey []byte) {
+func (t *TokenTransaction) Init(addressFrom string, addressTo string, coin uint32, value uint64, maxCost uint64, publicKey []byte) {
   t.AddressFrom = addressFrom
   t.AddressTo = addressTo
   t.Coin = coin
@@ -34,7 +34,7 @@ func (t *TokenTransaction) Init(addressFrom string, addressTo string, coin strin
 
 func (t *TokenTransaction) Hash() []byte {
   sha_512 := sha512.New()
-  sha_512.Write([]byte(t.AddressFrom + t.AddressTo + t.Coin + strconv.FormatUint(t.Value, 10) + strconv.FormatUint(t.MaxCost, 10) + string(t.PublicKey)))
+  sha_512.Write([]byte(t.AddressFrom + t.AddressTo + strconv.FormatUint(uint64(t.Coin), 10) + strconv.FormatUint(t.Value, 10) + strconv.FormatUint(t.MaxCost, 10) + string(t.PublicKey)))
   return sha_512.Sum(nil)
 }
 

@@ -122,7 +122,7 @@ func (i *ReqActionCoin) DoSign(pk *ecdsa.PrivateKey) bool {
     return false
   }
   i.Sign = sign
-  i.PubKey, ok = utils.ECDSASerialize(&pk.PublicKey)
+  i.PubKey, ok = utils.ECDSAPublicKeySerialize(&pk.PublicKey)
   if !ok {
     return false
   }
