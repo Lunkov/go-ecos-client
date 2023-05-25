@@ -8,6 +8,7 @@ import (
   "encoding/gob"
   "github.com/golang/glog"
   
+  "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
   "github.com/Lunkov/go-ecos-client/utils"
 )
@@ -19,6 +20,7 @@ const TXVersion = uint32(0x00)
 // TXInput represents a transaction input
 type TXInput struct {
 	Txid          []byte
+  Address       string
 	Vout          uint64
 	Signature     []byte
 	PublicKey     []byte
@@ -98,6 +100,7 @@ func (tx *Transaction) Deserialize(data []byte) bool {
 func (m TXInput) Hash512(timestamp int64) []byte {
   sha := sha512.New()
   sha.Write(m.Txid)
+  sha.Write([]byte(m.Address))
   sha.Write(utils.Int64ToBytes(timestamp))
   sha.Write(utils.UInt64ToBytes(m.Vout))
   sha.Write(m.PublicKey)
@@ -105,7 +108,25 @@ func (m TXInput) Hash512(timestamp int64) []byte {
   return sha.Sum(nil)
 }
 
+func (tx *Transaction) GetValueIn() uint64 {
+  vin := uint64(0)
+  for _, v := range tx.Vin {
+    vin += v.Vout
+  }
+  return vin
+}
+
+func (tx *Transaction) GetValueOut() uint64 {
+  vout := uint64(0)
+  for _, v := range tx.Vout {
+    vout += v.Value
+  }
+  return vout
+}
+
+
 func (tx *Transaction) DoSign(wallet wallets.IWallet) bool {
+  address := wallet.GetAddress(hdwallet.ECOS)
   PublicKey, ok := utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
   if !ok {
     return false
@@ -115,6 +136,7 @@ func (tx *Transaction) DoSign(wallet wallets.IWallet) bool {
       glog.Errorf("ERR: Previous transaction is not correct")
       return false
     }
+    tx.Vin[inID].Address = address
     tx.Vin[inID].PublicKey = PublicKey
     sign, ok := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), tx.Vin[inID].Hash512(tx.Timestamp))
     if !ok {
