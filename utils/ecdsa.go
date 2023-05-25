@@ -54,7 +54,7 @@ func ECDSAPublicKeyDeserialize(msg []byte) (*ecdsa.PublicKey, bool) {
 }
 
 // 
-func ECDSA256Verify(pubKey []byte, message []byte, signature []byte) bool {
+func ECDSA256VerifyHash512(pubKey []byte, hash []byte, signature []byte) bool {
   defer func() {
     if r := recover(); r != nil {
       glog.Errorf("ERR: ECDSA signature verification error: %v", r)
@@ -64,8 +64,7 @@ func ECDSA256Verify(pubKey []byte, message []byte, signature []byte) bool {
   if !ok {
     return false
   }
-  hashed := sha512.Sum512(message)
-  return ecdsa.VerifyASN1(rawPubKey, hashed[:], signature)
+  return ecdsa.VerifyASN1(rawPubKey, hash, signature)
 }
 
 func ECDSA256Sign(pk *ecdsa.PrivateKey, message []byte) ([]byte, bool) {

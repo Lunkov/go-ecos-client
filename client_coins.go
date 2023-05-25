@@ -29,7 +29,7 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   return result, true
 }
 
-func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*messages.MsgTransaction, bool) {
+func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*messages.Transaction, bool) {
   c.selectServer()
   msg := messages.NewMsgTransaction()
   msg.Init(messages.StatusTxNew, w, addressTo, coin, coin, 0, value)
@@ -43,18 +43,17 @@ func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin ui
     return nil, false
   }
 
-  if !msg.Deserialize(answer) {
+  msgAnswer := messages.NewTX()
+  if !msgAnswer.Deserialize(answer) {
     glog.Errorf("ERR: NewTransaction.Deserialize")
     return nil, false
   }
-  return msg, true
+  return msgAnswer, true
 }
 
-func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx uint32) (*messages.MsgTransaction, bool) {
+func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx []byte) (*messages.MsgTransactionStatus, bool) {
   c.selectServer()
-  msg := messages.NewMsgTransaction()
-  msg.Init(messages.StatusTxNew, w, "", 0, 0, 0, 0)
-  msg.IdTx = IdTx
+  msg := messages.NewMsgTransactionStatus(IdTx)
   
   if !msg.DoSign(w) {
     return nil, false
@@ -72,7 +71,7 @@ func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx uint32) (*message
   return msg, true
 }
 
-func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.MsgTransaction) (*messages.MsgTransaction, bool) {
+func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.Transaction) (*messages.Transaction, bool) {
   if tx == nil {
     return nil, false
   }
@@ -84,8 +83,12 @@ func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.MsgTransa
   if !msg.DoSign(w) {
     return nil, false
   }
+  output, oko := msg.Serialize()
+  if !oko {
+    return nil, false
+  }
   
-  answer, ok := c.httpRequest("/transaction/new", string(msg.Serialize()))
+  answer, ok := c.httpRequest("/transaction/new", string(output))
   if !ok {
     return nil, false
   }

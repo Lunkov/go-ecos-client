@@ -32,7 +32,7 @@ func TestECDSASign(t *testing.T) {
   vok1 := ecdsa.VerifyASN1(w.GetECDSAPublicKey(), hashed[:], signature)
   assert.True(t, vok1)
   
-  assert.True(t, ECDSA256Verify(pkBuf, message, signature)) 
+  assert.True(t, ECDSA256VerifyHash512(pkBuf, hashed[:], signature)) 
 }
 
 
