@@ -1,5 +1,5 @@
-github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxKOSUDLcl9ItKormWOgux6M6A5MYgs=
-github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
+github.com/Lunkov/go-ecos-client/utils v0.0.0-20230525094332-f3bf6bb09392 h1:QG14XXcIyeg8VpMWGQJmg0MPkOcSAv/t4wm6I/dZLlg=
+github.com/Lunkov/go-ecos-client/utils v0.0.0-20230525094332-f3bf6bb09392/go.mod h1:H9dKxengFZzr8k6VJOsdDqxQhiQKT6X9Xz1eJdrU+Do=
 github.com/Lunkov/go-hdwallet v0.0.0-20230402114829-9836cf5dfed5 h1:ss55pSMsX9OfPQEK2WHHiSIv9MGQ/dfDCvkd/1yWoIo=
 github.com/Lunkov/go-hdwallet v0.0.0-20230402114829-9836cf5dfed5/go.mod h1:kaZ8ttlLm/d1PdMgmN2/fHg5j4phq2COWTWuxd7jBh0=
 github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180 h1:TnxqJnPU9EmjbxmpN6Y+q+1tfdDWVds+J8oaSpWwJEA=
@@ -27,7 +27,6 @@ github.com/davecgh/go-spew v0.0.0-20171005155431-ecdeabc65495/go.mod h1:J7Y8YcW2
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/decred/dcrd/crypto/blake256 v1.0.0 h1:/8DMNYp9SGi5f0w7uCm6d6M4OU2rGFK09Y2A4Xv7EE0=
 github.com/decred/dcrd/crypto/blake256 v1.0.0/go.mod h1:sQl2p6Y26YV+ZOcSTP6thNdn47hh8kt6rqSlvmrXFAc=
 github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 h1:YLtO71vCjJRCBcrPMtQ9nqBsqpA1m5sE92cU+pd5Mcc=
 github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1/go.mod h1:hyedUtir6IdtD/7lIxGeCxkaw7y45JueMRL4DIyJDKs=
@@ -74,7 +73,6 @@ golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7w
 golang.org/x/sys v0.6.0 h1:MVltZSvRTcU2ljQOhs94SXPftV6DCNnZViHeQps87pQ=
 golang.org/x/sys v0.6.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
-gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/fsnotify.v1 v1.4.7/go.mod h1:Tz8NjZHkW78fSQdbUxIjBTcgA1z1m8ZHf0WmKUhAMys=
 gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7/go.mod h1:dt/ZhP58zS4L8KSrWDmTeBkI65Dw0HsyUHuEVlX15mw=

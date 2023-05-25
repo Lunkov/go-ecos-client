@@ -2,7 +2,8 @@ package utils
 
 import (
   "bytes"
-  "github.com/btcsuite/btcd/btcec"
+  //"github.com/btcsuite/btcd/btcec"
+  "github.com/Lunkov/go-btcec"
   "encoding/gob"
   "crypto/rand"
   "math/big"
