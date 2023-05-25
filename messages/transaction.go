@@ -25,7 +25,7 @@ const (
 
 type MsgTransaction struct {
   Version       uint32          `json:"version"`
-  IdMessage     uint32          `json:"id_message"`
+  IdTx          uint32          `json:"id_tx"`
 
   AddressFrom   string          `json:"address_from"`
   AddressTo     string          `json:"address_to"`
@@ -62,7 +62,7 @@ func (m *MsgTransaction) Init(idAction uint32,
   m.ValueFrom = valueFrom
   m.ValueTo = valueTo
   m.UpdatedAt = time.Now()
-  m.IdMessage = m.GenId()
+  m.IdTx = m.GenId()
 }
 
 func (m *MsgTransaction) GenId() uint32 {
