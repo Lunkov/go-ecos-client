@@ -18,7 +18,7 @@ require (
 
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230525094332-f3bf6bb09392 // indirect
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230525140307-1003ce9dd607 // indirect
 	github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
@@ -29,7 +29,6 @@ require (
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
 	github.com/ethereum/go-ethereum v1.11.5 // indirect
 	github.com/holiman/uint256 v1.2.0 // indirect
-	github.com/itchyny/base58-go v0.2.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect
 	golang.org/x/crypto v0.7.0 // indirect

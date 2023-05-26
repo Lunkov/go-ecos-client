@@ -2,14 +2,17 @@ module github.com/Lunkov/go-ecos-client/messages
 
 go 1.19
 
+replace github.com/Lunkov/go-ecos-client/utils => ./../utils
+
 require (
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230525094332-f3bf6bb09392
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230525140307-1003ce9dd607
 	github.com/Lunkov/go-hdwallet v0.0.0-20230402114829-9836cf5dfed5
 	github.com/Lunkov/lib-wallets v0.0.0-20230525055837-13776bf398ad
 	github.com/stretchr/testify v1.8.2
 )
 
 require (
+	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
 	github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect

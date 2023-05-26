@@ -96,7 +96,7 @@ func (tx *Transaction) Deserialize(data []byte) bool {
 
 	return true
 }
-  
+
 func (m TXInput) Hash512(timestamp int64) []byte {
   sha := sha512.New()
   sha.Write(m.Txid)

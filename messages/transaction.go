@@ -18,6 +18,7 @@ const (
   StatusTxVerifying = 2
   StatusTxVerified  = 10
   StatusTxApproved  = 100
+  StatusTxSaving    = 200
   StatusTxSaved     = 500
   StatusTxBadSign   = 10000
   StatusTxNoMoney   = 10001

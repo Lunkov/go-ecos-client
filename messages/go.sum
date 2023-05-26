@@ -1,3 +1,5 @@
+github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxKOSUDLcl9ItKormWOgux6M6A5MYgs=
+github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
 github.com/Lunkov/go-ecos-client/utils v0.0.0-20230525094332-f3bf6bb09392 h1:QG14XXcIyeg8VpMWGQJmg0MPkOcSAv/t4wm6I/dZLlg=
 github.com/Lunkov/go-ecos-client/utils v0.0.0-20230525094332-f3bf6bb09392/go.mod h1:H9dKxengFZzr8k6VJOsdDqxQhiQKT6X9Xz1eJdrU+Do=
 github.com/Lunkov/go-hdwallet v0.0.0-20230402114829-9836cf5dfed5 h1:ss55pSMsX9OfPQEK2WHHiSIv9MGQ/dfDCvkd/1yWoIo=
