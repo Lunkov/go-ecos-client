@@ -88,7 +88,7 @@ func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.Transacti
     return nil, false
   }
   
-  answer, ok := c.httpRequest("/transaction/new", string(output))
+  answer, ok := c.httpRequest("/transaction/commit", string(output))
   if !ok {
     return nil, false
   }
