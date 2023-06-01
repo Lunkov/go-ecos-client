@@ -20,6 +20,7 @@ func (c *ClientECOS) httpRequest(url string, request string) ([]byte, bool) {
     if ok {
       return answer, true
     }
+    c.selectServer()
     if retry >= c.maxRetries {
       return nil, false
     }

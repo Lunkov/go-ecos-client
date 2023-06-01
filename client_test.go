@@ -1,6 +1,7 @@
 package client
 
 import (
+  "flag"
   "testing"
   "github.com/stretchr/testify/assert"
   
@@ -11,7 +12,22 @@ import (
 )
 
 func TestCoins(t *testing.T) {
-	client := NewClientECOS([]string{"http://127.0.0.1:8085/"}, 3)
+  flag.Set("alsologtostderr", "true")
+  flag.Set("log_dir", ".")
+  //flag.Set("v", "9")
+  //flag.Parse()
+
+  client := NewClientECOS([]string{"http://127.0.0.1:8085/"}, 3)
+  clientLong := NewClientECOS([]string{
+                                  "http://127.0.0.1:8081/",
+                                  "http://127.0.0.1:8082/",
+                                  "http://127.0.0.1:8083/",
+                                  "http://127.0.0.1:8084/",
+                                  "http://127.0.0.1:8088/",
+                                  "http://127.0.0.1:8086/",
+                                  "http://127.0.0.1:8087/",
+                                  "http://127.0.0.1:8085/",
+                                 }, 10)
   
   w := wallets.NewWallet(wallets.TypeWalletHD)
   w.Create(&map[string]string{"mnemonic": "chase oil pigeon elegant ketchup whip frozen beauty unknown brass amount slender pony pottery attitude flavor rifle primary beach sign glue oven crazy lottery"})
@@ -19,7 +35,19 @@ func TestCoins(t *testing.T) {
   w2 := wallets.NewWallet(wallets.TypeWalletHD)
   w2.Create(&map[string]string{"mnemonic": "super inflict toward range sting apart rebel lady detail exotic remove school love buddy guitar hen loan approve neither giant pig divide glimpse loud"})
   
-  balance, ok := client.GetBalance(w)
+  balance, ok := clientLong.GetBalance(w)
+  assert.True(t, ok)
+
+  if balance != nil {
+    assert.Equal(t, "0x5f7ae710cED588D42E863E9b55C7c51e56869963", balance.Address)
+    assert.Equal(t, hdwallet.ECOS,            balance.Coin)
+    assert.Equal(t, uint64(0x2386f26fc10000), balance.Balance)
+    assert.Equal(t, uint64(0), balance.UnconfirmedBalance)
+    assert.Equal(t, uint64(0x2386f26fc10000), balance.TotalReceived)
+    assert.Equal(t, uint64(0x00), balance.TotalSent)
+  }
+
+  balance, ok = client.GetBalance(w)
   assert.True(t, ok)
   
   if balance != nil {
