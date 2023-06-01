@@ -19,28 +19,28 @@ const TXVersion = uint32(0x00)
 
 // TXInput represents a transaction input
 type TXInput struct {
-	Txid          []byte
+  Txid          []byte
   Address       string
-	Vout          uint64
-	Signature     []byte
-	PublicKey     []byte
+  Vout          uint64
+  Signature     []byte
+  PublicKey     []byte
 }
 
 
 // TXOutput represents a transaction output
 type TXOutput struct {
-	Address        string                 `yaml:"address"`
-	Value          uint64                 `yaml:"value"`
+  Address        string                 `yaml:"address"`
+  Value          uint64                 `yaml:"value"`
 }
 
 
 type Transaction struct {
   Id            []byte
   Version       uint32
-	Timestamp     int64
+  Timestamp     int64
   
-	Vin      []TXInput
-	Vout     []TXOutput
+  Vin      []TXInput
+  Vout     []TXOutput
 }
 
 func NewTX() *Transaction {
@@ -63,7 +63,9 @@ func (tx *Transaction) CalcID() ([]byte, bool) {
 
   encoder := gob.NewEncoder(&encoded)
   if err := encoder.Encode(tx); err != nil {
-    glog.Errorf("ERR: Transaction.SetID: %v", err)
+    if glog.V(2) {
+      glog.Errorf("ERR: Transaction.SetID: %v", err)
+    }
     return nil, false
   }
 
@@ -73,16 +75,18 @@ func (tx *Transaction) CalcID() ([]byte, bool) {
 
 // Serialize serializes the Transaction
 func (tx *Transaction) Serialize() ([]byte, bool) {
-	var result bytes.Buffer
-	encoder := gob.NewEncoder(&result)
+  var result bytes.Buffer
+  encoder := gob.NewEncoder(&result)
 
-	err := encoder.Encode(tx)
-	if err != nil {
-		glog.Errorf("ERR: Transaction.Serialize: %v", err)
+  err := encoder.Encode(tx)
+  if err != nil {
+    if glog.V(2) {
+      glog.Errorf("ERR: Transaction.Serialize: %v", err)
+    }
     return nil, false
-	}
+  }
 
-	return result.Bytes(), true
+  return result.Bytes(), true
 }
 
 // DeserializeBlock deserializes a block
@@ -90,7 +94,9 @@ func (tx *Transaction) Deserialize(data []byte) bool {
 	decoder := gob.NewDecoder(bytes.NewReader(data))
 	err := decoder.Decode(tx)
 	if err != nil {
-		glog.Errorf("ERR: Transaction.DeserializeTransaction: %v", err)
+    if glog.V(2) {
+		  glog.Errorf("ERR: Transaction.DeserializeTransaction: %v", err)
+    }
     return false
 	}
 
@@ -133,7 +139,9 @@ func (tx *Transaction) DoSign(wallet wallets.IWallet) bool {
   }
   for inID, vin := range tx.Vin {
     if vin.Txid == nil {
-      glog.Errorf("ERR: Previous transaction is not correct")
+      if glog.V(2) {
+        glog.Errorf("ERR: Previous transaction is not correct")
+      }
       return false
     }
     tx.Vin[inID].Address = address
@@ -150,7 +158,9 @@ func (tx *Transaction) DoSign(wallet wallets.IWallet) bool {
 func (tx *Transaction) DoVerify() bool {
   for inID, vin := range tx.Vin {
     if vin.Txid == nil {
-      glog.Errorf("ERR: Previous transaction is not correct")
+      if glog.V(2) {
+        glog.Errorf("ERR: Previous transaction is not correct")
+      }
       return false
     }
     if !utils.ECDSA256VerifyHash512(tx.Vin[inID].PublicKey, tx.Vin[inID].Hash512(tx.Timestamp), tx.Vin[inID].Signature) {

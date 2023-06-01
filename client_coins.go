@@ -23,7 +23,9 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   }
   result := messages.NewBalance()
   if !result.Deserialize(answer) {
-    glog.Errorf("ERR: GetBalance.Deserialize")
+    if glog.V(2) {
+      glog.Errorf("ERR: GetBalance.Deserialize")
+    }
     return nil, false
   }
   return result, true
@@ -45,7 +47,9 @@ func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin ui
 
   msgAnswer := messages.NewTX()
   if !msgAnswer.Deserialize(answer) {
-    glog.Errorf("ERR: NewTransaction.Deserialize")
+    if glog.V(2) {
+      glog.Errorf("ERR: NewTransaction.Deserialize")
+    }
     return nil, false
   }
   return msgAnswer, true
@@ -65,7 +69,9 @@ func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx []byte) (*message
   }
 
   if !msg.Deserialize(answer) {
-    glog.Errorf("ERR: NewTransaction.Deserialize")
+    if glog.V(2) {
+      glog.Errorf("ERR: NewTransaction.Deserialize")
+    }
     return nil, false
   }
   return msg, true
@@ -94,7 +100,7 @@ func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.Transacti
   }
 
   if !msg.Deserialize(answer) {
-    glog.Errorf("ERR: NewTransaction.Deserialize")
+    glog.Errorf("ERR: NewTransaction.Deserialize: '%v'", string(answer))
     return nil, false
   }
   return msg, true
