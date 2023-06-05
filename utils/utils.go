@@ -1,6 +1,7 @@
 package utils
 
 import (
+  "strconv"
 )
 
 // ReverseBytes reverses a byte array
@@ -43,4 +44,22 @@ func Int64ToBytes(v int64) (b []byte) {
   return b
 }
 
+
+func UInt64Format(n uint64) string {
+  in := strconv.FormatUint(n, 10)
+  numOfCommas := (len(in) - 1) / 3
+
+  out := make([]byte, len(in) + numOfCommas)
+
+  for i, j, k := len(in)-1, len(out)-1, 0; ; i, j = i-1, j-1 {
+    out[j] = in[i]
+    if i == 0 {
+      return string(out)
+    }
+    if k++; k == 3 {
+      j, k = j-1, 0
+      out[j] = ','
+    }
+  }
+}
 
