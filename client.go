@@ -8,6 +8,7 @@ import (
 
 type ClientECOS struct {
   currentUrl       string
+  currentIndexUrl  int
   currentProtocol  string
   url            []string
   maxRetries       int
@@ -25,11 +26,20 @@ func NewClientECOS(urls []string, maxRetries int) (*ClientECOS) {
       au = append(au, ui)
     }
   }
-  return &ClientECOS{url: au, maxRetries: maxRetries}
+  client := &ClientECOS{url: au, maxRetries: maxRetries}
+  client.selectRandomServer()
+  return client
 }
 
-func (c *ClientECOS) selectServer() {
-  index := rand.Intn(len(c.url))
-  c.currentUrl = c.url[index]
+func (c *ClientECOS) selectRandomServer() {
+  c.currentIndexUrl = rand.Intn(len(c.url))
+  c.currentUrl = c.url[c.currentIndexUrl]
 }
 
+func (c *ClientECOS) getAnotherServer() {
+  c.currentIndexUrl ++
+  if len(c.url) <= c.currentIndexUrl {
+    c.currentIndexUrl = 0
+  }
+  c.currentUrl = c.url[c.currentIndexUrl]
+}

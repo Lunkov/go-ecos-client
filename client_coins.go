@@ -10,7 +10,6 @@ import (
 )
 
 func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
-  c.selectServer()
   msg := messages.NewGetBalanceReq()
   oks := msg.Init(w, hdwallet.ECOS)
   if !oks {
@@ -32,7 +31,6 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
 }
 
 func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*messages.Transaction, bool) {
-  c.selectServer()
   msg := messages.NewMsgTransaction()
   msg.Init(messages.StatusTxNew, w, addressTo, coin, coin, 0, value)
   
@@ -56,7 +54,6 @@ func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin ui
 }
 
 func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx []byte) (*messages.MsgTransactionStatus, bool) {
-  c.selectServer()
   msg := messages.NewMsgTransactionStatus(IdTx)
   
   if !msg.DoSign(w) {
@@ -81,8 +78,6 @@ func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.Transacti
   if tx == nil {
     return nil, false
   }
-
-  c.selectServer()
   
   msg := tx
   
@@ -100,7 +95,9 @@ func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.Transacti
   }
 
   if !msg.Deserialize(answer) {
-    glog.Errorf("ERR: NewTransaction.Deserialize: '%v'", string(answer))
+    if glog.V(2) {
+      glog.Errorf("ERR: NewTransaction.Deserialize: '%v'", string(answer))
+    }
     return nil, false
   }
   return msg, true
