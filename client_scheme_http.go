@@ -11,12 +11,12 @@ import (
   "github.com/golang/glog"
 )
 
-func (c *ClientECOS) httpRequest(url string, request string) ([]byte, bool) {
+func (c *ClientECOS) httpRequest(protocol string, url string, request string) ([]byte, bool) {
   var answer []byte
   var reconnect, ok bool  
   retry := 1
   for {
-    answer, reconnect, ok = c.httpReq("POST", url, request)
+    answer, reconnect, ok = c.httpReq(protocol, url, request)
     if ok {
       return answer, true
     }
@@ -40,7 +40,7 @@ func (c *ClientECOS) httpReq(protocol string, url string, request string) ([]byt
   req, errreq := http.NewRequest(protocol, c.currentUrl + url, strings.NewReader(request))
   if errreq != nil {
     if glog.V(2) {
-      glog.Errorf("ERR: request(%s): %v", url, errreq)
+      glog.Infof("ERR: request(%s): %v", url, errreq)
     }
     return nil, true, false
   }
@@ -49,7 +49,7 @@ func (c *ClientECOS) httpReq(protocol string, url string, request string) ([]byt
   resp, errresp := client.Do(req)
   if errresp != nil {
     if glog.V(2) {
-      glog.Errorf("ERR: request.do(%s): %v: %v", url, errresp, errors.Is(errresp, syscall.ECONNREFUSED))
+      glog.Infof("ERR: request.do(%s): %v: %v", url, errresp, errors.Is(errresp, syscall.ECONNREFUSED))
     }
     return nil, errors.Is(errresp, syscall.ECONNREFUSED), false
   }
@@ -58,7 +58,7 @@ func (c *ClientECOS) httpReq(protocol string, url string, request string) ([]byt
   answer, errbody := ioutil.ReadAll(resp.Body)
   if errbody != nil {
     if glog.V(2) {
-      glog.Errorf("ERR: request.read(%s): %v", url, errbody)
+      glog.Infof("ERR: request.read(%s): %v", url, errbody)
     }
     return nil, false, false
   }

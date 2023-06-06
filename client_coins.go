@@ -1,8 +1,6 @@
 package client
 
 import (
-  "github.com/golang/glog"
-  
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
 
@@ -16,15 +14,12 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
     return nil, false
   }
   
-  answer, ok := c.httpRequest("/wallet/balance", string(msg.Serialize()))
+  answer, ok := c.httpRequest("POST", "/wallet/balance", string(msg.Serialize()))
   if !ok {
     return nil, false
   }
   result := messages.NewBalance()
   if !result.Deserialize(answer) {
-    if glog.V(2) {
-      glog.Errorf("ERR: GetBalance.Deserialize")
-    }
     return nil, false
   }
   return result, true
@@ -38,16 +33,13 @@ func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin ui
     return nil, false
   }
   
-  answer, ok := c.httpRequest("/transaction/new", string(msg.Serialize()))
+  answer, ok := c.httpRequest("POST", "/transaction/new", string(msg.Serialize()))
   if !ok {
     return nil, false
   }
 
   msgAnswer := messages.NewTX()
   if !msgAnswer.Deserialize(answer) {
-    if glog.V(2) {
-      glog.Errorf("ERR: NewTransaction.Deserialize")
-    }
     return nil, false
   }
   return msgAnswer, true
@@ -60,15 +52,12 @@ func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx []byte) (*message
     return nil, false
   }
   
-  answer, ok := c.httpRequest("/transaction/status", string(msg.Serialize()))
+  answer, ok := c.httpRequest("POST", "/transaction/status", string(msg.Serialize()))
   if !ok {
     return nil, false
   }
 
   if !msg.Deserialize(answer) {
-    if glog.V(2) {
-      glog.Errorf("ERR: NewTransaction.Deserialize")
-    }
     return nil, false
   }
   return msg, true
@@ -89,16 +78,57 @@ func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.Transacti
     return nil, false
   }
   
-  answer, ok := c.httpRequest("/transaction/commit", string(output))
+  answer, ok := c.httpRequest("POST", "/transaction/commit", string(output))
   if !ok {
     return nil, false
   }
 
   if !msg.Deserialize(answer) {
-    if glog.V(2) {
-      glog.Errorf("ERR: NewTransaction.Deserialize: '%v'", string(answer))
-    }
     return nil, false
   }
   return msg, true
 }
+
+/*
+func (c *ClientECOS) GetNodeStat() (*messages.Balance, bool) {
+  msg := messages.NewGetBalanceReq()
+  oks := msg.Init(w, hdwallet.ECOS)
+  if !oks {
+    return nil, false
+  }
+  
+  answer, ok := c.httpRequest("/wallet/balance", string(msg.Serialize()))
+  if !ok {
+    return nil, false
+  }
+  result := messages.NewBalance()
+  if !result.Deserialize(answer) {
+    if glog.V(2) {
+      glog.Errorf("ERR: GetBalance.Deserialize")
+    }
+    return nil, false
+  }
+  return result, true
+}
+
+func (c *ClientECOS) GetNetworkStat() (*messages.Balance, bool) {
+  msg := messages.NewGetBalanceReq()
+  oks := msg.Init(w, hdwallet.ECOS)
+  if !oks {
+    return nil, false
+  }
+  
+  answer, ok := c.httpRequest("/wallet/balance", string(msg.Serialize()))
+  if !ok {
+    return nil, false
+  }
+  result := messages.NewBalance()
+  if !result.Deserialize(answer) {
+    if glog.V(2) {
+      glog.Errorf("ERR: GetBalance.Deserialize")
+    }
+    return nil, false
+  }
+  return result, true
+}
+*/
