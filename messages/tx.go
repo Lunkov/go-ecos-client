@@ -21,6 +21,7 @@ const TXVersion = uint32(0x00)
 type TXInput struct {
   Txid          []byte
   Address       string
+  CID           string
   Vout          uint64
   Signature     []byte
   PublicKey     []byte
@@ -30,6 +31,7 @@ type TXInput struct {
 // TXOutput represents a transaction output
 type TXOutput struct {
   Address        string                 `yaml:"address"`
+  CID            string                 `yaml:"cid"`
   Value          uint64                 `yaml:"value"`
 }
 

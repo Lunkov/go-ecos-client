@@ -27,7 +27,7 @@ func RSAGenerate(bits int) (*rsa.PrivateKey, bool) {
   return caPrivKey, true
 }
 
-func RSASerialize(pk *rsa.PublicKey) ([]byte, bool) {
+func RSASerializePublicKey(pk *rsa.PublicKey) ([]byte, bool) {
   rsabuf := RSABuf{N: pk.N.Bytes(), E: pk.E}
   var buff bytes.Buffer
   encoder := gob.NewEncoder(&buff)
@@ -35,7 +35,7 @@ func RSASerialize(pk *rsa.PublicKey) ([]byte, bool) {
   return buff.Bytes(), true
 }
 
-func RSADeserialize(msg []byte) (*rsa.PublicKey, bool) {
+func RSADeserializePublicKey(msg []byte) (*rsa.PublicKey, bool) {
   var rsabuf RSABuf
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
@@ -55,7 +55,7 @@ func RSAVerify(pubKey []byte, message []byte, signature []byte) bool {
       glog.Errorf("ERR: ECDSA signature verification error: %v", r)
     }
   }()
-  rawPubKey, ok := RSADeserialize(pubKey) //PublicKeyFromBytes(pubKey)
+  rawPubKey, ok := RSADeserializePublicKey(pubKey) //PublicKeyFromBytes(pubKey)
   if !ok {
     return false
   }

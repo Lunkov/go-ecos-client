@@ -54,7 +54,7 @@ func (c *ClientECOS) httpReq(protocol string, url string, request string) ([]byt
     return nil, errors.Is(errresp, syscall.ECONNREFUSED), false
   }
   defer resp.Body.Close()
-
+  
   answer, errbody := ioutil.ReadAll(resp.Body)
   if errbody != nil {
     if glog.V(2) {
