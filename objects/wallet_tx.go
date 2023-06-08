@@ -17,6 +17,7 @@ type WalletTxBalance struct {
 type WalletTxDebet struct {
   IdTx          []byte
   CIDBlock      string
+  CIDNFT        string
   Timestamp     int64
   Debet         uint64
   Credit        uint64
@@ -26,6 +27,7 @@ type WalletTxCredit struct {
   IdTxCredit    []byte
   IdTxDebet     []byte
   CIDBlock      string
+  CIDNFT        string
   Timestamp     int64
   Credit        uint64
 }
