@@ -4,6 +4,7 @@ import (
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
 
+  "github.com/Lunkov/go-ecos-client/objects"
   "github.com/Lunkov/go-ecos-client/messages"
 )
 
@@ -25,7 +26,7 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   return result, true
 }
 
-func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*messages.Transaction, bool) {
+func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*objects.Transaction, bool) {
   msg := messages.NewMsgTransaction()
   msg.Init(messages.StatusTxNew, w, addressTo, coin, coin, 0, value)
   
@@ -38,7 +39,7 @@ func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin ui
     return nil, false
   }
 
-  msgAnswer := messages.NewTX()
+  msgAnswer := objects.NewTX()
   if !msgAnswer.Deserialize(answer) {
     return nil, false
   }
@@ -63,7 +64,7 @@ func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx []byte) (*message
   return msg, true
 }
 
-func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *messages.Transaction) (*messages.Transaction, bool) {
+func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *objects.Transaction) (*objects.Transaction, bool) {
   if tx == nil {
     return nil, false
   }

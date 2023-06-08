@@ -8,6 +8,7 @@ import (
   
   "github.com/Lunkov/lib-wallets"
   "github.com/Lunkov/go-ecos-client/utils"
+  "github.com/Lunkov/go-ecos-client/objects"
 )
 
 type MsgTransactionStatus struct {
@@ -21,7 +22,7 @@ type MsgTransactionStatus struct {
 }
 
 func NewMsgTransactionStatus(IdTx []byte) *MsgTransactionStatus {
-  return &MsgTransactionStatus{Version: TXVersion, IdTx: IdTx, Timestamp: time.Now().Unix()}
+  return &MsgTransactionStatus{Version: objects.TXVersion, IdTx: IdTx, Timestamp: time.Now().Unix()}
 }
 
 func (m *MsgTransactionStatus) Serialize() []byte {
