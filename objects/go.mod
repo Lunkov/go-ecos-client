@@ -5,10 +5,10 @@ go 1.19
 replace github.com/Lunkov/go-ecos-client/utils => ./../utils
 
 require (
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230606195050-4a0830ead330
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230608071119-6fc53a0f1787
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29
-	github.com/Lunkov/lib-wallets v0.0.0-20230525055837-13776bf398ad
+	github.com/Lunkov/lib-wallets v0.0.0-20230606135804-f0455259642c
 	github.com/golang/glog v1.1.1
 	github.com/google/uuid v1.3.0
 	github.com/stretchr/testify v1.8.2
@@ -22,8 +22,8 @@ require (
 	github.com/btcsuite/btcutil v1.0.2 // indirect
 	github.com/cpacia/bchutil v0.0.0-20181003130114-b126f6a35b6c // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.2.0 // indirect
-	github.com/ethereum/go-ethereum v1.12.0 // indirect
+	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
+	github.com/ethereum/go-ethereum v1.11.6 // indirect
 	github.com/holiman/uint256 v1.2.2-0.20230321075855-87b91420868c // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect

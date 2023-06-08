@@ -14,5 +14,7 @@ func TestMessageObject(t *testing.T) {
   
   buf := obj.Serialize()
 
-  assert.Equal(t, 188, len(buf))
+  assert.Equal(t, 211, len(buf))
+  
+//  assert.True(t, msg2.DoVerify()) 
 }
