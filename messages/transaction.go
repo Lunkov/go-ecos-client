@@ -15,6 +15,7 @@ import (
 
 const (
   StatusTxNew       = 0
+  StatusTxNewNFT    = 1
   StatusTxVerifying = 2
   StatusTxVerified  = 10
   StatusTxApproved  = 100
@@ -62,6 +63,18 @@ func (m *MsgTransaction) Init(idAction uint32,
   m.CoinTo = coinTo
   m.ValueFrom = valueFrom
   m.ValueTo = valueTo
+  m.UpdatedAt = time.Now()
+  m.IdTx = m.GenId()
+}
+
+func (m *MsgTransaction) InitNFT(idAction uint32,
+                               wallet wallets.IWallet,
+                               coin uint32,
+                               ) {
+  m.AddressFrom = wallet.GetAddress(coin)
+  m.AddressTo = wallet.GetAddress(coin)
+  m.CoinFrom = coin
+  m.CoinTo = coin
   m.UpdatedAt = time.Now()
   m.IdTx = m.GenId()
 }

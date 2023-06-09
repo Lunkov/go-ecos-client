@@ -4,8 +4,8 @@ github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3 h1:eXXKYmulSUPW
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3/go.mod h1:hIKtgJbW/waGlmVHt4bhhMaYFo5c8m6ZxRWbGfxXlAc=
 github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29 h1:Ss1s5rYXUt6XpU7HtvdBGy3CJIM7yPqMPyDRNw5OG0M=
 github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29/go.mod h1:Ck4M+EAHKq9/elooZ88cNUPTLI05cg0YRlb0gnaQyLU=
-github.com/Lunkov/lib-wallets v0.0.0-20230606135804-f0455259642c h1:trOYndgTGDFiNCpt7f/1YPVdpVB/lQj21myo8VXlqV4=
-github.com/Lunkov/lib-wallets v0.0.0-20230606135804-f0455259642c/go.mod h1:7qHIk7LJcm3Ez9IsLd5n/fqXne/4clTtZWpykxugEi0=
+github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374 h1:kkuXgV64mpgxYhTkITfGRgTNFNfr91Ut5Q22E3u94MI=
+github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374/go.mod h1:7qHIk7LJcm3Ez9IsLd5n/fqXne/4clTtZWpykxugEi0=
 github.com/aead/siphash v1.0.1/go.mod h1:Nywa3cDsYNNK3gaciGTWPwHt0wlpNV15vwmswBAUSII=
 github.com/btcsuite/btcd v0.20.1-beta h1:Ik4hyJqN8Jfyv3S4AGBOmyouMsYE3EdYODkMbQjwPGw=
 github.com/btcsuite/btcd v0.20.1-beta/go.mod h1:wVuoA8VJLEcwgqHBwHmzLRazpKxTv13Px/pDuV7OomQ=

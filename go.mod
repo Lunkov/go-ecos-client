@@ -10,16 +10,16 @@ replace github.com/Lunkov/go-ecos-client/objects => ./objects
 
 require (
 	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230608071119-6fc53a0f1787
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230608071119-6fc53a0f1787
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230608093908-1b99ba0129f0
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
-	github.com/Lunkov/lib-wallets v0.0.0-20230606135804-f0455259642c
+	github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374
 	github.com/golang/glog v1.1.1
 	github.com/stretchr/testify v1.8.2
 )
 
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230608071119-6fc53a0f1787 // indirect
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230608093908-1b99ba0129f0 // indirect
 	github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect

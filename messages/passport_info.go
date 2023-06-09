@@ -11,6 +11,7 @@ import (
 type PassportInfo struct {
   Passport     objects.Passport
   CodePhrase   string
+  TxId         []byte
   CID          string
 }
 
