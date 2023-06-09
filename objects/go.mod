@@ -5,7 +5,7 @@ go 1.19
 replace github.com/Lunkov/go-ecos-client/utils => ./../utils
 
 require (
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230608093908-1b99ba0129f0
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230609113834-7e12d504ad19
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29
 	github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374
