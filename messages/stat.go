@@ -12,6 +12,8 @@ type NetworkStat struct {
   Height                uint64
   CountBlocks           uint64
   CountTransactions     uint64
+  SumTransactions       uint64
+  CountWallets          uint64
   
   GenesisCID            string
   CurrentCID            string
