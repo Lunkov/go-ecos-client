@@ -26,6 +26,24 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   return result, true
 }
 
+func (c *ClientECOS) GetWalletTX(w wallets.IWallet) (*objects.WalletTxs, bool) {
+  msg := messages.NewGetBalanceReq()
+  oks := msg.Init(w, hdwallet.ECOS)
+  if !oks {
+    return nil, false
+  }
+  
+  answer, ok := c.httpRequest("POST", "/wallet/tx", string(msg.Serialize()))
+  if !ok {
+    return nil, false
+  }
+  result := objects.NewWalletTxEmpty()
+  if !result.Deserialize(answer) {
+    return nil, false
+  }
+  return result, true
+}
+
 func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*objects.Transaction, bool) {
   msg := messages.NewMsgTransaction()
   msg.Init(messages.StatusTxNew, w, addressTo, coin, coin, 0, value)
