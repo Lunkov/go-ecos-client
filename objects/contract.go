@@ -10,6 +10,16 @@ import (
   "github.com/Lunkov/go-ecos-client/utils"
 )
 
+const (
+  ContractNew    = 0
+  ContractActive = 100
+  ContractClosed = 1000
+
+
+  ContractPublic  = 2000
+  ContractPrivate = 4000
+)
+
 type ContractSide struct {
   Role         string
   Address      string
@@ -18,20 +28,12 @@ type ContractSide struct {
   Sign        []byte          `json:"sign"`
 }
 
-type ContractUserInput struct {
-  Id           int32
+type ContractRole struct {
+  RoleId       string
   Title        string
-  Role         string
-  Inputs       map[string]string
 }
 
-type ContractUserInputData struct {
-  Id           uint32
-  Role         string
-  CreatedAt    time.Time
-  Inputs       map[string]string
-}
-
+/*
 type ContractSequence struct {
   Name         string
 
@@ -41,46 +43,30 @@ type ContractPayment struct {
   RoleFrom     string
   RoleTo       string
   
-}
+}*/
 
 type Contract struct {
-  Id           string
-  Description  string
+  Id                string
+  Description       string
+  DescriptionTr     map[string]string
+
+  Version           uint64
+  TypeId            uint32
   
-  Version      uint64
-  TypeId       uint32
+  DurationHours     uint32
 
-  UserInputs   []ContractUserInput
+  Actions           []ContractAction
 
-  Roles        []string
+  UserForms         []UserForm
+
+  Roles             []ContractRole
   
-  Signs        map[string]ContractSide
+  Signs             map[string]ContractSide
 
-  PrevHash     []byte
-  PrevCID      string
-  Action       string
-  
-  CreatedAt    time.Time
-  UpdatedAt    time.Time
-  DeletedAt   *time.Time
-}
-
-type ContractState struct {
-  Id           string
-  Description  string
-  
-  Version      uint64
-  TypeId       uint32
-
-  Signs        map[string]ContractSide
-
-  PrevHash     []byte
-  PrevCID      string
-  Action       string
+  PrevHash          []byte
+  PrevCID           string
   
   CreatedAt    time.Time
-  UpdatedAt    time.Time
-  DeletedAt   *time.Time
 }
 
 func NewContract() *Contract {
@@ -94,7 +80,7 @@ func (c *Contract) NewID() {
 
 func (c *Contract) Hash() []byte {
   sha_512 := sha512.New()
-  sha_512.Write([]byte(c.Id + c.Description + c.PrevCID + c.Action + c.CreatedAt.String() + c.UpdatedAt.String()))
+  sha_512.Write([]byte(c.Id + c.Description + c.PrevCID + c.CreatedAt.String()))
   sha_512.Write(utils.UInt64ToBytes(c.Version))
   sha_512.Write(utils.UInt32ToBytes(c.TypeId))
   sha_512.Write(c.PrevHash)

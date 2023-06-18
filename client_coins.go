@@ -26,7 +26,7 @@ func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
   return result, true
 }
 
-func (c *ClientECOS) GetWalletTX(w wallets.IWallet) (*objects.WalletTxs, bool) {
+func (c *ClientECOS) GetWalletTX(w wallets.IWallet) (*objects.WalletTransactions, bool) {
   msg := messages.NewGetBalanceReq()
   oks := msg.Init(w, hdwallet.ECOS)
   if !oks {
@@ -37,7 +37,7 @@ func (c *ClientECOS) GetWalletTX(w wallets.IWallet) (*objects.WalletTxs, bool) {
   if !ok {
     return nil, false
   }
-  result := objects.NewWalletTxEmpty()
+  result := objects.NewWalletTransactionsEmpty()
   if !result.Deserialize(answer) {
     return nil, false
   }
