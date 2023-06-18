@@ -115,6 +115,47 @@ func (wtxb *WalletTransactions) RecalcBalance(startBalance uint64) {
   } 
 }
 
+func (wtxb *WalletTransactions) FindCoins(value uint64) []TXInput {
+  result := make([]TXInput, 0)
+  cntTx := len(wtxb.Transactions)
+  balance := wtxb.Transactions[cntTx - 1].Balance
+  if balance < value {
+    return result
+  }
+  inputVal := uint64(0)
+  needV := value
+  for ik := cntTx - 1; ik > 0; ik-- {
+    if wtxb.Transactions[ik].DirectionCoins == DirectionInput || wtxb.Transactions[ik].DirectionCoins == DirectionGen {
+      inputVal += wtxb.Transactions[ik].Amount
+      if inputVal >= balance {
+        dt := inputVal - balance
+        if wtxb.Transactions[ik].Amount - dt > value {
+          result = append(result, TXInput{Txid: wtxb.Transactions[ik].IdTx, Address: wtxb.Address, Vout: value})
+          break
+        }
+        needV -= wtxb.Transactions[ik].Amount - dt
+        result = append(result, TXInput{Txid: wtxb.Transactions[ik].IdTx, Address: wtxb.Address, Vout: wtxb.Transactions[ik].Amount - dt})
+        for i := ik + 1; i < cntTx; i++ {
+          if wtxb.Transactions[i].DirectionCoins == DirectionInput || wtxb.Transactions[i].DirectionCoins == DirectionGen {
+            if needV > wtxb.Transactions[i].Amount {
+              result = append(result, TXInput{Txid: wtxb.Transactions[i].IdTx, Address: wtxb.Address, Vout: wtxb.Transactions[i].Amount})
+              needV -= wtxb.Transactions[i].Amount
+            } else {
+              result = append(result, TXInput{Txid: wtxb.Transactions[i].IdTx, Address: wtxb.Address, Vout: needV})
+              needV = 0
+            }
+            if needV == 0 {
+              break
+            }
+          }
+        }
+        break
+      }
+    }
+  }
+  return result
+}
+
 func (wtxb *WalletTransactions) Serialize() ([]byte, bool) {
 	var result bytes.Buffer
 	encoder := gob.NewEncoder(&result)
