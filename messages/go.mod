@@ -7,7 +7,7 @@ replace github.com/Lunkov/go-ecos-client/utils => ./../utils
 replace github.com/Lunkov/go-ecos-client/objects => ./../objects
 
 require (
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230615144343-51b1169b8214
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230618215854-4a5e8be76f39
 	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230615144343-51b1169b8214
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374

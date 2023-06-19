@@ -100,24 +100,40 @@ func (wtxb *WalletTransactions) GetStat() (uint64, uint64) {
   return totalReceived, totalSent
 }
 
-func (wtxb *WalletTransactions) RecalcBalance(startBalance uint64) {
+func (wtxb *WalletTransactions) RecalcBalance(startBalance uint64) (uint64, uint64, uint64) {
   wtxb.SortByDate()
   
   balance := startBalance
+  totalReceived := uint64(0)
+  totalSent := uint64(0)
   for k, v := range wtxb.Transactions {
     if v.DirectionCoins == DirectionInput || v.DirectionCoins == DirectionGen {
       balance += v.Amount
+      totalReceived += v.Amount
     }
     if v.DirectionCoins == DirectionOutput {
       balance -= v.Amount
+      totalSent += v.Amount
     }
     wtxb.Transactions[k].Balance = balance
-  } 
+  }
+  return balance, totalReceived, totalSent
+}
+
+func (wtxb *WalletTransactions) GetBalance() uint64 {
+  cntTx := len(wtxb.Transactions)
+  if cntTx < 1 {
+    return 0
+  }
+  return wtxb.Transactions[cntTx - 1].Balance
 }
 
 func (wtxb *WalletTransactions) FindCoins(value uint64) []TXInput {
   result := make([]TXInput, 0)
   cntTx := len(wtxb.Transactions)
+  if cntTx < 1 {
+    return result
+  }
   balance := wtxb.Transactions[cntTx - 1].Balance
   if balance < value {
     return result
