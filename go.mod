@@ -9,13 +9,13 @@ replace github.com/Lunkov/go-ecos-client/utils => ./utils
 replace github.com/Lunkov/go-ecos-client/objects => ./objects
 
 require (
-	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230618215854-4a5e8be76f39
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230618215854-4a5e8be76f39
+	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230619132444-32ea75ff59d5
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230619132444-32ea75ff59d5
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374
 	github.com/golang/glog v1.1.1
 	github.com/libp2p/go-libp2p v0.28.0
-	github.com/libp2p/go-libp2p-kad-dht v0.24.1
+	github.com/libp2p/go-libp2p-kad-dht v0.24.2
 	github.com/libp2p/go-libp2p-pubsub v0.9.3
 	github.com/multiformats/go-multiaddr v0.9.0
 	github.com/stretchr/testify v1.8.4
@@ -23,7 +23,7 @@ require (
 
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230615144343-51b1169b8214 // indirect
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230619132444-32ea75ff59d5 // indirect
 	github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29 // indirect
 	github.com/benbjohnson/clock v1.3.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect

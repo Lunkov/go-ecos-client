@@ -18,6 +18,10 @@ const (
 
   ContractPublic  = 2000
   ContractPrivate = 4000
+  
+  ContractTypePublicOffer  = 1
+  ContractTypePrivateOffer = 2
+  ContractTypePrivate      = 3
 )
 
 type ContractSide struct {
@@ -56,6 +60,7 @@ type Contract struct {
   DurationHours     uint32
 
   Actions           []ContractAction
+  Payments          []ContractPayment
 
   UserForms         []UserForm
 
@@ -66,11 +71,17 @@ type Contract struct {
   PrevHash          []byte
   PrevCID           string
   
-  CreatedAt    time.Time
+  CreatedAt         time.Time
 }
 
 func NewContract() *Contract {
-  return &Contract{}
+  return &Contract{
+                   Actions: make([]ContractAction, 0),
+                   UserForms: make([]UserForm, 0),
+                   Payments: make([]ContractPayment, 0),
+                   Roles: make([]ContractRole, 0),
+                   Signs: make(map[string]ContractSide),
+                   }
 }
 
 func (c *Contract) NewID() {
