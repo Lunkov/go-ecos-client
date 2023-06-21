@@ -4,10 +4,16 @@ import (
 )
 
 type ContractPayment struct {
-  FinishActionId  string
-  
-  AddresFrom      string
-  AddresTo        string
+  Title               string
+  TitleTr             map[string]string
 
-  Costs           uint64
+  Description         string
+  DescriptionTr       map[string]string
+
+  FinishActionId      string
+  
+  RoleAddresFrom      string
+  RoleAddresTo        string
+
+  Amount              uint64
 }
