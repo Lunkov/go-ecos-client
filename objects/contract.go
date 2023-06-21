@@ -33,8 +33,13 @@ type ContractSide struct {
 }
 
 type ContractRole struct {
-  RoleId       string
-  Title        string
+  RoleId            string
+
+  Title             string
+  TitleTr           map[string]string
+
+  Description       string
+  DescriptionTr     map[string]string
 }
 
 /*

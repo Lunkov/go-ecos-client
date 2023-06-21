@@ -7,8 +7,8 @@ replace github.com/Lunkov/go-ecos-client/utils => ./../utils
 replace github.com/Lunkov/go-ecos-client/objects => ./../objects
 
 require (
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230621080013-65a9a493cc31
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230621080013-65a9a493cc31
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230621175511-3ed08e61dcdb
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230621175511-3ed08e61dcdb
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374
 	github.com/stretchr/testify v1.8.2
