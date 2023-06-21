@@ -51,6 +51,7 @@ type ContractPayment struct {
 
 type Contract struct {
   Id                string
+
   Description       string
   DescriptionTr     map[string]string
 

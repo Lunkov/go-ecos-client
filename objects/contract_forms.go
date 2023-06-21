@@ -30,6 +30,13 @@ type UserFormGroup struct {
 
 type UserForm struct {
   FormId       string
+
+  Title        string
+  TitleTr      map[string]string
+
+  Description       string
+  DescriptionTr     map[string]string
+
   Groups       []UserFormGroup
   Inputs       []UserFormInput
 }
