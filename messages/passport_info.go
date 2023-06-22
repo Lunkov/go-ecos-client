@@ -2,6 +2,7 @@ package messages
 
 import (
   "bytes"
+  "strings"
   "encoding/gob"
   "encoding/json"
   
@@ -19,6 +20,22 @@ func NewPassportInfo() *PassportInfo {
   return &PassportInfo{}
 }
 
+func (p *PassportInfo) GetCID() (string, bool) {
+  obj := strings.Split(p.CID, ":")
+  if len(obj) < 2 {
+    return "", false
+  }
+  return obj[len(obj) - 1], true
+}
+
+func (p *PassportInfo) GetType() (string, bool) {
+  obj := strings.Split(p.CID, ":")
+  if len(obj) < 1 {
+    return "", false
+  }
+  return obj[0], true
+}
+            
 func (p *PassportInfo) Serialize() ([]byte, bool) {
 	var result bytes.Buffer
 	encoder := gob.NewEncoder(&result)

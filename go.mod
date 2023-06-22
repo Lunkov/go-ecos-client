@@ -9,8 +9,8 @@ replace github.com/Lunkov/go-ecos-client/utils => ./utils
 replace github.com/Lunkov/go-ecos-client/objects => ./objects
 
 require (
-	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230621175511-3ed08e61dcdb
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230621175511-3ed08e61dcdb
+	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230621182952-4bf2f4556f7c
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230621182952-4bf2f4556f7c
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374
 	github.com/golang/glog v1.1.1
