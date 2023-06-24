@@ -10,7 +10,7 @@ replace github.com/Lunkov/go-ecos-client/objects => ./objects
 
 require (
 	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230621182952-4bf2f4556f7c
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230621182952-4bf2f4556f7c
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230622084428-ec7ad29a8cbc
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374
 	github.com/golang/glog v1.1.1
@@ -23,7 +23,7 @@ require (
 
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230621175511-3ed08e61dcdb // indirect
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230622084428-ec7ad29a8cbc // indirect
 	github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29 // indirect
 	github.com/benbjohnson/clock v1.3.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect

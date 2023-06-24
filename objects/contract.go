@@ -120,3 +120,27 @@ func (c *Contract) Deserialize(msg []byte) bool {
   }
   return true
 }
+
+func (c *Contract) GetRolesList() []string {
+  result := make([]string, 0)
+  for _, role := range c.Roles {
+    result = append(result, role.RoleId)
+  }
+  return result
+}
+
+func (c *Contract) GetActionsList() []string {
+  result := make([]string, 0)
+  for _, action := range c.Actions {
+    result = append(result, action.ActionId)
+  }
+  return result
+}
+
+func (c *Contract) GetFormsList() []string {
+  result := make([]string, 0)
+  for _, form := range c.UserForms {
+    result = append(result, form.FormId)
+  }
+  return result
+}

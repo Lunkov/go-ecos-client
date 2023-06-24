@@ -10,7 +10,9 @@ const (
   FormInputTypePassword2 = 12
   FormInputTypeText      = 15
   FormInputTypeNumber    = 20
-  FormInputTypeFile      = 100
+  FormInputTypeCheckBox  = 30
+  FormInputTypeFileImage = 100
+  FormInputTypeFileDoc   = 101
 )
 
 type UserFormInput struct {
@@ -29,10 +31,12 @@ type UserFormGroup struct {
 }
 
 type UserForm struct {
-  FormId       string
+  FormId            string
 
-  Title        string
-  TitleTr      map[string]string
+  ParentFormId      string
+
+  Title             string
+  TitleTr           map[string]string
 
   Description       string
   DescriptionTr     map[string]string
