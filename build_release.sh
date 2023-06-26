@@ -12,11 +12,11 @@ cd ..
 cd ./messages
 
 go get -d -u
-go get -t github.com/Lunkov/go-ecos-client/objects
+go get -t github.com/Lunkov/go-ecos-client/messages
 go test
 
 cd ..
 
 go get -d -u
-go get -t github.com/Lunkov/go-ecos-client/objects
+go get -t github.com/Lunkov/go-ecos-client
 go test

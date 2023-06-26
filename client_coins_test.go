@@ -8,7 +8,7 @@ import (
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
   
-  // "github.com/Lunkov/go-ecos-client/messages"
+  "github.com/Lunkov/go-ecos-client/objects"
 )
 
 func TestCoins(t *testing.T) {
@@ -42,7 +42,7 @@ func TestCoins(t *testing.T) {
     assert.Equal(t, "0x5f7ae710cED588D42E863E9b55C7c51e56869963", balance.Address)
     assert.Equal(t, hdwallet.ECOS,            balance.Coin)
     assert.Equal(t, uint64(0x2386f26fc10000), balance.Balance)
-    assert.Equal(t, uint64(0), balance.UnconfirmedBalance)
+    assert.Equal(t, uint64(0x2386f26fc10000), balance.UnconfirmedBalance)
     assert.Equal(t, uint64(0x2386f26fc10000), balance.TotalReceived)
     assert.Equal(t, uint64(0x00), balance.TotalSent)
   }
@@ -62,15 +62,18 @@ func TestCoins(t *testing.T) {
   // NewTransaction(w wallets.IWallet, addressTo string, coin uint32, value uint64)
   newTx, okTx := client.TransactionNew(w, "0xe414f133160Eced6e00CF686f97c19809803EF04", hdwallet.ECOS, 1000)
 	assert.True(t, okTx)
-  /*if newTx != nil {
-    assert.Equal(t, "0x5f7ae710cED588D42E863E9b55C7c51e56869963", newTx.AddressFrom)
-    assert.Equal(t, "0x5f7ae710cED588D42E863E9b55C7c51e56869963", newTx.AddressTo)
-    assert.Equal(t, hdwallet.ECOS,    newTx.CoinFrom)
-    assert.Equal(t, hdwallet.ECOS,    newTx.CoinTo)
-    assert.Equal(t, 0x2386f26fc10000, newTx.ValueFrom)
-    assert.Equal(t, 0x2386f26fc10000, newTx.ValueTo)
-    assert.Equal(t, 0x2386f26fc10000, newTx.IdStatus)
-  }*/
+  if newTx != nil {
+    assert.Equal(t, "0x5f7ae710cED588D42E863E9b55C7c51e56869963", newTx.Vin)
+    assert.Equal(t, []objects.TXOutput([]objects.TXOutput{objects.TXOutput{Address:"0xe414f133160Eced6e00CF686f97c19809803EF04", CIDNFT:"", Value:0x3e8},
+                                      objects.TXOutput{Address:"0xe414f133160Eced6e00CF686f97c19809803EF04", CIDNFT:"", Value:0x5},
+                                      objects.TXOutput{Address:"0xfa242EE498857ec3C06a2E5E9e37b090807B467a", CIDNFT:"", Value:0x2}}),
+                                      newTx.Vout)
+    //assert.Equal(t, hdwallet.ECOS,    newTx.CoinFrom)
+    //assert.Equal(t, hdwallet.ECOS,    newTx.CoinTo)
+    //assert.Equal(t, 0x2386f26fc10000, newTx.ValueFrom)
+    //assert.Equal(t, 0x2386f26fc10000, newTx.ValueTo)
+    //assert.Equal(t, 0x2386f26fc10000, newTx.IdStatus)
+  }
   
   newTx, okTx = client.TransactionCommit(w, newTx)
 	assert.True(t, okTx)

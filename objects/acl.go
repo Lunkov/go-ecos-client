@@ -5,7 +5,6 @@ import (
   "time"
   "strings"
   "bytes"
-  "io/ioutil"
   "encoding/gob"
   "encoding/hex"
   "github.com/google/uuid"
@@ -96,7 +95,7 @@ func (f *StorageFiles) CreateFile(pubKeyId string, data []byte) (string, bool) {
   encoder := gob.NewEncoder(&buff)
   encoder.Encode(acl)
   aclfilename := f.GetACLFileName(fileId, f.masterKey, false)
-  err := ioutil.WriteFile(aclfilename, buff.Bytes(), 0640) // just pass the file name
+  err := os.WriteFile(aclfilename, buff.Bytes(), 0640) // just pass the file name
   if err != nil {
     glog.Errorf("ERR: SaveKey Write(%s): %v", aclfilename, err)
     return "", false
@@ -136,7 +135,7 @@ func (f *StorageFiles) AddShareFile(fileId string, userKey cipher.IACipher) (boo
   encoder := gob.NewEncoder(&buff)
   encoder.Encode(userACL)
   aclfilename := f.GetACLFileName(fileId, userKey, false)
-  err := ioutil.WriteFile(acluserfilename, buff.Bytes(), 0640) // just pass the file name
+  err := os.WriteFile(acluserfilename, buff.Bytes(), 0640) // just pass the file name
   if err != nil {
     glog.Errorf("ERR: SaveACL Write(%s): %v", aclfilename, err)
     return false
@@ -161,7 +160,7 @@ func (f *StorageFiles) LoadACL(fileId string) ([]byte, bool) {
 
   // Read ACL master file
   var masterACL ACLStorage
-  data, err := ioutil.ReadFile(aclmasterfilename) 
+  data, err := os.ReadFile(aclmasterfilename) 
   if err != nil {
     glog.Errorf("ERR: LoadMasterACL (%s) err='%v'", aclmasterfilename, err)
     return nil, false

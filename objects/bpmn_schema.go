@@ -2,7 +2,7 @@ package objects
 
 import (
   "fmt"
-  "io/ioutil"
+  "os"
   "encoding/xml"
 )
 
@@ -219,7 +219,7 @@ func (b *Schema) isFinish(SequenceFlow string) bool {
 }
 
 func (b *Schema) LoadXML(filename string) (bool, string) {
-  xmlFile, err := ioutil.ReadFile(filename)
+  xmlFile, err := os.ReadFile(filename)
   if err != nil {
     return false, fmt.Sprintf("ERR: ReadFile(%s). %v", filename, err)
   }

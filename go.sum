@@ -12,10 +12,10 @@ github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxK
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3 h1:eXXKYmulSUPW3TjbFaUuMxyaRkOwx6eTjONxwgTTRK4=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3/go.mod h1:hIKtgJbW/waGlmVHt4bhhMaYFo5c8m6ZxRWbGfxXlAc=
-github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29 h1:Ss1s5rYXUt6XpU7HtvdBGy3CJIM7yPqMPyDRNw5OG0M=
-github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29/go.mod h1:Ck4M+EAHKq9/elooZ88cNUPTLI05cg0YRlb0gnaQyLU=
-github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374 h1:kkuXgV64mpgxYhTkITfGRgTNFNfr91Ut5Q22E3u94MI=
-github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374/go.mod h1:7qHIk7LJcm3Ez9IsLd5n/fqXne/4clTtZWpykxugEi0=
+github.com/Lunkov/lib-cipher v0.0.0-20230625093515-60c272d3c026 h1:L5GeMKq/Ua90YFI/XOlmfObxOnbc7p64bFb/LFioCx8=
+github.com/Lunkov/lib-cipher v0.0.0-20230625093515-60c272d3c026/go.mod h1:Ck4M+EAHKq9/elooZ88cNUPTLI05cg0YRlb0gnaQyLU=
+github.com/Lunkov/lib-wallets v0.0.0-20230625094503-d3169d22d389 h1:AGCzerTnN7fCQoUp04hM31lwBld7pI8zpmhJDWwIjMM=
+github.com/Lunkov/lib-wallets v0.0.0-20230625094503-d3169d22d389/go.mod h1:7qHIk7LJcm3Ez9IsLd5n/fqXne/4clTtZWpykxugEi0=
 github.com/aead/siphash v1.0.1/go.mod h1:Nywa3cDsYNNK3gaciGTWPwHt0wlpNV15vwmswBAUSII=
 github.com/anmitsu/go-shlex v0.0.0-20161002113705-648efa622239/go.mod h1:2FmKhYUyUczH0OGQWaF5ceTx0UBShxjsH6f8oGKYe2c=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=

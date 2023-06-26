@@ -6,7 +6,7 @@ import (
   "errors"
   "net/http"
   "strings"
-  "io/ioutil"
+  "io"
   
   "github.com/golang/glog"
 )
@@ -55,7 +55,7 @@ func (c *ClientECOS) httpReq(protocol string, url string, request string) ([]byt
   }
   defer resp.Body.Close()
   
-  answer, errbody := ioutil.ReadAll(resp.Body)
+  answer, errbody := io.ReadAll(resp.Body)
   if errbody != nil {
     if glog.V(2) {
       glog.Infof("ERR: request.read(%s): %v", url, errbody)

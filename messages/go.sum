@@ -2,10 +2,10 @@ github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxK
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3 h1:eXXKYmulSUPW3TjbFaUuMxyaRkOwx6eTjONxwgTTRK4=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3/go.mod h1:hIKtgJbW/waGlmVHt4bhhMaYFo5c8m6ZxRWbGfxXlAc=
-github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29 h1:Ss1s5rYXUt6XpU7HtvdBGy3CJIM7yPqMPyDRNw5OG0M=
-github.com/Lunkov/lib-cipher v0.0.0-20230420102046-39f2f16e9d29/go.mod h1:Ck4M+EAHKq9/elooZ88cNUPTLI05cg0YRlb0gnaQyLU=
-github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374 h1:kkuXgV64mpgxYhTkITfGRgTNFNfr91Ut5Q22E3u94MI=
-github.com/Lunkov/lib-wallets v0.0.0-20230608120332-879a2f42a374/go.mod h1:7qHIk7LJcm3Ez9IsLd5n/fqXne/4clTtZWpykxugEi0=
+github.com/Lunkov/lib-cipher v0.0.0-20230625093515-60c272d3c026 h1:L5GeMKq/Ua90YFI/XOlmfObxOnbc7p64bFb/LFioCx8=
+github.com/Lunkov/lib-cipher v0.0.0-20230625093515-60c272d3c026/go.mod h1:Ck4M+EAHKq9/elooZ88cNUPTLI05cg0YRlb0gnaQyLU=
+github.com/Lunkov/lib-wallets v0.0.0-20230625094503-d3169d22d389 h1:AGCzerTnN7fCQoUp04hM31lwBld7pI8zpmhJDWwIjMM=
+github.com/Lunkov/lib-wallets v0.0.0-20230625094503-d3169d22d389/go.mod h1:7qHIk7LJcm3Ez9IsLd5n/fqXne/4clTtZWpykxugEi0=
 github.com/aead/siphash v1.0.1/go.mod h1:Nywa3cDsYNNK3gaciGTWPwHt0wlpNV15vwmswBAUSII=
 github.com/btcsuite/btcd v0.20.1-beta h1:Ik4hyJqN8Jfyv3S4AGBOmyouMsYE3EdYODkMbQjwPGw=
 github.com/btcsuite/btcd v0.20.1-beta/go.mod h1:wVuoA8VJLEcwgqHBwHmzLRazpKxTv13Px/pDuV7OomQ=
@@ -24,7 +24,6 @@ github.com/btcsuite/winsvc v1.0.0/go.mod h1:jsenWakMcC0zFBFurPLEAyrnc/teJEM1O46f
 github.com/cpacia/bchutil v0.0.0-20181003130114-b126f6a35b6c h1:4e6Zsb6LFd3kadoMiut2zcd3hCb4zywpJnQa8+NV2Cs=
 github.com/cpacia/bchutil v0.0.0-20181003130114-b126f6a35b6c/go.mod h1:k5D13LCXSsMrQyfdW0yGYs4GWUvirqoxHht8qwtqyRY=
 github.com/davecgh/go-spew v0.0.0-20171005155431-ecdeabc65495/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/decred/dcrd/crypto/blake256 v1.0.0/go.mod h1:sQl2p6Y26YV+ZOcSTP6thNdn47hh8kt6rqSlvmrXFAc=
@@ -49,13 +48,8 @@ github.com/onsi/ginkgo v1.7.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+W
 github.com/onsi/gomega v1.4.3/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1CpauHY=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
-github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
-github.com/stretchr/objx v0.5.0/go.mod h1:Yh+to48EsGEfYuaHDzXPcE3xhTkx73EhmCGUpEOglKo=
-github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
-github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
-github.com/stretchr/testify v1.8.2 h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ8=
-github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
+github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
+github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/tyler-smith/go-bip39 v1.1.0 h1:5eUemwrMargf3BSLRRCalXT93Ns6pQJIjYQN2nyfOP8=
 github.com/tyler-smith/go-bip39 v1.1.0/go.mod h1:gUYDtqQw1JS3ZJ8UWVcGTGqqr6YIN3CWg+kkNaLt55U=
 golang.org/x/crypto v0.0.0-20170930174604-9419663f5a44/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
@@ -77,6 +71,5 @@ gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8
 gopkg.in/fsnotify.v1 v1.4.7/go.mod h1:Tz8NjZHkW78fSQdbUxIjBTcgA1z1m8ZHf0WmKUhAMys=
 gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7/go.mod h1:dt/ZhP58zS4L8KSrWDmTeBkI65Dw0HsyUHuEVlX15mw=
 gopkg.in/yaml.v2 v2.2.1/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
-gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
 gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

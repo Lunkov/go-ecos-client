@@ -140,7 +140,7 @@ func (wtxb *WalletTransactions) FindCoins(value uint64) []TXInput {
   }
   inputVal := uint64(0)
   needV := value
-  for ik := cntTx - 1; ik > 0; ik-- {
+  for ik := cntTx - 1; ik >= 0; ik-- {
     if wtxb.Transactions[ik].DirectionCoins == DirectionInput || wtxb.Transactions[ik].DirectionCoins == DirectionGen {
       inputVal += wtxb.Transactions[ik].Amount
       if inputVal >= balance {
