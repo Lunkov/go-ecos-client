@@ -7,11 +7,11 @@ replace github.com/Lunkov/go-ecos-client/utils => ./../utils
 require (
 	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230624064231-4cb5b646b53a
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
-	github.com/Lunkov/lib-cipher v0.0.0-20230625093515-60c272d3c026
-	github.com/Lunkov/lib-wallets v0.0.0-20230625094503-d3169d22d389
+	github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180
+	github.com/Lunkov/lib-wallets v0.0.0-20230606135804-f0455259642c
 	github.com/golang/glog v1.1.1
 	github.com/google/uuid v1.3.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.8.2
 )
 
 require (

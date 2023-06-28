@@ -10,13 +10,13 @@ require (
 	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230624064231-4cb5b646b53a
 	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230624064231-4cb5b646b53a
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
-	github.com/Lunkov/lib-wallets v0.0.0-20230625094503-d3169d22d389
-	github.com/stretchr/testify v1.8.4
+	github.com/Lunkov/lib-wallets v0.0.0-20230606135804-f0455259642c
+	github.com/stretchr/testify v1.8.2
 )
 
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
-	github.com/Lunkov/lib-cipher v0.0.0-20230625093515-60c272d3c026 // indirect
+	github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
 	github.com/btcsuite/btclog v0.0.0-20170628155309-84c8d2346e9f // indirect

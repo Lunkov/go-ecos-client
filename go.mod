@@ -12,7 +12,7 @@ require (
 	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230624064231-4cb5b646b53a
 	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230624064231-4cb5b646b53a
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
-	github.com/Lunkov/lib-wallets v0.0.0-20230625094503-d3169d22d389
+	github.com/Lunkov/lib-wallets v0.0.0-20230606135804-f0455259642c
 	github.com/golang/glog v1.1.1
 	github.com/libp2p/go-libp2p v0.28.1
 	github.com/libp2p/go-libp2p-kad-dht v0.24.2
@@ -24,7 +24,7 @@ require (
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
 	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230624064231-4cb5b646b53a // indirect
-	github.com/Lunkov/lib-cipher v0.0.0-20230625093515-60c272d3c026 // indirect
+	github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180 // indirect
 	github.com/benbjohnson/clock v1.3.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
