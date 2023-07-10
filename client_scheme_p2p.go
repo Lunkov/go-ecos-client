@@ -31,6 +31,9 @@ type P2PConnect struct {
   gossipSub    *pubsub.PubSub 
   pubTopics     map[string]*pubsub.Topic
   subTopics     map[string]*pubsub.Topic
+  
+  mDNSService
+  mDNSServer
 }
 
 type addrList []multiaddr.Multiaddr
@@ -134,8 +137,8 @@ func (p2p *P2PConnect) NewHost(port int, bootstrapPeers *addrList, privKey crypt
 func (p2p *P2PConnect) NewMDNS(discoveryServiceTag string, commonName string) bool {
   // setup mDNS discovery to find local peers
   glog.Infof("INFO: NewMdnsService: %s", discoveryServiceTag + commonName)
-  s := mdns.NewMdnsService(p2p.host, discoveryServiceTag + commonName, &discoveryNotifee{h: p2p.host})
-  err := s.Start()
+  p2p.mDNSService = mdns.NewMdnsService(p2p.host, discoveryServiceTag + commonName, &discoveryNotifee{h: p2p.host})
+  err := p2p.mDNSService.Start()
 	if err != nil {
     glog.Errorf("ERR: libp2p.NewMdnsService: %v", err)
 	}

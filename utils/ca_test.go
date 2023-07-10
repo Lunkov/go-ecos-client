@@ -33,5 +33,21 @@ func TestCA(t *testing.T) {
   ok = ca2.Verify([]byte("1234567890"), sig)
   assert.True(t, ok)
   
+  
+  ca1sub := NewCertInfo()
+  ca1sub.Bits = 2048
+  ca1sub.EMail = "user@myorg.ru"
+  
+  buf1sub, oks := ca.CreateSubCert(ca1sub)
+  assert.True(t, oks)
+  sig, ok = ca1sub.Sign([]byte("1234567890"))
+
+  ca2sub := NewCertInfo()
+  
+  ok = ca2sub.DeserializeCert(buf1sub)
+  assert.True(t, ok)
+  ok = ca2sub.Verify([]byte("1234567890"), sig)
+  assert.True(t, ok)
+
 }
 

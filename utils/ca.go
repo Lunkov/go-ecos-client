@@ -3,6 +3,7 @@ package utils
 import (
   "time"
   "bytes"
+  "strings"
   "crypto"
   "crypto/rand"
   "crypto/rsa"
@@ -10,6 +11,7 @@ import (
   "crypto/sha512"
   "crypto/x509"
   "crypto/x509/pkix"
+  "encoding/asn1"
   
   "encoding/pem"
   
@@ -35,6 +37,8 @@ type CertInfo struct {
   Locality        string        `yaml:"Locality,omitempty"`
   StreetAddress   string        `yaml:"StreetAddress,omitempty"`
   PostalCode      string        `yaml:"PostalCode,omitempty"`
+  OrgUnit         string        `yaml:"OrgUnit,omitempty"`
+  EMail           string        `yaml:"EMail,omitempty"`
 
   Bits            int           `yaml:"Bits,omitempty"`
   
@@ -42,11 +46,13 @@ type CertInfo struct {
   Cert           *x509.Certificate
 }
 
+var oidEmailAddress = asn1.ObjectIdentifier{1, 2, 840, 113549, 1, 9, 1}
+
 func NewCertInfo() *CertInfo {
   return &CertInfo{}
 }
 
-func (cai *CertInfo) NewInfo() *x509.Certificate {
+func (cai *CertInfo) NewInfo(isCA bool) *x509.Certificate {
   return &x509.Certificate{
     SerialNumber: big.NewInt(2023),
     Subject: pkix.Name{
@@ -57,9 +63,10 @@ func (cai *CertInfo) NewInfo() *x509.Certificate {
       StreetAddress: []string{cai.StreetAddress},
       PostalCode:    []string{cai.PostalCode},
     },
+    EmailAddresses:      []string{cai.EMail},
     NotBefore:             time.Now(),
     NotAfter:              time.Now().AddDate(10, 0, 0),
-    IsCA:                  true,
+    IsCA:                  isCA,
     ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
     KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
     BasicConstraintsValid: true,
@@ -67,7 +74,7 @@ func (cai *CertInfo) NewInfo() *x509.Certificate {
 }
 
 func (cai *CertInfo) СreateNewCA(fileNameCert string, fileNamePriv string, password string) (bool) {
-  cai.Cert = cai.NewInfo()
+  cai.Cert = cai.NewInfo(true)
 
   caPrivKey, errc := rsa.GenerateKey(rand.Reader, cai.Bits)
   if errc != nil {
@@ -231,4 +238,60 @@ func (cai *CertInfo) VerifyFile(filename string) bool {
     return false
   }
   return cai.Verify(content, sign)
+}
+
+
+func (cai *CertInfo) CreateSubCert(subCert *CertInfo) ([]byte, bool) {
+  certPrivKey, errg := rsa.GenerateKey(rand.Reader, subCert.Bits)
+  if errg != nil {
+    return nil, false
+  }
+  
+  cn := strings.Split(subCert.EMail, "@")
+  if len(cn) != 2 {
+    return nil, false
+  }
+
+  subCert.Cert = &x509.Certificate{
+    SerialNumber: big.NewInt(1658),
+    Subject: pkix.Name{
+      CommonName:         cn[0],
+      Country:            []string{subCert.Country},
+      Province:           []string{""},
+      Locality:           []string{subCert.Locality},
+      Organization:       []string{cai.Organization},
+      OrganizationalUnit: []string{subCert.OrgUnit},
+      ExtraNames: []pkix.AttributeTypeAndValue{
+            {
+                Type:  oidEmailAddress, 
+                Value: asn1.RawValue{
+                    Tag:   asn1.TagIA5String, 
+                    Bytes: []byte(subCert.EMail),
+                },
+            },
+        },
+    },
+    IsCA:         false,
+    EmailAddresses: []string{subCert.EMail},
+    //IPAddresses:  []net.IP{net.IPv4(127, 0, 0, 1), net.IPv6loopback},
+    NotBefore:    time.Now(),
+    NotAfter:     time.Now().AddDate(10, 0, 0),
+    SubjectKeyId: []byte{1, 2, 3, 4, 6},
+    ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+    KeyUsage:     x509.KeyUsageDigitalSignature,
+  }
+  subCert.PrivateKey = certPrivKey
+  
+  certBytes, err := x509.CreateCertificate(rand.Reader, subCert.Cert, cai.Cert, &subCert.PrivateKey.PublicKey, cai.PrivateKey)
+  if err != nil {
+    return nil, false
+  }
+
+  caPEM := new(bytes.Buffer)
+  pem.Encode(caPEM, &pem.Block{
+    Type:  "CERTIFICATE",
+    Bytes: certBytes,
+  })
+
+  return caPEM.Bytes(), true
 }
