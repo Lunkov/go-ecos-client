@@ -12,9 +12,8 @@ import (
   "crypto/x509"
   "crypto/x509/pkix"
   "encoding/asn1"
-  
   "encoding/pem"
-  
+  "gopkg.in/yaml.v3"
   "os"
   "math/big"
 )
@@ -106,6 +105,18 @@ func (cai *CertInfo) СreateNewCA(fileNameCert string, fileNamePriv string, pass
   }
 
   err = os.WriteFile(fileNamePriv, pem.EncodeToMemory(block), 0640) 
+  if err != nil {
+    return false
+  }
+  return true
+}
+
+func (cai *CertInfo) LoadConfig(filename string) bool {
+  out, err := os.ReadFile(filename) 
+  if err != nil {
+    return false
+  }
+  err = yaml.Unmarshal(out, &cai)
   if err != nil {
     return false
   }
