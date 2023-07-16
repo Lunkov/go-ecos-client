@@ -7,16 +7,16 @@ replace github.com/Lunkov/go-ecos-client/utils => ./../utils
 replace github.com/Lunkov/go-ecos-client/objects => ./../objects
 
 require (
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230624064231-4cb5b646b53a
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230624064231-4cb5b646b53a
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230710170120-42b8a284a383
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230710170120-42b8a284a383
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
-	github.com/Lunkov/lib-wallets v0.0.0-20230606135804-f0455259642c
+	github.com/Lunkov/lib-wallets v0.0.0-20230627073918-7d9a109b6bbf
 	github.com/stretchr/testify v1.8.2
 )
 
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
-	github.com/Lunkov/lib-cipher v0.0.0-20230324195628-77d817f26180 // indirect
+	github.com/Lunkov/lib-cipher v0.0.0-20230705134021-80f6c1e910e1 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
 	github.com/btcsuite/btclog v0.0.0-20170628155309-84c8d2346e9f // indirect

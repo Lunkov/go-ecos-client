@@ -30,6 +30,7 @@ openssl x509 -req -in localhost.csr -CA rootCA.crt -CAkey rootCA.key -CAcreatese
 */
 
 type CertInfo struct {
+  DisplayName     string        `yaml:"DisplayName,omitempty"`
   CommonName      string        `yaml:"CommonName,omitempty"`
   Organization    string        `yaml:"Organization,omitempty"`
   Country         string        `yaml:"Country,omitempty"`
@@ -46,6 +47,7 @@ type CertInfo struct {
 }
 
 var oidEmailAddress = asn1.ObjectIdentifier{1, 2, 840, 113549, 1, 9, 1}
+var oidDisplayName = asn1.ObjectIdentifier{2, 16, 76, 1, 3, 3}
 
 func NewCertInfo() *CertInfo {
   return &CertInfo{}
@@ -278,6 +280,13 @@ func (cai *CertInfo) CreateSubCert(subCert *CertInfo) ([]byte, bool) {
                 Value: asn1.RawValue{
                     Tag:   asn1.TagIA5String, 
                     Bytes: []byte(subCert.EMail),
+                },
+            },
+            {
+                Type:  oidDisplayName, 
+                Value: asn1.RawValue{
+                    Tag:   asn1.TagIA5String, 
+                    Bytes: []byte(subCert.DisplayName),
                 },
             },
         },
