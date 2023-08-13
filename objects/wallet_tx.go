@@ -15,17 +15,19 @@ const (
 )
 
 type WalletTransaction struct {
-  IdTx          []byte
-  CIDBlock        string
-  Timestamp       int64
+  IdTx                []byte
+  CIDBlock             string
+  Timestamp            int64
 
-  DirectionCoins  uint32  
-  Amount          uint64
+  ContragentAddress   []string
 
-  DirectionNFT    uint32  
-  CIDNFT          string
+  DirectionCoins       uint32  
+  Amount               uint64
 
-  Balance         uint64
+  DirectionNFT         uint32  
+  CIDNFT               string
+
+  Balance              uint64
 }
 
 type WalletTransactions struct {

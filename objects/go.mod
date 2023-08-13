@@ -1,15 +1,13 @@
 module github.com/Lunkov/go-ecos-client/objects
 
-go 1.19
-
-replace github.com/Lunkov/go-ecos-client/utils => ./../utils
+go 1.20
 
 require (
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230710170120-42b8a284a383
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230716053156-6cf72bc6e4c3
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
-	github.com/Lunkov/lib-cipher v0.0.0-20230705134021-80f6c1e910e1
-	github.com/Lunkov/lib-wallets v0.0.0-20230627073918-7d9a109b6bbf
-	github.com/golang/glog v1.1.1
+	github.com/Lunkov/lib-cipher v0.0.0-20230812222812-d903396a3b95
+	github.com/Lunkov/lib-wallets v0.0.0-20230813075645-8d58ce8cca09
+	github.com/golang/glog v1.1.2
 	github.com/google/uuid v1.3.0
 	github.com/stretchr/testify v1.8.2
 )
