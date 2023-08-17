@@ -1,9 +1,9 @@
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxKOSUDLcl9ItKormWOgux6M6A5MYgs=
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
-github.com/Lunkov/go-ecos-client/messages v0.0.0-20230813193011-a2bb97fc4ec0 h1:dh2F5MHdROKdJyxXTUyI29ys20uoKcMgLaa0UgbyJLY=
-github.com/Lunkov/go-ecos-client/messages v0.0.0-20230813193011-a2bb97fc4ec0/go.mod h1:QxLbwCvFJeK6rCXnmiVox/2g52AcgNvR1g22IlgEuqc=
-github.com/Lunkov/go-ecos-client/objects v0.0.0-20230813193011-a2bb97fc4ec0 h1:++6e1tJ24BaaOOFiSY+AYdl2J43f4CY+FpwbwoXJUR8=
-github.com/Lunkov/go-ecos-client/objects v0.0.0-20230813193011-a2bb97fc4ec0/go.mod h1:HLptBM6r6P46Vxn8vIOnwf8/zYEMXN4i6+SsDv2WOB0=
+github.com/Lunkov/go-ecos-client/messages v0.0.0-20230817142742-889071352b8f h1:F0n084Ac5D+K/7wSdww/KLbOV2cH324Kx0lx2wmHXK0=
+github.com/Lunkov/go-ecos-client/messages v0.0.0-20230817142742-889071352b8f/go.mod h1:QxLbwCvFJeK6rCXnmiVox/2g52AcgNvR1g22IlgEuqc=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230817142742-889071352b8f h1:OixyDXs6ZAVQc1SPJOeb2eAwG7GNTWMyVlTuR04vy1M=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230817142742-889071352b8f/go.mod h1:z6Bcts5RF7GWL177g7/wFJvrfUAxzVomTsI/pJoPCTg=
 github.com/Lunkov/go-ecos-client/utils v0.0.0-20230716053156-6cf72bc6e4c3 h1:HB5t7ulWQIGWsp64lRB5gSlt6Wf1YnH+2O0AAwoWN1A=
 github.com/Lunkov/go-ecos-client/utils v0.0.0-20230716053156-6cf72bc6e4c3/go.mod h1:FNPa9xiP2YTYxsr03/Rm2lsP+ImpUesCjFBCDATSJY8=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3 h1:eXXKYmulSUPW3TjbFaUuMxyaRkOwx6eTjONxwgTTRK4=
@@ -39,8 +39,8 @@ github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1/go.mod h1:hyedUtir6IdtD/7lIxGeC
 github.com/ethereum/go-ethereum v1.11.6 h1:2VF8Mf7XiSUfmoNOy3D+ocfl9Qu8baQBrCNbo2CXQ8E=
 github.com/ethereum/go-ethereum v1.11.6/go.mod h1:+a8pUj1tOyJ2RinsNQD4326YS+leSoKGiG/uVVb0x6Y=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
-github.com/golang/glog v1.1.2 h1:DVjP2PbBOzHyzA+dn3WhHIq4NdVu3Q+pvivFICf/7fo=
-github.com/golang/glog v1.1.2/go.mod h1:zR+okUeTbrL6EL3xHUDxZuEtGv04p5shwip1+mL/rLQ=
+github.com/golang/glog v1.1.1 h1:jxpi2eWoU84wbX9iIEyAeeoac3FLuifZpY9tcNUD9kw=
+github.com/golang/glog v1.1.1/go.mod h1:zR+okUeTbrL6EL3xHUDxZuEtGv04p5shwip1+mL/rLQ=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=

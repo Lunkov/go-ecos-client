@@ -75,8 +75,6 @@ func BenchmarkCoins(b *testing.B) {
   w := wallets.NewWallet(wallets.TypeWalletHD)
   w.Create(&map[string]string{"mnemonic": "chase oil pigeon elegant ketchup whip frozen beauty unknown brass amount slender pony pottery attitude flavor rifle primary beach sign glue oven crazy lottery"})
   
-  fmt.Printf("WALLETS = %d\n", len(Wallets))
-  
   wlts := make([]wallets.IWallet,0)
 
   for i := 0; i < len(Wallets); i++ {
