@@ -6,7 +6,6 @@ import (
   "crypto/sha256"
   "crypto/sha512"
   "encoding/gob"
-  "github.com/golang/glog"
   
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
@@ -65,9 +64,6 @@ func (tx *Transaction) CalcID() ([]byte, bool) {
 
   encoder := gob.NewEncoder(&encoded)
   if err := encoder.Encode(tx); err != nil {
-    if glog.V(2) {
-      glog.Errorf("ERR: Transaction.SetID: %v", err)
-    }
     return nil, false
   }
 
@@ -82,9 +78,6 @@ func (tx *Transaction) Serialize() ([]byte, bool) {
 
   err := encoder.Encode(tx)
   if err != nil {
-    if glog.V(2) {
-      glog.Errorf("ERR: Transaction.Serialize: %v", err)
-    }
     return nil, false
   }
 
@@ -96,9 +89,6 @@ func (tx *Transaction) Deserialize(data []byte) bool {
 	decoder := gob.NewDecoder(bytes.NewReader(data))
 	err := decoder.Decode(tx)
 	if err != nil {
-    if glog.V(2) {
-		  glog.Errorf("ERR: Transaction.DeserializeTransaction: %v", err)
-    }
     return false
 	}
 
@@ -141,9 +131,6 @@ func (tx *Transaction) DoSign(wallet wallets.IWallet) bool {
   }
   for inID, vin := range tx.Vin {
     if vin.Txid == nil {
-      if glog.V(2) {
-        glog.Errorf("ERR: Previous transaction is not correct")
-      }
       return false
     }
     tx.Vin[inID].Address = address
@@ -160,9 +147,6 @@ func (tx *Transaction) DoSign(wallet wallets.IWallet) bool {
 func (tx *Transaction) DoVerify() bool {
   for inID, vin := range tx.Vin {
     if vin.Txid == nil {
-      if glog.V(2) {
-        glog.Errorf("ERR: Previous transaction is not correct")
-      }
       return false
     }
     if !utils.ECDSA256VerifyHash512(tx.Vin[inID].PublicKey, tx.Vin[inID].Hash512(tx.Timestamp), tx.Vin[inID].Signature) {

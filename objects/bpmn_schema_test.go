@@ -5,7 +5,6 @@ import (
   "flag"
   "testing"
   "github.com/stretchr/testify/assert"
-  "github.com/golang/glog"
 )
 
 func TestCheckBPMN(t *testing.T) {
@@ -13,8 +12,6 @@ func TestCheckBPMN(t *testing.T) {
   flag.Set("log_dir", ".")
   flag.Set("v", "9")
   flag.Parse()
-
-  glog.Info("Logging configured: TestCheckBPMN")
 
   var b Schema
   ok, msg := b.LoadXML("etc.test/wrong_diagram_1.bpmn")

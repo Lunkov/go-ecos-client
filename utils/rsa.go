@@ -8,7 +8,6 @@ import (
   "math/big"
   "crypto/sha512"
   "crypto/rsa"
-  "github.com/golang/glog"
 )
 
 // const version = byte(0x00)
@@ -21,7 +20,6 @@ type RSABuf struct {
 func RSAGenerate(bits int) (*rsa.PrivateKey, bool) {
   caPrivKey, errc := rsa.GenerateKey(rand.Reader, bits)
   if errc != nil {
-    glog.Errorf("ERR: GenerateKey: %v", errc)
     return nil, false
   }
   return caPrivKey, true
@@ -41,7 +39,6 @@ func RSADeserializePublicKey(msg []byte) (*rsa.PublicKey, bool) {
   decoder := gob.NewDecoder(buf)
   err := decoder.Decode(&rsabuf)
   if err != nil {
-    glog.Errorf("ERR: gob.Decode %v", err)
     return nil, false
   }
   n := big.Int{}
@@ -52,7 +49,6 @@ func RSADeserializePublicKey(msg []byte) (*rsa.PublicKey, bool) {
 func RSAVerify(pubKey []byte, message []byte, signature []byte) bool {
   defer func() {
     if r := recover(); r != nil {
-      glog.Errorf("ERR: ECDSA signature verification error: %v", r)
     }
   }()
   rawPubKey, ok := RSADeserializePublicKey(pubKey) //PublicKeyFromBytes(pubKey)

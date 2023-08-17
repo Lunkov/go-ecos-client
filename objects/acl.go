@@ -8,7 +8,7 @@ import (
   "encoding/gob"
   "encoding/hex"
   "github.com/google/uuid"
-  "github.com/golang/glog"
+
   "github.com/Lunkov/lib-cipher"
 )
 
@@ -97,7 +97,6 @@ func (f *StorageFiles) CreateFile(pubKeyId string, data []byte) (string, bool) {
   aclfilename := f.GetACLFileName(fileId, f.masterKey, false)
   err := os.WriteFile(aclfilename, buff.Bytes(), 0640) // just pass the file name
   if err != nil {
-    glog.Errorf("ERR: SaveKey Write(%s): %v", aclfilename, err)
     return "", false
   }
   
@@ -137,7 +136,6 @@ func (f *StorageFiles) AddShareFile(fileId string, userKey cipher.IACipher) (boo
   aclfilename := f.GetACLFileName(fileId, userKey, false)
   err := os.WriteFile(acluserfilename, buff.Bytes(), 0640) // just pass the file name
   if err != nil {
-    glog.Errorf("ERR: SaveACL Write(%s): %v", aclfilename, err)
     return false
   }
   return true
@@ -149,7 +147,6 @@ func (f *StorageFiles) RemoveShareFile(fileId string, userKey cipher.IACipher) (
   // Remove File
   err := os.Remove(acluserfilename)
   if err != nil {
-    glog.Errorf("ERR: RemoveShareFile(%s): %v", acluserfilename, err)
     return false
   }
   return true
@@ -162,7 +159,6 @@ func (f *StorageFiles) LoadACL(fileId string) ([]byte, bool) {
   var masterACL ACLStorage
   data, err := os.ReadFile(aclmasterfilename) 
   if err != nil {
-    glog.Errorf("ERR: LoadMasterACL (%s) err='%v'", aclmasterfilename, err)
     return nil, false
   }
   
@@ -171,7 +167,6 @@ func (f *StorageFiles) LoadACL(fileId string) ([]byte, bool) {
   decoder := gob.NewDecoder(buf)
   err = decoder.Decode(masterACL)
   if err != nil {
-    glog.Errorf("ERR: gob.Decoder('%s'): GOB: %v", aclmasterfilename, err)
     return nil, false
   }
   key, ok := f.masterKey.DecryptWithPrivateKey(masterACL.acl.key)

@@ -2,14 +2,12 @@ package utils
 
 import (
   "bytes"
-  //"github.com/btcsuite/btcd/btcec"
   "github.com/Lunkov/go-btcec"
   "encoding/gob"
   "crypto/rand"
   "math/big"
   "crypto/sha512"
   "crypto/ecdsa"
-  "github.com/golang/glog"
 )
 
 const version = byte(0x00)
@@ -41,7 +39,6 @@ func ECDSAPublicKeyDeserialize(msg []byte) (*ecdsa.PublicKey, bool) {
   decoder := gob.NewDecoder(buf)
   err := decoder.Decode(&ecdsabuf)
   if err != nil {
-    glog.Errorf("ERR: gob.Decode %v", err)
     return nil, false
   }
   x := big.Int{}
@@ -57,7 +54,6 @@ func ECDSAPublicKeyDeserialize(msg []byte) (*ecdsa.PublicKey, bool) {
 func ECDSA256VerifyHash512(pubKey []byte, hash []byte, signature []byte) bool {
   defer func() {
     if r := recover(); r != nil {
-      glog.Errorf("ERR: ECDSA signature verification error: %v", r)
     }
   }()
   rawPubKey, ok := ECDSAPublicKeyDeserialize(pubKey) //PublicKeyFromBytes(pubKey)
@@ -76,12 +72,10 @@ func ECDSA256Sign(pk *ecdsa.PrivateKey, message []byte) ([]byte, bool) {
 func ECDSA256VerifySender(address string, pubKey []byte, hash []byte, signature []byte) bool {
   defer func() {
     if r := recover(); r != nil {
-      glog.Errorf("ERR: ECDSA signature verification error: %v", r)
     }
   }()
   rawPubKey, ok := ECDSAPublicKeyDeserialize(pubKey)
   if !ok {
-    glog.Errorf("ERR: ECDSAPublicKeyDeserialize %v", rawPubKey)
     return false
   }
   return ecdsa.VerifyASN1(rawPubKey, hash, signature)

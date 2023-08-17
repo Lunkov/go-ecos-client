@@ -122,9 +122,6 @@ func (c *ClientECOS) GetNodeStat() (*messages.Balance, bool) {
   }
   result := messages.NewBalance()
   if !result.Deserialize(answer) {
-    if glog.V(2) {
-      glog.Errorf("ERR: GetBalance.Deserialize")
-    }
     return nil, false
   }
   return result, true
@@ -143,9 +140,6 @@ func (c *ClientECOS) GetNetworkStat() (*messages.Balance, bool) {
   }
   result := messages.NewBalance()
   if !result.Deserialize(answer) {
-    if glog.V(2) {
-      glog.Errorf("ERR: GetBalance.Deserialize")
-    }
     return nil, false
   }
   return result, true
