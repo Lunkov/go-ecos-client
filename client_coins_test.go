@@ -8,7 +8,7 @@ import (
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
   
-  "go-ecos-client/objects"
+  "github.com/Lunkov/go-ecos-client/objects"
 )
 
 func TestCoins(t *testing.T) {

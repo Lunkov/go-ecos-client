@@ -9,7 +9,7 @@ import (
   "github.com/Lunkov/lib-wallets"
   
   //"github.com/Lunkov/go-ecos-client/objects"
-  "go-ecos-client/messages"
+  "github.com/Lunkov/go-ecos-client/messages"
 )
 
 func TestPassport(t *testing.T) {

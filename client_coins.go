@@ -5,8 +5,8 @@ import (
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
 
-  "go-ecos-client/objects"
-  "go-ecos-client/messages"
+  "github.com/Lunkov/go-ecos-client/objects"
+  "github.com/Lunkov/go-ecos-client/messages"
 )
 
 func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, error) {

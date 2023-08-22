@@ -4,7 +4,7 @@ import (
   "testing"
   "github.com/stretchr/testify/assert"
 
-  "go-ecos-client/utils"
+  "github.com/Lunkov/go-ecos-client/utils"
 )
 
 func TestMsgPassport(t *testing.T) {

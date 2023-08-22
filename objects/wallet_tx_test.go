@@ -41,9 +41,9 @@ func TestMsgWalletTx(t *testing.T) {
   
   tx2 := NewWalletTransactionsEmpty()
 
-  buf, ok := tx.Serialize()
-  assert.True(t, ok) 
-  assert.True(t, tx2.Deserialize(buf)) 
+  buf, err := tx.Serialize()
+  assert.Nil(t, err) 
+  assert.Nil(t, tx2.Deserialize(buf)) 
   
   
   assert.Equal(t, []WalletTransaction{

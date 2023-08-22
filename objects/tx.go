@@ -11,7 +11,7 @@ import (
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
   
-  "go-ecos-client/utils"
+  "github.com/Lunkov/go-ecos-client/utils"
 )
 
 const TXVersion = uint32(0x00)

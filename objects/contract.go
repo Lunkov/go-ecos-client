@@ -7,7 +7,7 @@ import (
   "crypto/sha512"
   "encoding/gob"
   
-  "go-ecos-client/utils"
+  "github.com/Lunkov/go-ecos-client/utils"
 )
 
 const (

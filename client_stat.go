@@ -1,7 +1,7 @@
 package client
 
 import (
-  "go-ecos-client/messages"
+  "github.com/Lunkov/go-ecos-client/messages"
 )
 
 func (c *ClientECOS) GetNetworkStat() (*messages.NetworkStat, error) {

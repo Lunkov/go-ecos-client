@@ -4,8 +4,8 @@ import (
   "errors"
   "github.com/Lunkov/lib-wallets"
 
-  "go-ecos-client/objects"
-  "go-ecos-client/messages"
+  "github.com/Lunkov/go-ecos-client/objects"
+  "github.com/Lunkov/go-ecos-client/messages"
 )
 
 func (c *ClientECOS) PassportStatus(w wallets.IWallet, IdTx []byte) (*messages.MsgTransactionStatus, error) {

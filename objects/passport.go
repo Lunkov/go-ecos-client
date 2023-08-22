@@ -12,7 +12,7 @@ import (
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
   
-  "go-ecos-client/utils"
+  "github.com/Lunkov/go-ecos-client/utils"
 )
 
 type Passport struct {

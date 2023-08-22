@@ -10,7 +10,7 @@ import (
   
   "github.com/google/uuid"
   
-  "go-ecos-client/utils"
+  "github.com/Lunkov/go-ecos-client/utils"
 )
 
 // Information about Organization

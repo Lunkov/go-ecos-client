@@ -6,7 +6,7 @@ import (
   "encoding/gob"
   "encoding/json"
   
-  "go-ecos-client/objects"
+  "github.com/Lunkov/go-ecos-client/objects"
 )
 
 type PassportInfo struct {
