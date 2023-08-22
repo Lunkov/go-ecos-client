@@ -174,26 +174,21 @@ func (wtxb *WalletTransactions) FindCoins(value uint64) []TXInput {
   return result
 }
 
-func (wtxb *WalletTransactions) Serialize() ([]byte, bool) {
+func (wtxb *WalletTransactions) Serialize() ([]byte, error) {
 	var result bytes.Buffer
 	encoder := gob.NewEncoder(&result)
 
 	err := encoder.Encode(wtxb)
 	if err != nil {
-    return nil, false
+    return nil, err
 	}
 
-	return result.Bytes(), true
+	return result.Bytes(), nil
 }
 
-func (wtxb *WalletTransactions) Deserialize(data []byte) bool {
+func (wtxb *WalletTransactions) Deserialize(data []byte) error {
 	decoder := gob.NewDecoder(bytes.NewReader(data))
-	err := decoder.Decode(wtxb)
-	if err != nil {
-		return false
-	}
-
-	return true
+	return decoder.Decode(wtxb)
 }
 
 func (wtxb *WalletTransactions) ToJSON() ([]byte, bool) {

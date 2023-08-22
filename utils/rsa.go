@@ -17,51 +17,51 @@ type RSABuf struct {
   E int
 }
 
-func RSAGenerate(bits int) (*rsa.PrivateKey, bool) {
-  caPrivKey, errc := rsa.GenerateKey(rand.Reader, bits)
-  if errc != nil {
-    return nil, false
+func RSAGenerate(bits int) (*rsa.PrivateKey, error) {
+  caPrivKey, err := rsa.GenerateKey(rand.Reader, bits)
+  if err != nil {
+    return nil, err
   }
-  return caPrivKey, true
+  return caPrivKey, nil
 }
 
-func RSASerializePublicKey(pk *rsa.PublicKey) ([]byte, bool) {
+func RSASerializePublicKey(pk *rsa.PublicKey) ([]byte, error) {
   rsabuf := RSABuf{N: pk.N.Bytes(), E: pk.E}
   var buff bytes.Buffer
   encoder := gob.NewEncoder(&buff)
   encoder.Encode(rsabuf)
-  return buff.Bytes(), true
+  return buff.Bytes(), nil
 }
 
-func RSADeserializePublicKey(msg []byte) (*rsa.PublicKey, bool) {
+func RSADeserializePublicKey(msg []byte) (*rsa.PublicKey, error) {
   var rsabuf RSABuf
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
   err := decoder.Decode(&rsabuf)
   if err != nil {
-    return nil, false
+    return nil, err
   }
   n := big.Int{}
   n.SetBytes(rsabuf.N)
-  return &rsa.PublicKey{E: rsabuf.E, N: &n}, true
+  return &rsa.PublicKey{E: rsabuf.E, N: &n}, nil
 }
 
-func RSAVerify(pubKey []byte, message []byte, signature []byte) bool {
+func RSAVerify(pubKey []byte, message []byte, signature []byte) (error) {
   defer func() {
     if r := recover(); r != nil {
     }
   }()
-  rawPubKey, ok := RSADeserializePublicKey(pubKey) //PublicKeyFromBytes(pubKey)
-  if !ok {
-    return false
+  rawPubKey, err := RSADeserializePublicKey(pubKey) //PublicKeyFromBytes(pubKey)
+  if err != nil {
+    return err
   }
   hashed := sha512.Sum512(message)
-  return rsa.VerifyPKCS1v15(rawPubKey, crypto.SHA512, hashed[:], signature) == nil
+  return rsa.VerifyPKCS1v15(rawPubKey, crypto.SHA512, hashed[:], signature)
 }
 
-func RSASign(pk *rsa.PrivateKey, message []byte) ([]byte, bool) {
+func RSASign(pk *rsa.PrivateKey, message []byte) ([]byte, error) {
   hashed := sha512.Sum512(message)
   signature, err := rsa.SignPKCS1v15(rand.Reader, pk, crypto.SHA512, hashed[:])
-  return signature, err == nil 
+  return signature, err 
 }
 

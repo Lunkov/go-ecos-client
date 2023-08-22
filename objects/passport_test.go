@@ -4,38 +4,39 @@ import (
   "testing"
   "github.com/stretchr/testify/assert"
 
-  "github.com/Lunkov/go-ecos-client/utils"
+  "go-ecos-client/utils"
 )
 
 func TestMsgPassport(t *testing.T) {
-  key, ok := utils.RSAGenerate(2048)
-  assert.True(t, ok)
+  key, err := utils.RSAGenerate(2048)
+  assert.Nil(t, err)
   
   msg := NewPassport()
   msg.DisplayName = "Test User"
   
-  msg.IssuerPublicKey, ok = utils.RSASerializePublicKey(&key.PublicKey)
-  assert.True(t, ok)
+  msg.IssuerPublicKey, err = utils.RSASerializePublicKey(&key.PublicKey)
+  assert.Nil(t, err)
   
-  msg.IssuerSign, ok = utils.RSASign(key, msg.HashIssuer())
-  assert.True(t, ok)
+  msg.IssuerSign, err = utils.RSASign(key, msg.HashIssuer())
+  assert.Nil(t, err)
   
   buf, okb := msg.Serialize()
-  assert.True(t, okb) 
+  assert.Nil(t, okb) 
   
   msg2 := NewPassport()
   
-  assert.True(t, msg2.Deserialize(buf)) 
+  assert.Nil(t, msg2.Deserialize(buf)) 
   
-  assert.True(t, utils.RSAVerify(msg.IssuerPublicKey, msg.HashIssuer(), msg.IssuerSign))
+  verr := utils.RSAVerify(msg.IssuerPublicKey, msg.HashIssuer(), msg.IssuerSign)
+  assert.Nil(t, verr)
   
   assert.Equal(t, "Test User", msg2.DisplayName)
   assert.Equal(t, *msg, *msg2)
   
-  benc, bok := msg.SerializeEncrypt("password")
-  assert.True(t, bok) 
+  benc, berr := msg.SerializeEncrypt("password")
+  assert.Nil(t, berr) 
   msg3 := NewPassport()
-  bok = msg3.DeserializeDecrypt("password", benc)
-  assert.True(t, bok) 
+  berr = msg3.DeserializeDecrypt("password", benc)
+  assert.Nil(t, berr) 
   assert.Equal(t, *msg, *msg3)
 }

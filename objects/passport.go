@@ -11,7 +11,8 @@ import (
   "github.com/Lunkov/lib-cipher"
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
-  "github.com/Lunkov/go-ecos-client/utils"
+  
+  "go-ecos-client/utils"
 )
 
 type Passport struct {
@@ -67,102 +68,102 @@ func (p *Passport) HashIssuer() []byte {
   return sha_512.Sum(nil)
 }
 
-func (p *Passport) Serialize() ([]byte, bool) {
+func (p *Passport) Serialize() ([]byte, error) {
 	var result bytes.Buffer
 	encoder := gob.NewEncoder(&result)
 
 	err := encoder.Encode(p)
 	if err != nil {
-    return nil, false
+    return nil, err
 	}
 
-	return result.Bytes(), true
+	return result.Bytes(), nil
 }
 
-func (p *Passport) Deserialize(data []byte) bool {
+func (p *Passport) Deserialize(data []byte) error {
 	decoder := gob.NewDecoder(bytes.NewReader(data))
 	err := decoder.Decode(p)
 	if err != nil {
-		return false
+		return err
 	}
 
-	return true
+	return nil
 }
 
-func (p *Passport) ToJSON() ([]byte, bool) {
+func (p *Passport) ToJSON() ([]byte, error) {
   jsonAnswer, err := json.Marshal(p)
   if err != nil {
-    return jsonAnswer, false
+    return jsonAnswer, err
   }
-	return jsonAnswer, true
+	return jsonAnswer, nil
 }
 
-func (p *Passport) FromJSON(data []byte) bool {
+func (p *Passport) FromJSON(data []byte) error {
   if err := json.Unmarshal(data, p); err != nil {
-    return false
+    return err
   }
-  return true
+  return nil
 }
 
-func (p *Passport) DoSignPerson(wallet wallets.IWallet) bool {
+func (p *Passport) DoSignPerson(wallet wallets.IWallet) error {
   p.Address = wallet.GetAddress(hdwallet.ECOS)
-  PublicKey, ok := utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
-  if !ok {
-    return false
+  PublicKey, err := utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
+  if err != nil {
+    return err
   }
   p.PersonPublicKey = PublicKey
-  sign, ok := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), p.HashPerson())
-  if !ok {
-    return false
+  sign, errh := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), p.HashPerson())
+  if errh != nil {
+    return errh
   }
   p.PersonSign = sign
-  return true
+  return nil
 }
 
-func (p *Passport) DoVerifyPerson() bool {
+func (p *Passport) DoVerifyPerson() (bool, error) {
   return utils.ECDSA256VerifyHash512(p.PersonPublicKey, p.HashPerson(), p.PersonSign)
 }
 
-func (p *Passport) DoSignIssuer(pk *rsa.PrivateKey) bool {
-  PublicKey, ok := utils.RSASerializePublicKey(&pk.PublicKey)
-  if !ok {
-    return false
+func (p *Passport) DoSignIssuer(pk *rsa.PrivateKey) error {
+  PublicKey, err := utils.RSASerializePublicKey(&pk.PublicKey)
+  if err != nil {
+    return err
   }
   p.IssuerPublicKey = PublicKey
-  sign, ok := utils.RSASign(pk, p.HashIssuer())
-  if !ok {
-    return false
+  sign, errs := utils.RSASign(pk, p.HashIssuer())
+  if errs != nil {
+    return errs
   }
   p.PersonSign = sign
-  return true
+  return nil
 }
 
-func (p *Passport) DoVerifyIssuer() bool {
+func (p *Passport) DoVerifyIssuer() (error) {
   return utils.RSAVerify(p.IssuerPublicKey, p.HashIssuer(), p.IssuerSign)
 }
 
-func (p *Passport) SerializeEncrypt(password string) ([]byte, bool) {
-  buf, ok := p.Serialize()
-  if !ok {
-    return nil, false
+func (p *Passport) SerializeEncrypt(password string) ([]byte, error) {
+  buf, err := p.Serialize()
+  if err != nil {
+    return nil, err
   }
   c := cipher.NewSCipher()
   key := c.Password2Key(password)
-  enc, okenc := c.AESEncrypt(key, buf)
-  if !okenc {
-    return nil, false
+  enc, errc := c.AESEncrypt(key, buf)
+  if errc != nil {
+    return nil, errc
   }
 
-  return enc, true
+  return enc, nil
 }
 
 
-func (p *Passport) DeserializeDecrypt(password string, buf []byte) (bool) {
+func (p *Passport) DeserializeDecrypt(password string, buf []byte) (error) {
   c := cipher.NewSCipher()
   key := c.Password2Key(password)
-  dec, ok := c.AESDecrypt(key, buf)
-  if !ok {
-    return false
+  dec, err := c.AESDecrypt(key, buf)
+  if err != nil {
+    return err
   }
   return p.Deserialize(dec)
 }

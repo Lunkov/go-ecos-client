@@ -1,6 +1,7 @@
 package objects
 
 import (
+  "errors"
   "bytes"
   "time"
   "crypto/sha256"
@@ -9,7 +10,8 @@ import (
   
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
-  "github.com/Lunkov/go-ecos-client/utils"
+  
+  "go-ecos-client/utils"
 )
 
 const TXVersion = uint32(0x00)
@@ -72,27 +74,27 @@ func (tx *Transaction) CalcID() ([]byte, bool) {
 }
 
 // Serialize serializes the Transaction
-func (tx *Transaction) Serialize() ([]byte, bool) {
+func (tx *Transaction) Serialize() ([]byte, error) {
   var result bytes.Buffer
   encoder := gob.NewEncoder(&result)
 
   err := encoder.Encode(tx)
   if err != nil {
-    return nil, false
+    return nil, err
   }
 
-  return result.Bytes(), true
+  return result.Bytes(), nil
 }
 
 // DeserializeBlock deserializes a block
-func (tx *Transaction) Deserialize(data []byte) bool {
+func (tx *Transaction) Deserialize(data []byte) error {
 	decoder := gob.NewDecoder(bytes.NewReader(data))
 	err := decoder.Decode(tx)
 	if err != nil {
-    return false
+    return err
 	}
 
-	return true
+	return nil
 }
 
 func (m TXInput) Hash512(timestamp int64) []byte {
@@ -123,35 +125,36 @@ func (tx *Transaction) GetValueOut() uint64 {
 }
 
 
-func (tx *Transaction) DoSign(wallet wallets.IWallet) bool {
+func (tx *Transaction) DoSign(wallet wallets.IWallet) error {
   address := wallet.GetAddress(hdwallet.ECOS)
-  PublicKey, ok := utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
-  if !ok {
-    return false
+  PublicKey, err := utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
+  if err != nil {
+    return err
   }
   for inID, vin := range tx.Vin {
     if vin.Txid == nil {
-      return false
+      return errors.New("DoSign: vin.Txid is empty")
     }
     tx.Vin[inID].Address = address
     tx.Vin[inID].PublicKey = PublicKey
-    sign, ok := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), tx.Vin[inID].Hash512(tx.Timestamp))
-    if !ok {
-      return false
+    sign, errs := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), tx.Vin[inID].Hash512(tx.Timestamp))
+    if errs != nil {
+      return errs
     }
     tx.Vin[inID].Signature = sign
   }
-  return true
+  return nil
 }
 
-func (tx *Transaction) DoVerify() bool {
+func (tx *Transaction) DoVerify() (bool, error) {
   for inID, vin := range tx.Vin {
     if vin.Txid == nil {
-      return false
+      return false, errors.New("DoVerify: vin.Txid is empty")
     }
-    if !utils.ECDSA256VerifyHash512(tx.Vin[inID].PublicKey, tx.Vin[inID].Hash512(tx.Timestamp), tx.Vin[inID].Signature) {
-      return false
+    vok, errv := utils.ECDSA256VerifyHash512(tx.Vin[inID].PublicKey, tx.Vin[inID].Hash512(tx.Timestamp), tx.Vin[inID].Signature)
+    if !vok || errv != nil {
+      return false, errv
     }
   }
-  return true
+  return true, nil
 }

@@ -83,7 +83,7 @@ func BenchmarkCoins(b *testing.B) {
     //mnemonic, _ := bip39.NewMnemonic(entropy)
     //wlt.Create(&map[string]string{"mnemonic": mnemonic})
     wlt.Create(&map[string]string{"mnemonic": Wallets[i]})
-    balance, ok := client.GetBalance(wlt)
+    balance, err := client.GetBalance(wlt)
     //assert.True(t, ok)
     //fmt.Printf("\"%s\", ", mnemonic)
     if balance != nil {
@@ -91,12 +91,12 @@ func BenchmarkCoins(b *testing.B) {
     } else {
       fmt.Printf("%d) \"%s\" => 0 \n", i, wlt.GetAddress(hdwallet.ECOS))
     }
-    if !ok || balance.Balance < 100 {
-      newTx, okTx := client.TransactionNew(w, wlt.GetAddress(hdwallet.ECOS), hdwallet.ECOS, 1000000)
-      if okTx {
+    if err != nil || balance.Balance < 100 {
+      newTx, errTx := client.TransactionNew(w, wlt.GetAddress(hdwallet.ECOS), hdwallet.ECOS, 1000000)
+      if errTx == nil {
         //fmt.Printf("%d) \"%s\" => TransactionNew \n", i, wlt.GetAddress(hdwallet.ECOS))
-        newTx, okTx = client.TransactionCommit(w, newTx)
-        if okTx {
+        newTx, errTx = client.TransactionCommit(w, newTx)
+        if errTx == nil {
           //fmt.Printf("%d) \"%s\" => TransactionCommit OK \n", i, wlt.GetAddress(hdwallet.ECOS))
         } else {
           //fmt.Printf("%d) \"%s\" => TransactionCommit ERROR \n", i, wlt.GetAddress(hdwallet.ECOS))
@@ -128,26 +128,26 @@ func BenchmarkCoins(b *testing.B) {
           to := rand.Intn(cnt_wallets)
           sum := uint64(rand.Intn(1000))
 
-          balance, ok := client.GetBalance(wlts[from])
+          balance, err := client.GetBalance(wlts[from])
           /*if balance != nil {
             fmt.Printf("%d) \"%s\" => %d \n", from, wlts[from].GetAddress(hdwallet.ECOS), balance.Balance)
           } else {
             fmt.Printf("%d) \"%s\" => 0 \n", from, wlts[from].GetAddress(hdwallet.ECOS))
           }*/
-          if !ok || balance.Balance < sum {
-            newTx, okTx := client.TransactionNew(w, wlts[from].GetAddress(hdwallet.ECOS), hdwallet.ECOS, 1000000)
-            if okTx {
-              newTx, okTx = client.TransactionCommit(w, newTx)
+          if err != nil || balance.Balance < sum {
+            newTx, errTx := client.TransactionNew(w, wlts[from].GetAddress(hdwallet.ECOS), hdwallet.ECOS, 1000000)
+            if errTx == nil {
+              newTx, errTx = client.TransactionCommit(w, newTx)
               //fmt.Printf("'%d' +++ ??? +++> '%d' => %d \n", from, to, sum)
               countTransactions ++
             }
           }
 
 
-          newTx, okTx := client.TransactionNew(wlts[from], wlts[to].GetAddress(hdwallet.ECOS), hdwallet.ECOS, sum)
-          if okTx {
-            newTx, okTx = client.TransactionCommit(wlts[from], newTx)
-            if okTx {
+          newTx, errTx := client.TransactionNew(wlts[from], wlts[to].GetAddress(hdwallet.ECOS), hdwallet.ECOS, sum)
+          if errTx == nil {
+            newTx, errTx = client.TransactionCommit(wlts[from], newTx)
+            if errTx == nil {
               //fmt.Printf("'%d' +> '%d' => %d \n", from, to, sum)
               countTransactions ++
             }

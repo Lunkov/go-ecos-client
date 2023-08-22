@@ -10,7 +10,8 @@ import (
   
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
-  "github.com/Lunkov/go-ecos-client/utils"
+  
+  "go-ecos-client/utils"
 )
 
 type ReqActionObject struct {
@@ -78,20 +79,20 @@ func (i *ReqActionObject) Deserialize(msg []byte) bool {
   return decoder.Decode(i) == nil
 }
 
-func (i *ReqActionObject) DoSign(wallet wallets.IWallet) bool {
-  sign, ok := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), i.Hash())
-  if !ok {
-    return false
+func (i *ReqActionObject) DoSign(wallet wallets.IWallet) error {
+  sign, err := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), i.Hash())
+  if err != nil {
+    return err
   }
   i.Address = wallet.GetAddress(hdwallet.ECOS)
   i.Sign = sign
-  i.PublicKey, ok = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
-  if !ok {
-    return false
+  i.PublicKey, err = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
+  if err != nil {
+    return err
   }
-  return true
+  return nil
 }
 
-func (i *ReqActionObject) DoVerify() bool {
+func (i *ReqActionObject) DoVerify() (bool, error) {
   return utils.ECDSA256VerifySender(i.Address, i.PublicKey, i.Hash(), i.Sign)
 }

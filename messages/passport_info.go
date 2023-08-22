@@ -6,7 +6,7 @@ import (
   "encoding/gob"
   "encoding/json"
   
-  "github.com/Lunkov/go-ecos-client/objects"
+  "go-ecos-client/objects"
 )
 
 type PassportInfo struct {
@@ -36,39 +36,27 @@ func (p *PassportInfo) GetType() (string, bool) {
   return obj[0], true
 }
             
-func (p *PassportInfo) Serialize() ([]byte, bool) {
+func (p *PassportInfo) Serialize() ([]byte, error) {
 	var result bytes.Buffer
 	encoder := gob.NewEncoder(&result)
 
 	err := encoder.Encode(p)
 	if err != nil {
-    return nil, false
+    return nil, err
 	}
 
-	return result.Bytes(), true
+	return result.Bytes(), nil
 }
 
-func (p *PassportInfo) Deserialize(data []byte) bool {
+func (p *PassportInfo) Deserialize(data []byte) error {
 	decoder := gob.NewDecoder(bytes.NewReader(data))
-	err := decoder.Decode(p)
-	if err != nil {
-		return false
-	}
-
-	return true
+	return decoder.Decode(p)
 }
 
-func (p *PassportInfo) ToJSON() ([]byte, bool) {
-  jsonAnswer, err := json.Marshal(p)
-  if err != nil {
-    return jsonAnswer, false
-  }
-	return jsonAnswer, true
+func (p *PassportInfo) ToJSON() ([]byte, error) {
+  return json.Marshal(p)
 }
 
-func (p *PassportInfo) FromJSON(data []byte) bool {
-  if err := json.Unmarshal(data, p); err != nil {
-    return false
-  }
-  return true
+func (p *PassportInfo) FromJSON(data []byte) error {
+  return json.Unmarshal(data, p)
 }

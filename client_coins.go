@@ -1,111 +1,119 @@
 package client
 
 import (
+  "errors"
   "github.com/Lunkov/go-hdwallet"
   "github.com/Lunkov/lib-wallets"
 
-  "github.com/Lunkov/go-ecos-client/objects"
-  "github.com/Lunkov/go-ecos-client/messages"
+  "go-ecos-client/objects"
+  "go-ecos-client/messages"
 )
 
-func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, bool) {
+func (c *ClientECOS) GetBalance(w wallets.IWallet) (*messages.Balance, error) {
   msg := messages.NewGetBalanceReq()
-  oks := msg.Init(w, hdwallet.ECOS)
-  if !oks {
-    return nil, false
+  errs := msg.Init(w, hdwallet.ECOS)
+  if errs != nil {
+    return nil, errs
   }
   
-  answer, ok := c.httpRequest("POST", "/wallet/balance", string(msg.Serialize()))
-  if !ok {
-    return nil, false
+  answer, err := c.httpRequest("POST", "/wallet/balance", string(msg.Serialize()))
+  if err != nil {
+    return nil, err
   }
   result := messages.NewBalance()
-  if !result.Deserialize(answer) {
-    return nil, false
+  err = result.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return result, true
+  return result, nil
 }
 
-func (c *ClientECOS) GetWalletTX(w wallets.IWallet) (*objects.WalletTransactions, bool) {
+func (c *ClientECOS) GetWalletTX(w wallets.IWallet) (*objects.WalletTransactions, error) {
   msg := messages.NewGetBalanceReq()
-  oks := msg.Init(w, hdwallet.ECOS)
-  if !oks {
-    return nil, false
+  errs := msg.Init(w, hdwallet.ECOS)
+  if errs != nil {
+    return nil, errs
   }
   
-  answer, ok := c.httpRequest("POST", "/wallet/tx", string(msg.Serialize()))
-  if !ok {
-    return nil, false
+  answer, err := c.httpRequest("POST", "/wallet/tx", string(msg.Serialize()))
+  if err != nil {
+    return nil, err
   }
   result := objects.NewWalletTransactionsEmpty()
-  if !result.Deserialize(answer) {
-    return nil, false
+  err = result.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return result, true
+  return result, nil
 }
 
-func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*objects.Transaction, bool) {
+func (c *ClientECOS) TransactionNew(w wallets.IWallet, addressTo string, coin uint32, value uint64) (*objects.Transaction, error) {
   msg := messages.NewMsgTransaction()
   msg.Init(messages.StatusTxNew, w, addressTo, coin, coin, 0, value)
   
-  if !msg.DoSign(w) {
-    return nil, false
+  errs := msg.DoSign(w)
+  if errs != nil {
+    return nil, errs
   }
   
-  answer, ok := c.httpRequest("POST", "/transaction/new", string(msg.Serialize()))
-  if !ok {
-    return nil, false
+  answer, err := c.httpRequest("POST", "/transaction/new", string(msg.Serialize()))
+  if err != nil {
+    return nil, err
   }
 
   msgAnswer := objects.NewTX()
-  if !msgAnswer.Deserialize(answer) {
-    return nil, false
+  err = msgAnswer.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return msgAnswer, true
+  return msgAnswer, nil
 }
 
-func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx []byte) (*messages.MsgTransactionStatus, bool) {
+func (c *ClientECOS) TransactionStatus(w wallets.IWallet, IdTx []byte) (*messages.MsgTransactionStatus, error) {
   msg := messages.NewMsgTransactionStatus(IdTx)
   
-  if !msg.DoSign(w) {
-    return nil, false
+  err := msg.DoSign(w)
+  if err != nil {
+    return nil, err
   }
   
-  answer, ok := c.httpRequest("POST", "/transaction/status", string(msg.Serialize()))
-  if !ok {
-    return nil, false
+  answer, errc := c.httpRequest("POST", "/transaction/status", string(msg.Serialize()))
+  if errc != nil {
+    return nil, errc
   }
 
-  if !msg.Deserialize(answer) {
-    return nil, false
+  err = msg.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return msg, true
+  return msg, nil
 }
 
-func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *objects.Transaction) (*objects.Transaction, bool) {
+func (c *ClientECOS) TransactionCommit(w wallets.IWallet, tx *objects.Transaction) (*objects.Transaction, error) {
   if tx == nil {
-    return nil, false
+    return nil, errors.New("TX is empty")
   }
   
   msg := tx
   
-  if !msg.DoSign(w) {
-    return nil, false
+  err := msg.DoSign(w)
+  if err != nil {
+    return nil, err
   }
-  output, oko := msg.Serialize()
-  if !oko {
-    return nil, false
+  output, errs := msg.Serialize()
+  if errs != nil {
+    return nil, errs
   }
   
-  answer, ok := c.httpRequest("POST", "/transaction/commit", string(output))
-  if !ok {
-    return nil, false
+  answer, errc := c.httpRequest("POST", "/transaction/commit", string(output))
+  if errc != nil {
+    return nil, errc
   }
-
-  if !msg.Deserialize(answer) {
-    return nil, false
+  err = msg.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return msg, true
+  return msg, nil
 }
 
 /*

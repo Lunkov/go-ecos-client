@@ -7,8 +7,9 @@ import (
   "encoding/gob"
   
   "github.com/Lunkov/lib-wallets"
-  "github.com/Lunkov/go-ecos-client/utils"
-  "github.com/Lunkov/go-ecos-client/objects"
+
+  "go-ecos-client/utils"
+  "go-ecos-client/objects"
 )
 
 type MsgTransactionStatus struct {
@@ -32,10 +33,10 @@ func (m *MsgTransactionStatus) Serialize() []byte {
   return buff.Bytes()
 }
 
-func (m *MsgTransactionStatus) Deserialize(msg []byte) bool {
+func (m *MsgTransactionStatus) Deserialize(msg []byte) error {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
-  return decoder.Decode(m) == nil
+  return decoder.Decode(m)
 }
 
 
@@ -48,20 +49,20 @@ func (m *MsgTransactionStatus) Hash512() []byte {
   return sha.Sum(nil)
 }
 
-func (m *MsgTransactionStatus) DoSign(wallet wallets.IWallet) bool {
-  var ok bool
-  m.PublicKey, ok = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
-  if !ok {
-    return false
+func (m *MsgTransactionStatus) DoSign(wallet wallets.IWallet) error {
+  var err error
+  m.PublicKey, err = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
+  if err != nil {
+    return err
   }
-  sign, oks := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), m.Hash512())
-  if !oks {
-    return false
+  sign, errs := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), m.Hash512())
+  if errs != nil {
+    return errs
   }
   m.Sign = sign
-  return true
+  return nil
 }
 
-func (m *MsgTransactionStatus) DoVerify() bool {
+func (m *MsgTransactionStatus) DoVerify() (bool, error) {
   return utils.ECDSA256VerifyHash512(m.PublicKey, m.Hash512(), m.Sign)
 }

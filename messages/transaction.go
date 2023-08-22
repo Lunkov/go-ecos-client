@@ -1,6 +1,7 @@
 package messages
 
 import (
+  "errors"
   "bytes"
   "time"
   "crypto/sha256"
@@ -10,7 +11,8 @@ import (
   "encoding/binary"
   
   "github.com/Lunkov/lib-wallets"
-  "github.com/Lunkov/go-ecos-client/utils"
+  
+  "go-ecos-client/utils"
 )
 
 const (
@@ -107,43 +109,37 @@ func (m *MsgTransaction) Serialize() []byte {
   return buff.Bytes()
 }
 
-func (m *MsgTransaction) Deserialize(msg []byte) bool {
+func (m *MsgTransaction) Deserialize(msg []byte) error {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
-  return decoder.Decode(m) == nil
+  return decoder.Decode(m)
 }
 
-func (m *MsgTransaction) ToJSON() ([]byte, bool) {
+func (m *MsgTransaction) ToJSON() ([]byte, error) {
   jsonAnswer, err := json.Marshal(m)
   if err != nil {
-    return nil, false
+    return nil, err
   }
-  return jsonAnswer, true
+  return jsonAnswer, nil
 }
 
-func (m *MsgTransaction) FromJSON(msg []byte) bool {
-  if err := json.Unmarshal(msg, m); err != nil {
-    return false
-  }
-  return true
+func (m *MsgTransaction) FromJSON(msg []byte) error {
+  return json.Unmarshal(msg, m)
 }
 
-func (m *MsgTransaction) DoSign(wallet wallets.IWallet) bool {
+func (m *MsgTransaction) DoSign(wallet wallets.IWallet) error {
   if m.AddressFrom != wallet.GetAddress(m.CoinFrom) {
-    return false
+    return errors.New("DoSign: Wrong Address")
   }
-  sign, ok := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), m.Hash())
-  if !ok {
-    return false
+  sign, err := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), m.Hash())
+  if err != nil {
+    return err
   }
   m.Sign = sign
-  m.PublicKey, ok = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
-  if !ok {
-    return false
-  }
-  return true
+  m.PublicKey, err = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
+  return err
 }
 
-func (m *MsgTransaction) DoVerify() bool {
+func (m *MsgTransaction) DoVerify() (bool, error) {
   return utils.ECDSA256VerifySender(m.AddressFrom, m.PublicKey, m.Hash(), m.Sign)
 }

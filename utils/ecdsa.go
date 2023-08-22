@@ -20,7 +20,7 @@ type ECDSABuf struct {
   X, Y []byte
 }
 
-func ECDSAPublicKeySerialize(pk *ecdsa.PublicKey) ([]byte, bool) {
+func ECDSAPublicKeySerialize(pk *ecdsa.PublicKey) ([]byte, error) {
   ecdsabuf := ECDSABuf{
                        BitSize: pk.Curve.Params().BitSize,
                        Name: "S256",
@@ -30,16 +30,16 @@ func ECDSAPublicKeySerialize(pk *ecdsa.PublicKey) ([]byte, bool) {
   var buff bytes.Buffer
   encoder := gob.NewEncoder(&buff)
   encoder.Encode(ecdsabuf)
-  return buff.Bytes(), true
+  return buff.Bytes(), nil
 }
 
-func ECDSAPublicKeyDeserialize(msg []byte) (*ecdsa.PublicKey, bool) {
+func ECDSAPublicKeyDeserialize(msg []byte) (*ecdsa.PublicKey, error) {
   var ecdsabuf ECDSABuf
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
   err := decoder.Decode(&ecdsabuf)
   if err != nil {
-    return nil, false
+    return nil, err
   }
   x := big.Int{}
   y := big.Int{}
@@ -47,41 +47,41 @@ func ECDSAPublicKeyDeserialize(msg []byte) (*ecdsa.PublicKey, bool) {
   y.SetBytes(ecdsabuf.Y)
   
   // btcec.KoblitzCurve
-  return &ecdsa.PublicKey{Curve: btcec.S256(), X: &x, Y: &y}, true
+  return &ecdsa.PublicKey{Curve: btcec.S256(), X: &x, Y: &y}, nil
 }
 
 // 
-func ECDSA256VerifyHash512(pubKey []byte, hash []byte, signature []byte) bool {
+func ECDSA256VerifyHash512(pubKey []byte, hash []byte, signature []byte) (bool, error) {
   defer func() {
     if r := recover(); r != nil {
     }
   }()
-  rawPubKey, ok := ECDSAPublicKeyDeserialize(pubKey) //PublicKeyFromBytes(pubKey)
-  if !ok {
-    return false
+  rawPubKey, err := ECDSAPublicKeyDeserialize(pubKey) //PublicKeyFromBytes(pubKey)
+  if err != nil {
+    return false, err
   }
-  return ecdsa.VerifyASN1(rawPubKey, hash, signature)
+  return ecdsa.VerifyASN1(rawPubKey, hash, signature), nil
 }
 
-func ECDSA256Sign(pk *ecdsa.PrivateKey, message []byte) ([]byte, bool) {
+func ECDSA256Sign(pk *ecdsa.PrivateKey, message []byte) ([]byte, error) {
   hashed := sha512.Sum512(message)
   signature, err := ecdsa.SignASN1(rand.Reader, pk, hashed[:])
-  return signature, err == nil 
+  return signature, err
 }
 
-func ECDSA256VerifySender(address string, pubKey []byte, hash []byte, signature []byte) bool {
+func ECDSA256VerifySender(address string, pubKey []byte, hash []byte, signature []byte) (bool, error) {
   defer func() {
     if r := recover(); r != nil {
     }
   }()
-  rawPubKey, ok := ECDSAPublicKeyDeserialize(pubKey)
-  if !ok {
-    return false
+  rawPubKey, err := ECDSAPublicKeyDeserialize(pubKey)
+  if err != nil {
+    return false, err
   }
-  return ecdsa.VerifyASN1(rawPubKey, hash, signature)
+  return ecdsa.VerifyASN1(rawPubKey, hash, signature), nil
 }
 
-func ECDSA256SignHash512(pk *ecdsa.PrivateKey, hash []byte) ([]byte, bool) {
+func ECDSA256SignHash512(pk *ecdsa.PrivateKey, hash []byte) ([]byte, error) {
   signature, err := ecdsa.SignASN1(rand.Reader, pk, hash)
-  return signature, err == nil 
+  return signature, err
 }

@@ -24,11 +24,11 @@ func TestMsgTransaction(t *testing.T) {
   obj := NewMsgTransaction()
   obj.Init(1, w1, addr2, hdwallet.ECOS, hdwallet.ECOS, 0, 10)
   
-  oks := obj.DoSign(w1)
-  assert.True(t, oks)
+  errs := obj.DoSign(w1)
+  assert.Nil(t, errs)
 
-  _, ok := obj.ToJSON()
-  assert.True(t, ok)
+  _, err := obj.ToJSON()
+  assert.Nil(t, err)
   /*
    * assert.Equal(t, "{\"version\":\"\",\"id_message\":2907279365,\"id_object\":\"payment\",\"id_action\":1,\"updated_at\":\"2023-05-24T10:17:54.256548986+03:00\",\"pubkey\":null,\"sign\":null,\"address_from\":\"0x5fAD534AadacBe64E43944CAEfAC04B087B75F9D\",\"address_to\":\"0x8E348b74e2f52f1c97ADBf0aA42b4c3FC7961fA6\",\"coin_from\":2147685952,\"coin_to\":2147685952}", bufJson)
   */
@@ -38,5 +38,6 @@ func TestMsgTransaction(t *testing.T) {
   obj2 := NewMsgTransaction()
   obj2.Deserialize(buf)
 
-  assert.True(t, obj2.DoVerify()) 
+  vok, _ := obj2.DoVerify()
+  assert.True(t, vok) 
 }

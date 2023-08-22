@@ -42,10 +42,10 @@ func (i *NetworkStat) Serialize() []byte {
   return buff.Bytes()
 }
 
-func (i *NetworkStat) Deserialize(msg []byte) bool {
+func (i *NetworkStat) Deserialize(msg []byte) error {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
-  return decoder.Decode(i) == nil
+  return decoder.Decode(i)
 }
 
 
@@ -85,8 +85,8 @@ func (i *NodeStat) Serialize() []byte {
   return buff.Bytes()
 }
 
-func (i *NodeStat) Deserialize(msg []byte) bool {
+func (i *NodeStat) Deserialize(msg []byte) error {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
-  return decoder.Decode(i) == nil
+  return decoder.Decode(i)
 }

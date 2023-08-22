@@ -1,84 +1,91 @@
 package client
 
 import (
+  "errors"
   "github.com/Lunkov/lib-wallets"
 
-  "github.com/Lunkov/go-ecos-client/objects"
-  "github.com/Lunkov/go-ecos-client/messages"
+  "go-ecos-client/objects"
+  "go-ecos-client/messages"
 )
 
-func (c *ClientECOS) PassportStatus(w wallets.IWallet, IdTx []byte) (*messages.MsgTransactionStatus, bool) {
+func (c *ClientECOS) PassportStatus(w wallets.IWallet, IdTx []byte) (*messages.MsgTransactionStatus, error) {
   msg := messages.NewMsgTransactionStatus(IdTx)
   
-  if !msg.DoSign(w) {
-    return nil, false
+  errs := msg.DoSign(w)
+  if errs != nil {
+    return nil, errs
   }
   
-  answer, ok := c.httpRequest("POST", "/passport/status", string(msg.Serialize()))
-  if !ok {
-    return nil, false
+  answer, err := c.httpRequest("POST", "/passport/status", string(msg.Serialize()))
+  if err != nil {
+    return nil, err
   }
-
-  if !msg.Deserialize(answer) {
-    return nil, false
+  err = msg.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return msg, true
+  return msg, nil
 }
 
-func (c *ClientECOS) PassportNew(w wallets.IWallet, coin uint32) (*objects.Transaction, bool) {
+func (c *ClientECOS) PassportNew(w wallets.IWallet, coin uint32) (*objects.Transaction, error) {
   msg := messages.NewMsgTransaction()
   msg.InitNFT(messages.StatusTxNewNFT, w, coin)
   
-  if !msg.DoSign(w) {
-    return nil, false
+  errs := msg.DoSign(w)
+  if errs != nil {
+    return nil, errs
   }
   
-  answer, ok := c.httpRequest("POST", "/passport/new", string(msg.Serialize()))
-  if !ok {
-    return nil, false
+  answer, err := c.httpRequest("POST", "/passport/new", string(msg.Serialize()))
+  if err != nil {
+    return nil, err
   }
 
   msgAnswer := objects.NewTX()
-  if !msgAnswer.Deserialize(answer) {
-    return nil, false
+  err = msgAnswer.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return msgAnswer, true
+  return msgAnswer, nil
 }
 
-func (c *ClientECOS) PassportCommit(w wallets.IWallet, coin uint32, passport *messages.PassportInfo) (*objects.Transaction, bool) {
+func (c *ClientECOS) PassportCommit(w wallets.IWallet, coin uint32, passport *messages.PassportInfo) (*objects.Transaction, error) {
   if passport == nil {
-    return nil, false
+    return nil, errors.New("Passport is empty")
   }
-  if !passport.Passport.DoSignPerson(w) {
-    return nil, false
+  errs := passport.Passport.DoSignPerson(w)
+  if errs != nil {
+    return nil, errs
   }
-  output, oko := passport.Serialize()
-  if !oko {
-    return nil, false
+  output, errs2 := passport.Serialize()
+  if errs2 != nil {
+    return nil, errs2
   }
   
-  answerBuf, ok := c.httpRequest("POST", "/passport/commit", string(output))
-  if !ok {
-    return nil, false
+  answerBuf, err := c.httpRequest("POST", "/passport/commit", string(output))
+  if err != nil {
+    return nil, err
   }
   answer := objects.NewTX()
-  if !answer.Deserialize(answerBuf) {
-    return nil, false
+  err = answer.Deserialize(answerBuf)
+  if err != nil {
+    return nil, err
   }
-  return answer, true
+  return answer, nil
 }
 
-func (c *ClientECOS) PassportGet(cid string, password string) (*objects.Passport, bool) {
+func (c *ClientECOS) PassportGet(cid string, password string) (*objects.Passport, error) {
   
-  answerBuf, ok := c.httpRequest("POST", "/object", string(cid))
-  if !ok {
-    return nil, false
+  answerBuf, err := c.httpRequest("POST", "/object", string(cid))
+  if err != nil {
+    return nil, err
   }
   // DECRYPT
   passport := objects.NewPassport()
   
-  if !passport.DeserializeDecrypt(password, answerBuf) {
-    return nil, false
+  err = passport.DeserializeDecrypt(password, answerBuf)
+  if err != nil {
+    return nil, err
   }
-  return passport, true
+  return passport, nil
 }

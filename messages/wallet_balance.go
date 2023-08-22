@@ -32,14 +32,10 @@ func (b *Balance) Serialize() []byte {
   return buff.Bytes()
 }
 
-func (b *Balance) Deserialize(msg []byte) bool {
+func (b *Balance) Deserialize(msg []byte) error {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
-  err := decoder.Decode(b)
-  if err != nil {
-    return false
-  }
-  return true
+  return decoder.Decode(b)
 }
 
 type Balances struct {

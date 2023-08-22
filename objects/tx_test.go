@@ -12,14 +12,16 @@ func TestTx(t *testing.T) {
   w1.Create(&map[string]string{"mnemonic": "chase oil pigeon elegant ketchup whip frozen beauty unknown brass amount slender pony pottery attitude flavor rifle primary beach sign glue oven crazy lottery"})
 
   obj := NewTX()
-  oks := obj.DoSign(w1)
-  assert.True(t, oks)
+  serr := obj.DoSign(w1)
+  assert.Nil(t, serr)
 
-  buf, ok2 := obj.Serialize()
-  assert.True(t, ok2)
+  buf, errs := obj.Serialize()
+  assert.Nil(t, errs)
   
   obj2 := NewTX()
   obj2.Deserialize(buf)
 
-  assert.True(t, obj2.DoVerify()) 
+  vok, verr := obj2.DoVerify()
+  assert.True(t, vok)
+  assert.Nil(t, verr) 
 }

@@ -13,13 +13,14 @@ func TestMsgWalletBalance(t *testing.T) {
   w1.Create(&map[string]string{"mnemonic": "chase oil pigeon elegant ketchup whip frozen beauty unknown brass amount slender pony pottery attitude flavor rifle primary beach sign glue oven crazy lottery"})
 
   msg := NewGetBalanceReq()
-  ok := msg.Init(w1, hdwallet.ECOS)
-  assert.True(t, ok)
+  err := msg.Init(w1, hdwallet.ECOS)
+  assert.Nil(t, err)
   
   buf := msg.Serialize()
   
   msg2 := NewGetBalanceReq()
   msg2.Deserialize(buf)
 
-  assert.True(t, msg2.DoVerify()) 
+  vok, _ := msg2.DoVerify()
+  assert.True(t, vok) 
 }

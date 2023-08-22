@@ -6,7 +6,8 @@ import (
   "crypto/sha512"
   
   "github.com/Lunkov/lib-wallets"
-  "github.com/Lunkov/go-ecos-client/utils"
+  
+  "go-ecos-client/utils"
 )
 
 type GetBalanceReq struct {
@@ -28,14 +29,10 @@ func (m *GetBalanceReq) Serialize() []byte {
   return buff.Bytes()
 }
 
-func (m *GetBalanceReq) Deserialize(msg []byte) bool {
+func (m *GetBalanceReq) Deserialize(msg []byte) error {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
-  err := decoder.Decode(m)
-  if err != nil {
-    return false
-  }
-  return true
+  return decoder.Decode(m)
 }
 
 func (m *GetBalanceReq) Hash() []byte {
@@ -46,22 +43,22 @@ func (m *GetBalanceReq) Hash() []byte {
   return sha.Sum(nil)
 }
 
-func (m *GetBalanceReq) Init(wallet wallets.IWallet, coin uint32) bool {
+func (m *GetBalanceReq) Init(wallet wallets.IWallet, coin uint32) error {
   m.Address = wallet.GetAddress(coin)
   m.Coin = coin
   
-  sign, ok := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), m.Hash())
-  if !ok {
-    return false
+  sign, err := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), m.Hash())
+  if err != nil {
+    return err
   }
   m.Sign = sign
-  m.PublicKey, ok = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
-  if !ok {
-    return false
+  m.PublicKey, err = utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
+  if err != nil {
+    return err
   }
-  return true  
+  return nil
 }
 
-func (m *GetBalanceReq) DoVerify() bool {
+func (m *GetBalanceReq) DoVerify() (bool, error) {
   return utils.ECDSA256VerifySender(m.Address, m.PublicKey, m.Hash(), m.Sign)
 }

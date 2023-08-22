@@ -1,30 +1,32 @@
 package client
 
 import (
-  "github.com/Lunkov/go-ecos-client/messages"
+  "go-ecos-client/messages"
 )
 
-func (c *ClientECOS) GetNetworkStat() (*messages.NetworkStat, bool) {
-  answer, ok := c.httpRequest("POST", "/network/stat", "")
-  if !ok {
-    return nil, false
+func (c *ClientECOS) GetNetworkStat() (*messages.NetworkStat, error) {
+  answer, err := c.httpRequest("POST", "/network/stat", "")
+  if err != nil {
+    return nil, err
   }
   result := messages.NewNetworkStat()
-  if !result.Deserialize(answer) {
-    return nil, false
+  err = result.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return result, true
+  return result, nil
 }
 
-func (c *ClientECOS) GetNodeStat() (*messages.NodeStat, bool) {
-  answer, ok := c.httpRequest("POST", "/node/stat", "")
-  if !ok {
-    return nil, false
+func (c *ClientECOS) GetNodeStat() (*messages.NodeStat, error) {
+  answer, err := c.httpRequest("POST", "/node/stat", "")
+  if err != nil {
+    return nil, err
   }
 
   msgAnswer := messages.NewNodeStat()
-  if !msgAnswer.Deserialize(answer) {
-    return nil, false
+  err = msgAnswer.Deserialize(answer)
+  if err != nil {
+    return nil, err
   }
-  return msgAnswer, true
+  return msgAnswer, nil
 }
