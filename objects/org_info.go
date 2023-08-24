@@ -16,7 +16,10 @@ import (
 // Information about Organization
 type OrgInfo struct {
   Id                string
-  
+
+  CID               string
+  PrevCID           string
+
   DisplayName       string
   DisplayNameTr     map[string]string
   
@@ -54,7 +57,7 @@ func (io *OrgInfo) NewID() {
 
 func (io *OrgInfo) Hash() []byte {
   sha_512 := sha512.New()
-  sha_512.Write([]byte(io.Id + io.Description + io.WalletAddress + io.CreatedAt.String()))
+  sha_512.Write([]byte(io.Id + io.Description + io.PrevCID + io.WalletAddress + io.CreatedAt.String()))
   sha_512.Write([]byte(io.DisplayName + io.LogoURL + io.EMailInfo + io.Country + io.Locality))
   sha_512.Write([]byte(strings.Join(io.APIURL, ":")))
   sha_512.Write(io.Cert)

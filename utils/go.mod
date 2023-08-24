@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
-	github.com/Lunkov/lib-wallets v0.0.0-20230822101559-a0b70aca6d9f
+	github.com/Lunkov/lib-wallets v0.0.0-20230823062113-b1113f08e072
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/crypto v0.12.0
 	gopkg.in/yaml.v3 v3.0.1

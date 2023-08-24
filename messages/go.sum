@@ -2,8 +2,12 @@ github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxK
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
 github.com/Lunkov/go-ecos-client/objects v0.0.0-20230818081023-3265bf166aa8 h1:XT/kVIbO7Jk4xJBbEE1rFbkVTs3E2nTJMDfAH1qGzIc=
 github.com/Lunkov/go-ecos-client/objects v0.0.0-20230818081023-3265bf166aa8/go.mod h1:v/KJcsT599gD8nQG6m6KPLZoBdbBJ9o2igajNjX/ipQ=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230822153020-dc29c9c33bea h1:KhfQ2Kz1hVNmbGIpA8539eU9iyCXv7rn5x4TgUSyLP8=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230822153020-dc29c9c33bea/go.mod h1:tyf0Oyb+cXurnl9iY/CAzzk6AVj7LiHtq+9I4YnuHXc=
 github.com/Lunkov/go-ecos-client/utils v0.0.0-20230818081023-3265bf166aa8 h1:uugTH4XkQf5LMfESrXHLwMTIJqLQFQW1y9e1nXd/fT0=
 github.com/Lunkov/go-ecos-client/utils v0.0.0-20230818081023-3265bf166aa8/go.mod h1:t0uh6zWU0oEntDCMb0QjJNxU5nQdhE0cb/zMkcg8gko=
+github.com/Lunkov/go-ecos-client/utils v0.0.0-20230822153020-dc29c9c33bea h1:9D5iOmqsJuvYIl5RD4XdFoEuk37AEeB0MfzLYkIh3u8=
+github.com/Lunkov/go-ecos-client/utils v0.0.0-20230822153020-dc29c9c33bea/go.mod h1:UmnfjLw6ls1772R43t52oB5eUAnTxdKfSQ3TiW43/SQ=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3 h1:eXXKYmulSUPW3TjbFaUuMxyaRkOwx6eTjONxwgTTRK4=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3/go.mod h1:hIKtgJbW/waGlmVHt4bhhMaYFo5c8m6ZxRWbGfxXlAc=
 github.com/Lunkov/lib-cipher v0.0.0-20230822094401-480fc8192b31 h1:2oVZWJajqlCvJn2Z1VgKsYqGBfxmr/1t6NJgwwkVauY=

@@ -2,6 +2,7 @@ package utils
 
 import (
   "time"
+  "errors"
   "bytes"
   "strings"
   "crypto"
@@ -74,23 +75,23 @@ func (cai *CertInfo) NewInfo(isCA bool) *x509.Certificate {
   }
 }
 
-func (cai *CertInfo) СreateNewCA(fileNameCert string, fileNamePriv string, password string) (bool) {
+func (cai *CertInfo) СreateNewCA(fileNameCert string, fileNamePriv string, password string) (error) {
   cai.Cert = cai.NewInfo(true)
 
   caPrivKey, errc := rsa.GenerateKey(rand.Reader, cai.Bits)
   if errc != nil {
-    return false
+    return errors.New("Private Key does not exists")
   }
   cai.PrivateKey = caPrivKey
 
-  buf, ok := cai.SerializeCert()
-  if !ok {
-    return false
+  buf, err := cai.SerializeCert()
+  if err != nil {
+    return err
   }
 
-  err := os.WriteFile(fileNameCert, buf, 0640) 
+  err = os.WriteFile(fileNameCert, buf, 0640) 
   if err != nil {
-    return false
+    return err
   }
 
   block := &pem.Block{
@@ -102,67 +103,60 @@ func (cai *CertInfo) СreateNewCA(fileNameCert string, fileNamePriv string, pass
     var err error
     block, err = x509.EncryptPEMBlock(rand.Reader, block.Type, block.Bytes, []byte(password), x509.PEMCipherAES256)
     if err != nil {
-      return false
+      return err
     }
   }
 
-  err = os.WriteFile(fileNamePriv, pem.EncodeToMemory(block), 0640) 
-  if err != nil {
-    return false
-  }
-  return true
+  return os.WriteFile(fileNamePriv, pem.EncodeToMemory(block), 0640) 
 }
 
-func (cai *CertInfo) LoadConfig(filename string) bool {
+func (cai *CertInfo) LoadConfig(filename string) error {
   out, err := os.ReadFile(filename) 
   if err != nil {
-    return false
+    return err
   }
-  err = yaml.Unmarshal(out, &cai)
-  if err != nil {
-    return false
-  }
-  return true
+  return yaml.Unmarshal(out, &cai)
 }
 
-func (cai *CertInfo) Load(fileNameCert string, fileNamePriv string, password string) bool {
+func (cai *CertInfo) Load(fileNameCert string, fileNamePriv string, password string) error {
   content, err := os.ReadFile(fileNameCert)
   if err != nil {
-    return false
+    return err
   }
   
-  if !cai.DeserializeCert(content) {
-    return false
+  err = cai.DeserializeCert(content)
+  if err != nil {
+    return err
   }
   
   content, err = os.ReadFile(fileNamePriv)
   if err != nil {
-    return false
+    return err
   }
   block, _ := pem.Decode(content)
   if block == nil {
-    return false
+    return errors.New("Wrong format")
   }
   enc := x509.IsEncryptedPEMBlock(block)
   b := block.Bytes
   if enc {
     b, err = x509.DecryptPEMBlock(block, []byte(password))
     if err != nil {
-      return false
+      return err
     }
   }
   key, err := x509.ParsePKCS1PrivateKey(b)
   if err != nil {
-    return false
+    return err
   }
   cai.PrivateKey = key
-  return true
+  return nil
 }
 
-func (cai *CertInfo) SerializeCert() ([]byte, bool) {
+func (cai *CertInfo) SerializeCert() ([]byte, error) {
   caBytes, err := x509.CreateCertificate(rand.Reader, cai.Cert, cai.Cert, &cai.PrivateKey.PublicKey, cai.PrivateKey)
   if err != nil {
-    return nil, false
+    return nil, err
   }
 
   caPEM := new(bytes.Buffer)
@@ -171,37 +165,37 @@ func (cai *CertInfo) SerializeCert() ([]byte, bool) {
     Bytes: caBytes,
   })
 
-  return caPEM.Bytes(), true
+  return caPEM.Bytes(), nil
 }
 
-func (cai *CertInfo) DeserializeCert(buf []byte) (bool) {
+func (cai *CertInfo) DeserializeCert(buf []byte) (error) {
   block, _ := pem.Decode(buf)
   if block == nil {
-    return false
+    return errors.New("Wrong format")
   }
   cert, err2 := x509.ParseCertificate(block.Bytes)
   if err2 != nil {
-    return false
+    return err2
   }
   cai.Cert = cert
-  return true
+  return nil
 }
 
-func (cai *CertInfo) Sign(message []byte) ([]byte, bool) {
+func (cai *CertInfo) Sign(message []byte) ([]byte, error) {
   if cai.PrivateKey == nil {
-    return nil, false
+    return nil, errors.New("Private Key does not exists")
   }
   hash := sha512.Sum512(message)
   signature, err := rsa.SignPKCS1v15(rand.Reader, cai.PrivateKey, crypto.SHA512, hash[:])
   if err != nil {
-    return nil, false
+    return nil, err
   }
-  return signature, true 
+  return signature, nil 
 }
 
-func (cai *CertInfo) Verify(message []byte, signature []byte) (bool) {
+func (cai *CertInfo) Verify(message []byte, signature []byte) (error) {
   if cai.Cert == nil {
-    return false
+    return errors.New("Certificate does not exists")
   }
   hash := sha512.Sum512(message)
   var err error
@@ -213,56 +207,52 @@ func (cai *CertInfo) Verify(message []byte, signature []byte) (bool) {
 		err = cai.Cert.CheckSignature(x509.ECDSAWithSHA512, nil, signature)
 
 	default:
-		return false
+		return errors.New("Wrong type of key")
 	}
   
   if err != nil {
-    return false
+    return err
   }
 
-  return true
+  return nil
 }
 
-func (cai *CertInfo) SignFile(filename string) bool {
+func (cai *CertInfo) SignFile(filename string) error {
   content, err := os.ReadFile(filename)
   if err != nil {
-    return false
+    return err
   }
-  sign, ok := cai.Sign(content)
-  if !ok {
-    return false
+  sign, errs := cai.Sign(content)
+  if errs != nil {
+    return errs
   }
   filens := filename + ".sign"
-  err = os.WriteFile(filens, sign, 0640) 
-  if err != nil {
-    return false
-  }
-  return true
+  return os.WriteFile(filens, sign, 0640) 
 }
 
-func (cai *CertInfo) VerifyFile(filename string) bool {
+func (cai *CertInfo) VerifyFile(filename string) error {
   content, err := os.ReadFile(filename)
   if err != nil {
-    return false
+    return err
   }
   filesign := filename + ".sign"
   sign, errs := os.ReadFile(filesign)
   if errs != nil {
-    return false
+    return err
   }
   return cai.Verify(content, sign)
 }
 
 
-func (cai *CertInfo) CreateSubCert(subCert *CertInfo) ([]byte, bool) {
+func (cai *CertInfo) CreateSubCert(subCert *CertInfo) ([]byte, error) {
   certPrivKey, errg := rsa.GenerateKey(rand.Reader, subCert.Bits)
   if errg != nil {
-    return nil, false
+    return nil, errg
   }
   
   cn := strings.Split(subCert.EMail, "@")
   if len(cn) != 2 {
-    return nil, false
+    return nil, errors.New("Wrong email: " + subCert.EMail)
   }
 
   subCert.Cert = &x509.Certificate{
@@ -304,7 +294,7 @@ func (cai *CertInfo) CreateSubCert(subCert *CertInfo) ([]byte, bool) {
   
   certBytes, err := x509.CreateCertificate(rand.Reader, subCert.Cert, cai.Cert, &subCert.PrivateKey.PublicKey, cai.PrivateKey)
   if err != nil {
-    return nil, false
+    return nil, err
   }
 
   caPEM := new(bytes.Buffer)
@@ -313,5 +303,5 @@ func (cai *CertInfo) CreateSubCert(subCert *CertInfo) ([]byte, bool) {
     Bytes: certBytes,
   })
 
-  return caPEM.Bytes(), true
+  return caPEM.Bytes(), nil
 }

@@ -3,12 +3,12 @@ module github.com/Lunkov/go-ecos-client/objects
 go 1.19
 
 require (
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230822153020-dc29c9c33bea
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-cipher v0.0.0-20230822094401-480fc8192b31
 	github.com/Lunkov/lib-wallets v0.0.0-20230822101559-a0b70aca6d9f
 	github.com/google/uuid v1.3.1
 	github.com/stretchr/testify v1.8.2
-	go-ecos-client/utils v0.0.0-00010101000000-000000000000
 )
 
 require (

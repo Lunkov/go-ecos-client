@@ -68,7 +68,7 @@ func UInt64Format(n uint64) string {
 func GenerateRandomSeedString(min int, max int) string {
 	rand.Seed(time.Now().UnixNano())
 	n:=uint(min + rand.Intn(max - min))
-	var letterRunes = []rune("adefghijklqrstvxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789")
+	var letterRunes = []rune("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz") // base58
 
   b := make([]rune, n)
   for i := range b {
