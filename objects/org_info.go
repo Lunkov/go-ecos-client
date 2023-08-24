@@ -73,35 +73,32 @@ func (oi *OrgInfo) Serialize() []byte {
   return buff.Bytes()
 }
 
-func (oi *OrgInfo) Deserialize(msg []byte) bool {
+func (oi *OrgInfo) Deserialize(msg []byte) error {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
-  err := decoder.Decode(oi)
-  if err != nil {
-    return false
-  }
-  return true
+  return decoder.Decode(oi)
 }
 
-func (oi *OrgInfo) DoSign(cert utils.CertInfo) bool {
-  crt, ok1 := cert.SerializeCert()
-  if !ok1 {
-    return false
+func (oi *OrgInfo) DoSign(cert utils.CertInfo) error {
+  crt, err := cert.SerializeCert()
+  if err != nil {
+    return err
   }
-  sign, ok2 := cert.Sign(oi.Hash())
-  if !ok2 {
-    return false
+  sign, err2 := cert.Sign(oi.Hash())
+  if err2 != nil {
+    return err2
   }
   oi.Cert = crt
   oi.Sign = sign
-  return true
+  return nil
 }
 
-func (oi *OrgInfo) DoVerify() bool {
+func (oi *OrgInfo) DoVerify() (error) {
   cert := utils.NewCertInfo()
   
-  if !cert.DeserializeCert(oi.Cert) {
-    return false
+  err := cert.DeserializeCert(oi.Cert)
+  if err != nil {
+    return err
   }
   
   return cert.Verify(oi.Hash(), oi.Sign)

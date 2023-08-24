@@ -1,9 +1,9 @@
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxKOSUDLcl9ItKormWOgux6M6A5MYgs=
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
-github.com/Lunkov/go-ecos-client/messages v0.0.0-20230822153020-dc29c9c33bea h1:9jVIO8Ua4lbtG1LC8UeAbjH7K0Lnu+vQlw+l1YH5V1o=
-github.com/Lunkov/go-ecos-client/messages v0.0.0-20230822153020-dc29c9c33bea/go.mod h1:xU5yhtkQ2g2zQbhxcd5emshO8/fwqHaLv6pbnpTqs1s=
-github.com/Lunkov/go-ecos-client/objects v0.0.0-20230822153020-dc29c9c33bea h1:KhfQ2Kz1hVNmbGIpA8539eU9iyCXv7rn5x4TgUSyLP8=
-github.com/Lunkov/go-ecos-client/objects v0.0.0-20230822153020-dc29c9c33bea/go.mod h1:tyf0Oyb+cXurnl9iY/CAzzk6AVj7LiHtq+9I4YnuHXc=
+github.com/Lunkov/go-ecos-client/messages v0.0.0-20230824084536-4755ab468703 h1:sjQ0bHWWGqWVL4xVkLIWH2Q4FW1KDgFffHQB1VBXP1U=
+github.com/Lunkov/go-ecos-client/messages v0.0.0-20230824084536-4755ab468703/go.mod h1:3uMa/MFhwIpdpdsI/bK2PXqNlScY2NJb3TEPaKPPgDU=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824084536-4755ab468703 h1:9cmPyN9qWyN+ToCMoANIItVnJKC6UF6k5aCNYmaIJ/w=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824084536-4755ab468703/go.mod h1:aIi7LH5Oz8q/blhPCkbOSWhKZkqk8tmi9z5DB9LOc78=
 github.com/Lunkov/go-ecos-client/utils v0.0.0-20230822153020-dc29c9c33bea h1:9D5iOmqsJuvYIl5RD4XdFoEuk37AEeB0MfzLYkIh3u8=
 github.com/Lunkov/go-ecos-client/utils v0.0.0-20230822153020-dc29c9c33bea/go.mod h1:UmnfjLw6ls1772R43t52oB5eUAnTxdKfSQ3TiW43/SQ=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3 h1:eXXKYmulSUPW3TjbFaUuMxyaRkOwx6eTjONxwgTTRK4=

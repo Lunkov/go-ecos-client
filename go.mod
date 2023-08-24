@@ -3,8 +3,8 @@ module github.com/Lunkov/go-ecos-client
 go 1.19
 
 require (
-	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230822153020-dc29c9c33bea
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230822153020-dc29c9c33bea
+	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230824084536-4755ab468703
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824084536-4755ab468703
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230823062113-b1113f08e072
 	github.com/stretchr/testify v1.8.2
