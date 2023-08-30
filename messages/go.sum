@@ -1,9 +1,9 @@
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxKOSUDLcl9ItKormWOgux6M6A5MYgs=
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
-github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824084536-4755ab468703 h1:9cmPyN9qWyN+ToCMoANIItVnJKC6UF6k5aCNYmaIJ/w=
-github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824084536-4755ab468703/go.mod h1:aIi7LH5Oz8q/blhPCkbOSWhKZkqk8tmi9z5DB9LOc78=
-github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824084536-4755ab468703 h1:pRM7OaU7tFeXlAk87/V0ONLZXRhT2EZzFbpHjya6yuE=
-github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824084536-4755ab468703/go.mod h1:LovhBsbDVNcUCqAddSVzujn0+rEoBWjum0IuYsELpeM=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824101215-9064e7d3192c h1:VttTkrchTxhslGy9ZPeQNqWR08iwcXLQM4NThF4ZZcg=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824101215-9064e7d3192c/go.mod h1:D6Zw/Csvv5x+VmPSJIrpS2NrTqmxm65u1Fixx3HC0UM=
+github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824101215-9064e7d3192c h1:4bFTzAGz5slyfOPXhFsMNuSQE7myvLJDGV7bapn3ndg=
+github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824101215-9064e7d3192c/go.mod h1:LovhBsbDVNcUCqAddSVzujn0+rEoBWjum0IuYsELpeM=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3 h1:eXXKYmulSUPW3TjbFaUuMxyaRkOwx6eTjONxwgTTRK4=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3/go.mod h1:hIKtgJbW/waGlmVHt4bhhMaYFo5c8m6ZxRWbGfxXlAc=
 github.com/Lunkov/lib-cipher v0.0.0-20230822094401-480fc8192b31 h1:2oVZWJajqlCvJn2Z1VgKsYqGBfxmr/1t6NJgwwkVauY=
@@ -15,7 +15,6 @@ github.com/btcsuite/btcd v0.20.1-beta h1:Ik4hyJqN8Jfyv3S4AGBOmyouMsYE3EdYODkMbQj
 github.com/btcsuite/btcd v0.20.1-beta/go.mod h1:wVuoA8VJLEcwgqHBwHmzLRazpKxTv13Px/pDuV7OomQ=
 github.com/btcsuite/btcd/btcec/v2 v2.2.0 h1:fzn1qaOt32TuLjFlkzYSsBC35Q3KUjT1SwPxiMSCF5k=
 github.com/btcsuite/btcd/btcec/v2 v2.2.0/go.mod h1:U7MHm051Al6XmscBQ0BoNydpOTsFAn707034b5nY8zU=
-github.com/btcsuite/btcd/chaincfg/chainhash v1.0.1 h1:q0rUy8C/TYNBQS1+CGKw68tLOFYSNEs0TFnxxnS9+4U=
 github.com/btcsuite/btclog v0.0.0-20170628155309-84c8d2346e9f h1:bAs4lUbRJpnnkd9VhRV3jjAVU7DJVjMaK+IsvSeZvFo=
 github.com/btcsuite/btclog v0.0.0-20170628155309-84c8d2346e9f/go.mod h1:TdznJufoqS23FtqVCzL0ZqgP5MqXbb4fg/WgDys70nA=
 github.com/btcsuite/btcutil v0.0.0-20190425235716-9e5f4b9a998d/go.mod h1:+5NJ2+qvTyV9exUAL/rxXi3DcLg2Ts+ymUAY5y4NvMg=

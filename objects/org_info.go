@@ -20,6 +20,8 @@ type OrgInfo struct {
   CID               string
   PrevCID           string
 
+  ShortName         string
+
   DisplayName       string
   DisplayNameTr     map[string]string
   
@@ -48,6 +50,15 @@ type OrgInfo struct {
 
 func NewOrgInfo() *OrgInfo {
   return &OrgInfo{}
+}
+
+func NewOrgInfoFromMem(buf []byte) (*OrgInfo, error) {
+  org := NewOrgInfo()
+  err := org.Deserialize(buf)
+  if err != nil {
+    return nil, err
+  }
+  return org, nil
 }
 
 func (io *OrgInfo) NewID() {

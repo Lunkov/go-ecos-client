@@ -110,6 +110,78 @@ func (cai *CertInfo) СreateNewCA(fileNameCert string, fileNamePriv string, pass
   return os.WriteFile(fileNamePriv, pem.EncodeToMemory(block), 0640) 
 }
 
+
+func (cai *CertInfo) CreateUserCert(cert *CertInfo, fileNameCert string, fileNamePriv string, password string) (error) {
+  certPrivKey, errg := rsa.GenerateKey(rand.Reader, cai.Bits)
+  if errg != nil {
+    return errg
+  }
+  
+  cn := strings.Split(cai.EMail, "@")
+  if len(cn) != 2 {
+    return errors.New("Bad email")
+  }
+
+  cai.Cert = &x509.Certificate{
+    SerialNumber: big.NewInt(1658),
+    Subject: pkix.Name{
+      CommonName:         cn[0],
+      Country:            []string{cai.Country},
+      Province:           []string{""},
+      Locality:           []string{cai.Locality},
+      Organization:       []string{cert.Organization},
+      OrganizationalUnit: []string{cai.OrgUnit},
+      ExtraNames: []pkix.AttributeTypeAndValue{
+            {
+                Type:  oidEmailAddress, 
+                Value: asn1.RawValue{
+                    Tag:   asn1.TagIA5String, 
+                    Bytes: []byte(cai.EMail),
+                },
+            },
+        },
+    },
+    EmailAddresses: []string{cai.EMail},
+    //IPAddresses:  []net.IP{net.IPv4(127, 0, 0, 1), net.IPv6loopback},
+    NotBefore:    time.Now(),
+    NotAfter:     time.Now().AddDate(10, 0, 0),
+    SubjectKeyId: []byte{1, 2, 3, 4, 6},
+    ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+    KeyUsage:     x509.KeyUsageDigitalSignature,
+  }
+
+  certBytes, err := x509.CreateCertificate(rand.Reader, cai.Cert, cert.Cert, &certPrivKey.PublicKey, cert.PrivateKey)
+  if err != nil {
+    return err
+  }
+  
+  certPEM := new(bytes.Buffer)
+  pem.Encode(certPEM, &pem.Block{
+    Type:  "CERTIFICATE",
+    Bytes: certBytes,
+  })
+
+  err = os.WriteFile(fileNameCert, certPEM.Bytes(), 0640) 
+  if err != nil {
+    return err
+  }
+
+  block := &pem.Block{
+      Type:  "RSA PRIVATE KEY",
+      Bytes: x509.MarshalPKCS1PrivateKey(certPrivKey),
+    }
+
+  if password != "" {
+    var err error
+    block, err = x509.EncryptPEMBlock(rand.Reader, block.Type, block.Bytes, []byte(password), x509.PEMCipherAES256)
+    if err != nil {
+      return err
+    }
+  }
+
+  return os.WriteFile(fileNamePriv, pem.EncodeToMemory(block), 0640) 
+}
+
 func (cai *CertInfo) LoadConfig(filename string) error {
   out, err := os.ReadFile(filename) 
   if err != nil {

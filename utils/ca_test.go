@@ -49,5 +49,14 @@ func TestCA(t *testing.T) {
   err = ca2sub.Verify([]byte("1234567890"), sig)
   assert.Nil(t, err)
 
+  caUser := NewCertInfo()
+  caUser.Bits = 2048
+  caUser.EMail = "user@myorg.ru"
+  errc = caUser.CreateUserCert(ca, "./test/user.cert", "./test/user.priv", pwd)
+  assert.Nil(t, errc)
+  
+  errc = caUser.Load("./test/user.cert", "./test/user.priv", pwd)
+  assert.Nil(t, errc)
+  
 }
 
