@@ -1,11 +1,11 @@
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 h1:KiSpKZlAnCA6AxKOSUDLcl9ItKormWOgux6M6A5MYgs=
 github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0/go.mod h1:Mwvg6Kq37lDGEiq1JWp27mQPpc4QaJTt/XmT/o5/W/E=
-github.com/Lunkov/go-ecos-client/messages v0.0.0-20230824101215-9064e7d3192c h1:GZbLJHPIRsD0T8Zl7RB8dLUYQi/AojbEHBTjk/Xexqw=
-github.com/Lunkov/go-ecos-client/messages v0.0.0-20230824101215-9064e7d3192c/go.mod h1:Ky4PaNSn1AKMj8mVVRupzBPHG/yNMfQI0ueWFYTlRfQ=
-github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824101215-9064e7d3192c h1:VttTkrchTxhslGy9ZPeQNqWR08iwcXLQM4NThF4ZZcg=
-github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824101215-9064e7d3192c/go.mod h1:D6Zw/Csvv5x+VmPSJIrpS2NrTqmxm65u1Fixx3HC0UM=
-github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824084536-4755ab468703 h1:pRM7OaU7tFeXlAk87/V0ONLZXRhT2EZzFbpHjya6yuE=
-github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824084536-4755ab468703/go.mod h1:LovhBsbDVNcUCqAddSVzujn0+rEoBWjum0IuYsELpeM=
+github.com/Lunkov/go-ecos-client/messages v0.0.0-20230830114644-adbce838be6b h1:1hFMTDIxqh8FaoJZo0y27ZUNN0343OQ+2aEgVT/uR+k=
+github.com/Lunkov/go-ecos-client/messages v0.0.0-20230830114644-adbce838be6b/go.mod h1:WHypdXjRN7f02RbpNmk8Qy/M7Xu++ZQehKRAdC8jiAk=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230830114644-adbce838be6b h1:DE86NMrecET4ldjEt5KwhD9s5VkYTjhHY8vL+Mqy8Vk=
+github.com/Lunkov/go-ecos-client/objects v0.0.0-20230830114644-adbce838be6b/go.mod h1:0zd62qNwwi/mHTozffZmAJfybxLBtofRA0b27NVMa/k=
+github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824101215-9064e7d3192c h1:4bFTzAGz5slyfOPXhFsMNuSQE7myvLJDGV7bapn3ndg=
+github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824101215-9064e7d3192c/go.mod h1:LovhBsbDVNcUCqAddSVzujn0+rEoBWjum0IuYsELpeM=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3 h1:eXXKYmulSUPW3TjbFaUuMxyaRkOwx6eTjONxwgTTRK4=
 github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3/go.mod h1:hIKtgJbW/waGlmVHt4bhhMaYFo5c8m6ZxRWbGfxXlAc=
 github.com/Lunkov/lib-cipher v0.0.0-20230822094401-480fc8192b31 h1:2oVZWJajqlCvJn2Z1VgKsYqGBfxmr/1t6NJgwwkVauY=

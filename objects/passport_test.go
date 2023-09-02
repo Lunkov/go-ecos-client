@@ -14,10 +14,10 @@ func TestMsgPassport(t *testing.T) {
   msg := NewPassport()
   msg.DisplayName = "Test User"
   
-  msg.IssuerPublicKey, err = utils.RSASerializePublicKey(&key.PublicKey)
+  msg.PublicKey, err = utils.RSASerializePublicKey(&key.PublicKey)
   assert.Nil(t, err)
   
-  msg.IssuerSign, err = utils.RSASign(key, msg.HashIssuer())
+  msg.Sign, err = utils.RSASign(key, msg.Hash())
   assert.Nil(t, err)
   
   buf, okb := msg.Serialize()
@@ -27,7 +27,7 @@ func TestMsgPassport(t *testing.T) {
   
   assert.Nil(t, msg2.Deserialize(buf)) 
   
-  verr := utils.RSAVerify(msg.IssuerPublicKey, msg.HashIssuer(), msg.IssuerSign)
+  verr := utils.RSAVerify(msg.PublicKey, msg.Hash(), msg.Sign)
   assert.Nil(t, verr)
   
   assert.Equal(t, "Test User", msg2.DisplayName)

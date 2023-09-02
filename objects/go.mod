@@ -3,11 +3,11 @@ module github.com/Lunkov/go-ecos-client/objects
 go 1.19
 
 require (
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824101215-9064e7d3192c
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230830114644-adbce838be6b
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-cipher v0.0.0-20230822094401-480fc8192b31
 	github.com/Lunkov/lib-wallets v0.0.0-20230823062113-b1113f08e072
-	github.com/google/uuid v1.3.0
+	github.com/google/uuid v1.3.1
 	github.com/stretchr/testify v1.8.2
 )
 

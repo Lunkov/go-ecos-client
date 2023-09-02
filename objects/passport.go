@@ -4,7 +4,7 @@ import (
   "bytes"
   "time"
   "crypto/sha512"
-  "crypto/rsa"
+  // "crypto/rsa"
   "encoding/gob"
   "encoding/json"
   
@@ -36,35 +36,24 @@ type Passport struct {
 
   CreatedAt     time.Time       `json:"created_at"`
   
-  Address             string    `json:"address"`
-  PersonPublicKey     []byte    `json:"person_pubkey"`  
-  PersonSign          []byte    `json:"person_sign"`
-
-  IssuerName          string    `json:"issuer_name"`
-  IssuerPublicKey     []byte    `json:"issuer_pubkey"`
-  IssuerSign          []byte    `json:"issuer_sign"`
+  Address       string    `json:"address"`
+  SignType      string    `json:"sign_type"`
+  PublicKey     []byte    `json:"pubkey"`  
+  Sign          []byte    `json:"sign"`
 }
 
 func NewPassport() *Passport {
   return &Passport{}
 }
 
-func (p *Passport) HashPerson() []byte {
+func (p *Passport) Hash() []byte {
   sha_512 := sha512.New()
-  sha_512.Write([]byte(p.Version + p.IssuerName + p.Address))
+  sha_512.Write([]byte(p.Version + p.Address))
   sha_512.Write([]byte(p.DisplayName + p.FirstName + p.MiddleName + p.LastName + p.EMail + p.Phone))
-  sha_512.Write([]byte(p.Country + p.Locality + p.Role))
-  sha_512.Write(p.PersonPublicKey)
-  sha_512.Write(p.Photo)
-  return sha_512.Sum(nil)
-}
-
-func (p *Passport) HashIssuer() []byte {
-  sha_512 := sha512.New()
-  sha_512.Write([]byte(p.ID))
+  sha_512.Write([]byte(p.Country + p.Locality + p.Role + p.SignType))
   sha_512.Write([]byte(p.CreatedAt.String()))
-  sha_512.Write(p.IssuerPublicKey)
-  sha_512.Write(p.HashPerson())
+  sha_512.Write(p.PublicKey)
+  sha_512.Write(p.Photo)
   return sha_512.Sum(nil)
 }
 
@@ -105,41 +94,24 @@ func (p *Passport) FromJSON(data []byte) error {
   return nil
 }
 
-func (p *Passport) DoSignPerson(wallet wallets.IWallet) error {
+func (p *Passport) DoSign(wallet wallets.IWallet) error {
   p.Address = wallet.GetAddress(hdwallet.ECOS)
   PublicKey, err := utils.ECDSAPublicKeySerialize(wallet.GetECDSAPublicKey())
   if err != nil {
     return err
   }
-  p.PersonPublicKey = PublicKey
-  sign, errh := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), p.HashPerson())
+  p.PublicKey = PublicKey
+  sign, errh := utils.ECDSA256SignHash512(wallet.GetECDSAPrivateKey(), p.Hash())
   if errh != nil {
     return errh
   }
-  p.PersonSign = sign
+  p.SignType = "ECDSA256"
+  p.Sign = sign
   return nil
 }
 
-func (p *Passport) DoVerifyPerson() (bool, error) {
-  return utils.ECDSA256VerifyHash512(p.PersonPublicKey, p.HashPerson(), p.PersonSign)
-}
-
-func (p *Passport) DoSignIssuer(pk *rsa.PrivateKey) error {
-  PublicKey, err := utils.RSASerializePublicKey(&pk.PublicKey)
-  if err != nil {
-    return err
-  }
-  p.IssuerPublicKey = PublicKey
-  sign, errs := utils.RSASign(pk, p.HashIssuer())
-  if errs != nil {
-    return errs
-  }
-  p.PersonSign = sign
-  return nil
-}
-
-func (p *Passport) DoVerifyIssuer() (error) {
-  return utils.RSAVerify(p.IssuerPublicKey, p.HashIssuer(), p.IssuerSign)
+func (p *Passport) DoVerify() (bool, error) {
+  return utils.ECDSA256VerifyHash512(p.PublicKey, p.Hash(), p.Sign)
 }
 
 func (p *Passport) SerializeEncrypt(password string) ([]byte, error) {

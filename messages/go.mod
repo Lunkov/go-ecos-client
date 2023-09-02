@@ -3,8 +3,8 @@ module github.com/Lunkov/go-ecos-client/messages
 go 1.19
 
 require (
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230824101215-9064e7d3192c
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824101215-9064e7d3192c
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230830114644-adbce838be6b
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230830114644-adbce838be6b
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230823062113-b1113f08e072
 	github.com/stretchr/testify v1.8.2
@@ -21,7 +21,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
 	github.com/ethereum/go-ethereum v1.12.2 // indirect
-	github.com/google/uuid v1.3.1 // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/holiman/uint256 v1.2.3 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect

@@ -14,7 +14,7 @@ import (
 )
 
 // Information about Organization
-type OrgInfo struct {
+type OrganizationInfo struct {
   Id                string
 
   CID               string
@@ -48,12 +48,12 @@ type OrgInfo struct {
   Sign             []byte
 }
 
-func NewOrgInfo() *OrgInfo {
-  return &OrgInfo{}
+func NewOrganizationInfo() *OrganizationInfo {
+  return &OrganizationInfo{}
 }
 
-func NewOrgInfoFromMem(buf []byte) (*OrgInfo, error) {
-  org := NewOrgInfo()
+func NewOrganizationInfoFromMem(buf []byte) (*OrganizationInfo, error) {
+  org := NewOrganizationInfo()
   err := org.Deserialize(buf)
   if err != nil {
     return nil, err
@@ -61,12 +61,12 @@ func NewOrgInfoFromMem(buf []byte) (*OrgInfo, error) {
   return org, nil
 }
 
-func (io *OrgInfo) NewID() {
+func (io *OrganizationInfo) NewID() {
   uid, _ := uuid.NewUUID()
   io.Id = uid.String()
 }
 
-func (io *OrgInfo) Hash() []byte {
+func (io *OrganizationInfo) Hash() []byte {
   sha_512 := sha512.New()
   sha_512.Write([]byte(io.Id + io.Description + io.PrevCID + io.WalletAddress + io.CreatedAt.String()))
   sha_512.Write([]byte(io.DisplayName + io.LogoURL + io.EMailInfo + io.Country + io.Locality))
@@ -77,20 +77,20 @@ func (io *OrgInfo) Hash() []byte {
   return sha_512.Sum(nil)
 }
 
-func (oi *OrgInfo) Serialize() []byte {
+func (oi *OrganizationInfo) Serialize() []byte {
   var buff bytes.Buffer
   encoder := gob.NewEncoder(&buff)
   encoder.Encode(oi)
   return buff.Bytes()
 }
 
-func (oi *OrgInfo) Deserialize(msg []byte) error {
+func (oi *OrganizationInfo) Deserialize(msg []byte) error {
   buf := bytes.NewBuffer(msg)
   decoder := gob.NewDecoder(buf)
   return decoder.Decode(oi)
 }
 
-func (oi *OrgInfo) DoSign(cert utils.CertInfo) error {
+func (oi *OrganizationInfo) DoSign(cert utils.CertInfo) error {
   crt, err := cert.SerializeCert()
   if err != nil {
     return err
@@ -104,7 +104,7 @@ func (oi *OrgInfo) DoSign(cert utils.CertInfo) error {
   return nil
 }
 
-func (oi *OrgInfo) DoVerify() (error) {
+func (oi *OrganizationInfo) DoVerify() (error) {
   cert := utils.NewCertInfo()
   
   err := cert.DeserializeCert(oi.Cert)
