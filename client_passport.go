@@ -53,7 +53,7 @@ func (c *ClientECOS) PassportCommit(w wallets.IWallet, coin uint32, passport *me
   if passport == nil {
     return nil, errors.New("Passport is empty")
   }
-  errs := passport.Passport.DoSignPerson(w)
+  errs := passport.Passport.DoSign(w)
   if errs != nil {
     return nil, errs
   }

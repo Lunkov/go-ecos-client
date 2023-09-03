@@ -49,7 +49,7 @@ func (c *ClientECOS) OrganizationNew(w wallets.IWallet, coin uint32) (*objects.T
   return msgAnswer, nil
 }
 
-func (c *ClientECOS) OrganizationCommit(w wallets.IWallet, coin uint32, org *messages.Organization) (*objects.Transaction, error) {
+func (c *ClientECOS) OrganizationCommit(w wallets.IWallet, coin uint32, org *messages.OrganizationInfo) (*objects.Transaction, error) {
   if org == nil {
     return nil, errors.New("Organization is empty")
   }

@@ -1,6 +1,6 @@
 module github.com/Lunkov/go-ecos-client/utils
 
-go 1.19
+go 1.20
 
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0

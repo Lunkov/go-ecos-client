@@ -1,10 +1,10 @@
 module github.com/Lunkov/go-ecos-client
 
-go 1.19
+go 1.20
 
 require (
-	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230902190754-f7825d664c50
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230902190754-f7825d664c50
+	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230903141945-7f01805e1bed
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230903141945-7f01805e1bed
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230823062113-b1113f08e072
 	github.com/stretchr/testify v1.8.2
