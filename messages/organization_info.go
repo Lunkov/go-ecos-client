@@ -10,7 +10,7 @@ import (
 )
 
 type OrganizationInfo struct {
-  Organization     objects.Organization
+  Organization     objects.OrganizationInfo
   CID              string
   TX               objects.Transaction 
 }

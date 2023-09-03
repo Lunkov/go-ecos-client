@@ -3,8 +3,8 @@ module github.com/Lunkov/go-ecos-client
 go 1.19
 
 require (
-	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230830114644-adbce838be6b
-	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230830114644-adbce838be6b
+	github.com/Lunkov/go-ecos-client/messages v0.0.0-20230902190754-f7825d664c50
+	github.com/Lunkov/go-ecos-client/objects v0.0.0-20230902190754-f7825d664c50
 	github.com/Lunkov/go-hdwallet v0.0.0-20230525092819-390711df8fa3
 	github.com/Lunkov/lib-wallets v0.0.0-20230823062113-b1113f08e072
 	github.com/stretchr/testify v1.8.2
@@ -12,7 +12,7 @@ require (
 
 require (
 	github.com/Lunkov/go-btcec v0.0.0-20230525101159-f058a4a0edc0 // indirect
-	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230824101215-9064e7d3192c // indirect
+	github.com/Lunkov/go-ecos-client/utils v0.0.0-20230830114644-adbce838be6b // indirect
 	github.com/Lunkov/lib-cipher v0.0.0-20230822094401-480fc8192b31 // indirect
 	github.com/btcsuite/btcd v0.20.1-beta // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
